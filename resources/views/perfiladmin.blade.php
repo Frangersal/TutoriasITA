@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Tutorias ITA
+                    Perfil Administrador
                 </div>
 
                 <div class="links">

@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Tutorias ITA
+                    Registrar Usuario
                 </div>
 
                 <div class="links">
