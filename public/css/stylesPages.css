@@ -1,0 +1,307 @@
+        body { margin:0 auto }
+        body {
+            margin:0 auto; 
+            }
+    
+            /** ---Inicio Header--- */
+    .headerazul {
+            width: 100%; float: left; background-color: #233D7B; 
+            margin-bottom: 50px;
+        }
+            
+    .seccionizq{ 
+            width: 20%; float: left;
+        }
+                
+    .imagetecnm 
+        {
+            width: 130px; height: 80px; float: left; 				
+            background-image: url(../Images/tecnmlogoblanco.png); 
+            background-size: cover; margin-top: 5px; margin-bottom: 5px; 		
+            background-position: center; margin-left: 5px;
+        }
+    
+    .secciontitulo{
+            width: 60%; float: left; margin-top: 30px;
+        }
+                
+    .titulo{
+            width: 100%; float: left; font-family: 'Montserrat', sans-serif; 
+            font-size: 25px; color: #fff; text-transform: uppercase; letter-spacing: 5px;
+        }
+                    
+    .seccionder{
+            width: 20%; float: left;
+        }
+                
+    .imageita
+        {
+            width: 90px; height: 80px; float: right; 
+            background-image: url(../Images/italogoblanco.png); 
+            background-size: cover; margin-top: 5px;	margin-bottom: 5px; 
+            background-position: center; margin-right: 5px;
+        }
+                    
+    .menuheader{
+            width: 100%; float: left; margin-top: 30px;
+        }
+    .menu1 {
+            width: calc(20% - 10px); 	float: left;  	margin: 5px; 
+            background-color: #1f3261;	cursor: pointer;
+        }
+    
+    .opc1 {
+            width: 100%; float: left; 	font-family: 'Montserrat',sans-serif; 
+            font-size: 12px; color: #fff; 	letter-spacing: 3px; padding: 8px 5px;
+        }
+            /** ---Fin Header--- */
+            /** ---Inicio Footer--- */
+    .footerwidth {
+            width:100%; float: left; height: 130px; 
+            margin-top: 7%; background-color: #fff;
+        }
+            
+    .contenidofooter{
+            width: 90%; margin-top: 30px; float: left; 
+            margin-right: 5%; margin-left: 5%;
+        }
+                
+    .contenidologo{
+            width: 100%; float: left;
+        }
+            
+    .logofooter{
+            width: 100px; height: 100px; float: left; 
+            margin-left: 47%;
+        }
+            
+    .linksfooter{
+            width: calc(100% - 200px); float: left; margin-left: 100px; 
+            margin-right: 100px; margin-top: 10px;
+        }
+                    
+    .text1 {width: 100%; font-size: 13px; margin-bottom: 20px; 
+            font-family: 'Open Sans', sans-serif; line-height: 1.5px; 
+            float: left; text-decoration: none; color: #20385C;
+        }
+            /** ---Fin Footer--- */
+                        
+    
+    
+                    
+                
+        /**Estilos basicos**/
+.textoenimagen { width: 100%; float: left; font-family: 'Open Sans', sans-serif; font-size: 18px; font-weight: bold; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; color: #fff; position: absolute; z-index: 3; margin-top: 260px; text-transform: uppercase; letter-spacing: 5px; }
+.lineaseparadora { width: calc(100% - 300px); margin-left: 150px; margin-right: 150px; float: left; margin-top: 330px; margin-bottom: 50px; height: 1px; background-color: #1f3261; }
+.title1 { width: 100%; float: left; font-family: 'Open Sans', sans-serif; font-size: 20px; font-weight: bold; color: #233d7b; margin-bottom: 20px; }
+.textblack { width: 100%; float: left; font-family: 'Open Sans', sans-serif; font-size: 14px; color: #000; margin-bottom: 50px; text-align: left; line-height: 25px; }
+.textblue1{width: 21%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3px}
+.textblue2 { width: calc(100% - 37px); float: left; font-size: 15px; font-weight: bold; }
+.fotoperfil1 { width: calc(25% - 40px); margin-left: 20px; float: left; padding-bottom: calc(25% - 40px); border-radius: 50%; background-color: #A6A1A1; background-image: url(../Images/tonystark.jpeg); background-size: cover; background-position: center; }
+.fotoperfil2 { width: calc(70% - 40px); margin-left: 20px; padding-bottom: calc(70% - 40px); border-radius: 50%; background-color: #A6A1A1; background-image: url(../Images/tonystark.jpeg); background-size: cover; background-position: center; }
+.fotoperfil3 { width: calc(35% - 40px); margin-left: 20px; padding-bottom: calc(35% - 40px); border-radius: 50%; background-color: #A6A1A1; background-image: url(../Images/tonystark.jpeg); background-size: cover; background-position: center; }
+.botonpequenio{width: calc(15% - 13px); float: left; margin-bottom: 20px; background-color: #1f3261; border: 1px solid #1f3261; cursor: pointer; font-family: 'Open Sans', sans-serif; font-size: 14px; color: #fff; padding: 2px 5px; border-radius: 10px; margin-left: 20px;}
+.botonmediano{width: calc(90% - 13px); float: left; margin-bottom: 20px; background-color: #1f3261; border: 1px solid #1f3261; cursor: pointer; font-family: 'Open Sans', sans-serif; font-size: 14px; color: #fff; padding: 10px 8px; border-radius: 10px; margin-left: 25px; margin-top: 10px;}
+.botongrande { width: calc(100% - 13px); float: left; margin-top: 50px; margin-bottom: 60px; background-color: #1f3261; border: 1px solid #1f3261; cursor: pointer; font-family: 'Open Sans', sans-serif; font-size: 16px; color: #fff; padding: 10px 5px; border-radius: 10px; }
+
+
+
+        
+        /** --inicio inicio-- **/
+.contenedorfoto { width: calc(100% - 300px); margin-left: 150px; margin-right: 150px; position: absolute; z-index: 1; top: 30%; }
+.fotobackground { width: 100%; height: 290px; float: left; background-image: url(images/TutorTutoriandos.jpg); background-size: cover; background-position: center; filter: blur(2px); position: absolute; z-index: 2; top: 35%; }
+.textoenimagen { width: 100%; float: left; font-family: 'Open Sans', sans-serif; font-size: 18px; font-weight: bold; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; color: #fff; position: absolute; z-index: 3; margin-top: 260px; text-transform: uppercase; letter-spacing: 5px; }
+.lineaseparadora1 { width: calc(100% - 300px); margin-left: 150px; margin-right: 150px; float: left; margin-top: 330px; margin-bottom: 50px; height: 1px; background-color: #1f3261; }
+.contenidocolumna { width: calc(100% - 300px); margin-left: 150px; margin-right: 150px; float: left; }
+
+.texto { width: 100%; float: left; font-family: 'Open Sans', sans-serif; font-size: 14px; color: #000; margin-bottom: 50px; text-align: left; line-height: 25px; }
+.lineaseparadora2 { width: 100%; float: left;margin-bottom: 30px; height: 1px; background-color: #1f3261; }
+
+.fotostutores { width: calc(100% - 40px); float: left; margin-left: 20px; margin-right: 20px; }
+        /** --Fin inicio-- **/
+
+        /** --Inicio iniciarsesion-- **/
+        /**Secion iniciar sesion */
+.seccion { width: 64%; margin-left: 18%; float: left; height: 430px; }
+.seccioningresar { width: calc(50% - 62px); float: left; background-color: #fff; height: 330px; padding: 30px; border: 1px solid #1f3261; }
+.titulo-ingresar { float: left; font-family: 'Montserrat', sans-serif; font-size: 20px; color: #555454; }
+.usuario { float: left; width: calc(100% - 10px); padding: 5px; height: 30px; border-radius: 8px; border: 1px solid #5d5b5b; margin-top: 30px; font-size: 14px; }
+.password { float: left; width: calc(100% - 10px); padding: 5px; height: 30px; border-radius: 8px; border: 1px solid #5d5b5b; margin-top: 30px; font-size: 14px; }
+.acceder { width: calc(100% - 13px); float: left; margin-top: 50px; margin-bottom: 60px; background-color: #1f3261; border: 1px solid #1f3261; cursor: pointer; font-family: 'Open Sans', sans-serif; font-size: 16px; color: #fff; padding: 10px 5px; border-radius: 10px; }
+        /**Secion registrar */ 
+.seccionregistrar { width: calc(50% - 62px); float: left; background-color: #1f3261; padding: 30px; height: 330px; border: 1px solid #1f3261; }
+.titulo-registrar { float: left; font-family: 'Montserrat', sans-serif; font-size: 20px; color: #fff; }
+.texto-registrar { float: left; font-family: 'Open Sans', sans-serif; font-size: 16px; color: #E7E4E4; margin-top: 30px; }
+        /** --Fin iniciarsesion-- **/
+        /** -- Inicio Perfil alumno -- **/
+.estudiante { width: calc(100% - 300px); margin-left: 150px; margin-right: 150px; float: left; }
+.divizq { width: calc(35% - 4px); float: left; margin-left: 5%; border: 2px solid #233D7B; border-radius: 10px; height: 500px; }
+.contieneimagen { width: calc(100% - 20px); float: left; margin: 10px 0px; }
+        /**Fin foto de perfil**/
+.datosperfil { width: calc(100% - 100px); float: left; margin-left: 50px; margin-right: 50px; font-family: 'Open Sans', sans-serif; color: #10275E; margin-bottom: 10px; }
+.contenedorDatosPerfilAlumno1 { width: 100%; float: left; margin-top: 10px; }
+.datoPerfilAlumno1 { width: 100%; float: left; font-size: 15px; font-weight: bold; }
+        /**Fin div izquierdo**/
+.divder { width: calc(55% - 4px); float: left; margin-left: 5%; border: 2px solid #233D7B; border-radius: 10px; height: 500px; }
+.datosseccion { width: calc(100% - 100px); float: left; margin-left: 50px; margin-right: 50px; font-family: 'Open Sans', sans-serif; color: #10275E; margin-bottom: 30px; }
+.notificacion1 {float: left; width: 100%; margin-top: 20px; }
+.contenedor-imagen1 {float: left; }
+.checkedicon { width: 22px; float: left;padding-right: 15px; }
+.not1 { width: calc(100% - 37px); float: left; font-size: 15px; font-weight: bold; }
+        /**Fin contenedor datos**/
+        /**Fin datos perfil**/
+        /**Fin div derecho**/
+
+.divsegundo { width: calc(100% - 50px); margin: 50px; float: left; border: 2px solid #233D7B; border-radius: 10px; height: 300px; }
+
+.formularios { width: 100%; float: left; font-family: 'Open Sans', sans-serif; color: #222020; margin-bottom: 30px; }
+.form1 
+.barra1 { width: calc(25% - 4px); float: left; background-color: #2db372; height: 40px; border: 2px solid #233D7B; }
+        /**Fin formularios**/
+        /**Fin div segundo**/
+.divtercero { width: calc(100% - 50px); margin: 10px 50px; float: left; border: 2px solid #233D7B; border-radius: 10px; }
+.opcreunion { width: calc(100% - 60px); margin-left: 30px; margin-right: 30px; float: left; }
+.diareunion { width: 5%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3px; }
+.diaMesAniotext { width: 10%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 5px; border: 1px solid #b7aeae; }
+.mesreunion { width: 5%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3px; margin-left: 20px; }
+.anioreunion { width: 5%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3px; margin-left: 20px; }
+.descreunion { width: 100%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 10px; border: 1px solid #b7aeae; max-height: 100px; resize: none; overflow: hidden; margin-bottom: 30px; }
+        /**Fin opc reunion**/
+.opcanotaciones { width: calc(100% - 60px); margin-left: 30px; margin-right: 30px; float: left; }
+.labelanotaciones { width: 8%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3p}
+.anotaciontext { width: 35%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 5px; border: 1px solid #b7aeae; margin-left: 20px; }
+.descanotacion { width: 100%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 10px; border: 1px solid #b7aeae; max-height: 100px; resize: none; overflow: hidden; margin-bottom: 30px; }
+        /**Fin opcanotaciones**/
+.opcfoto { width: calc(100% - 60px); margin-left: 30px; margin-right: 30px; float: left; margin-bottom: 30px; }
+.contieneimagen2 { width: 60%; float: left; margin-left: 20%; margin-right: 20%; margin-bottom: 30px; }
+        /**Fin foto de perfil**/
+.labelfoto { width: 16%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3px; }
+.fototext { width: 30%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 5px; border: 1px solid #b7aeae; margin-left: 10px; margin-right: 50px; }
+        /**Fin opcanotaciones**/
+        /**Fin div tercero**/
+        /**Fin div estudiante**/
+        /** -- Fin Perfil Alumno -- **/
+        /** Inicio Registro Alumno**/
+.formularioalumno { width: 70%; float: left; margin-right: 15%; margin-left: 15%; background-color: #fff; }
+.etiquetas-nombre { width: calc(100% - 20px); float: left; margin: 0px 10px; }
+.labelInfo1 { width: 33%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; }
+        /**Fin etiquetas nombre **/
+.input-nombre { width: calc(100% - 20px); float: left; margin: 10px; }
+.nombre { width: calc(30% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 16px; }
+.apaterno { width: calc(30% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 16px; }
+.amaterno { width: calc(30% - 2px); float: left; margin-right: 2%; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 16px; }
+        /**Fin input nombre **/ 
+.etiquetas1 { width: calc(100% - 20px); float: left; margin: 0px 10px; }
+        /**Fin etiquetas 1 **/
+.input1 { width: calc(100% - 20px); float: left; margin: 10px; }
+.numcontrol { width: calc(30% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 16px; }
+.carrera { width: calc(31% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; font-family: 'Open Sans', sans-serif; }
+.genero { width: calc(29% - 2px); float: left; margin-right: 2%; padding: 5px; border-radius: 10px; font-size: 15px; font-family: 'Open Sans', sans-serif; }
+        /**Fin input1 **/ 
+        /**Fin fila 1 **/
+.etiquetas2 { width: calc(100% - 20px); float: left; margin: 0px 10px; } 
+.labeledad { width: 16.5%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; }
+.labeledocivil { width: 16.5%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; }
+        /**Fin etiquetas 2 **/
+.fechanac { width: 33%; float: left; }
+.dianac { width: calc(26% - 2px); margin-right: 3%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+.mesnac { width: calc(26% - 2px); margin-right: 3%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+.anioac { width: calc(26% - 2px); float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+.lugarnacimiento { width: 30%; float: left; margin-right: 3%; }
+.lugarnac { width: calc(100% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+        /**Fin lugar nacimiento **/
+.edadalumno { width: 13%; float: left; margin-right: 3%; }
+.edad { width: calc(100% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+.edocivil { width: calc(16% - 2px); margin-right: 2%; float: left; padding: 3px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; font-family: 'Open Sans', sans-serif; }
+        /**Fin input2 **/ 
+        /**Fin fila 2 **/
+.titledomicilio { width: 100%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; margin-bottom: 20px; }
+.etiquetas3 { width: calc(100% - 20px); float: left; margin: 0px 10px; }
+.labelcalle { width: 28%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D}#labelnumext { width: 12.5%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; }
+.labelnumint { width: calc(12.5% - 10px); float: left; margin-left: 10px; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; }
+.labelcolonia { width: calc(30% - 20px); float: left; margin-left: 20px; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; }
+.labelcp { width: 15%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; }
+        /**Fin etiquetas 3 **/
+.calle { width: calc(25% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+.numext { width: calc(10.5% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+.numint { width: calc(10.5% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+.colonia { width: calc(25% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+.cp { width: calc(13% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+        /**Fin input3 **/
+        /**Fin fila 3 **/ 
+.label4 { width: calc(100% - 20px); float: left; margin: 0px 10px; }
+.labeltelefono { width: 18%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; }
+.labeltrabaja { width: 15%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; }
+.labelespecifique { width: 30%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D; }
+        /**Fin label 4 **/
+.correo { width: calc(30% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+.telefono { width: calc(14% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+.trabaja { width: calc(13% - 2px); float: left; margin-right: 2%; padding: 5px; border-radius: 10px; font-size: 15px; font-family: 'Open Sans', sans-serif; }
+.especifique { width: calc(30% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solid #233D7B; font-size: 15px; }
+        /**Fin input 4 **/
+        /**Fin fila 4 **/
+.registrarse { width: calc(30% - 13px); margin-left: 35%; float: left; margin-top: 50px; margin-bottom: 60px; background-color: #1f3261; border: 1px solid #1f3261; cursor: pointer; font-family: 'Open Sans', sans-serif; font-size: 16px; color: #fff; padding: 10px 5px; border-radius: 10px; }
+        /**Fin formulario **/
+        /** Fin Registro Alumno**/
+
+        /** Perfil tutor*/
+.estudiante{width: calc(100% - 300px); margin-left: 150px; margin-right: 150px; float: left}
+.divizq{width: calc(35% - 4px); float: left; margin-left: 5%; border: 2px solid #233D7B; border-radius: 10px; height: 500px}
+.contieneimagen {width: calc(100% - 20px); float: left; margin: 10px 0px}
+        /**Fin foto de perfil **/
+.datosperfil{width: calc(100% - 100px); float: left; margin-left: 50px; margin-right: 50px; font-family: 'Open Sans', sans-serif; color: #10275E; margin-bottom: 10px}
+.contenedornombre{width: 100%; float: left; margin-top: 10px}
+.nombre {width: 100%; float: left; font-size: 15px; font-weight: bold}
+.contenedorcarrera{width: 100%; float: left; margin-top: 10px}
+.carrera {width: 100%; float: left; font-size: 15px; font-weight: bold}
+        /**Fin div izquierdo **/
+.divder{width: calc(55% - 4px); float: left; margin-left: 5%; border: 2px solid #233D7B; border-radius: 10px; height: 500px}
+.datosseccion{width: calc(100% - 100px); float: left; margin-left: 50px; margin-right: 50px; font-family: 'Open Sans', sans-serif; color: #10275E; margin-bottom: 30px}
+.contenedordatos{width: 100%; float: left; margin-top: 10px}
+
+.notificacion1{float: left; width: 100%; margin-top: 20px}
+.contenedor-imagen1{float: left; width: 22px; float: left; padding-right: 15px; }
+.not1 {width: calc(100% - 37px); float: left; font-size: 15px; font-weight: bold}
+        /**Fin notificación 1 **/
+        /**Fin contenedor datos **/
+        /**Fin datos perfil **/
+        /**Fin div derecho **/
+.divsegundo{width: calc(100% - 50px); margin: 50px; float: left; border: 2px solid #233D7B; border-radius: 10px; height: 300px}
+
+.opcanotaciones{width: calc(100% - 60px); margin-left: 30px; margin-right: 30px; float: left}
+.izq{float: left; width: 80%}
+.busctutorado{width: 21%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3px}
+.nombretutorado{width: 78%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 5px; border: 1px solid #b7aeae; margin-left: 5px; margin-top: 3px}
+.numctrol{width: 20%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 10px}
+.numcontrol{width: 28%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 5px; border: 1px solid #b7aeae; margin-left: 5px; margin-top: 10px}
+.periodtutoria{width: 20%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 10px; margin-left: 15px}
+.periodotutoria{width: 28%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 5px; border: 1px solid #b7aeae; margin-left: 5px; margin-top: 10px}
+.descanotacion{width: calc(100% - 6px); float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 10px; border: 1px solid #b7aeae; max-height: 100px; resize: none; overflow: hidden; margin-bottom: 30px; margin-top: 10px}
+        /**Fin div izquierdo **/
+.der{float: left; width:20%}
+            .agregar2{width: calc(90% - 13px); float: left; margin-bottom: 20px; background-color: #1f3261; border: 1px solid #1f3261; cursor: pointer; font-family: 'Open Sans', sans-serif; font-size: 14px; color: #fff; padding: 10px 8px; border-radius: 10px; margin-left: 25px; margin-top: 10px;}
+        /**Fin opcanotaciones **/
+        /**Fin div segundo **/
+.divtercero{width: calc(100% - 50px); margin: 10px 50px; float: left; border: 2px solid #233D7B; border-radius: 10px}
+
+.opcreunion{width: calc(100% - 60px); margin-left: 30px; margin-right: 30px; float: left}
+.descreunion{width: 100%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 10px; border: 1px solid #b7aeae; max-height: 100px; resize: none; overflow: hidden; margin-bottom: 30px}
+.contienebotones{width: 100%; float: left}
+        /**Fin contiene botones **/
+        /**Fin opc reunion **/
+        /**Fin div tercero **/
+.divcuarto{width: calc(100% - 50px); margin: 10px 50px; float: left; border: 2px solid #233D7B; border-radius: 10px}
+
+.opcperfiltutor{width: calc(100% - 60px); margin-left: 30px; margin-right: 30px; float: left}
+.columnaizq{width: 70%; float: left}
+.tutornombre{width: 20%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3px; margin-bottom: 10px}
+.nombretutor{width: 70%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 5px; border: 1px solid #b7aeae; margin-left: 5px; margin-top: 3px; margin-bottom: 10px}
+.tutorcarrera{width: 15%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3px; margin-bottom: 10px}
+.carreratutor{width: 75%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 5px; border: 1px solid #b7aeae; margin-left: 5px; margin-top: 3px; margin-bottom: 10px}
+.fototutor1{width: 25%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3px; margin-bottom: 10px}
+.tutorfoto{width: 65%; float: left; font-size: 15px; color: #000; font-family: 'Open Sans', sans-serif; border-radius: 5px; border: 1px solid #b7aeae; margin-left: 5px; margin-top: 3px; margin-bottom: 10px}
+.columnader{width: 30%; float: left}
+.contieneimagentutor {width: calc(100% - 20px); float: left; margin-bottom: 30px}
+        /**Fin foto de perfil **/
+        /**Fin div cuarto **/
+        /**Fin div estudiante **/
