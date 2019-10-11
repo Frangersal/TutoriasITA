@@ -14,135 +14,131 @@
     </head>
     <body>
     @include ('includes.header')
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+            <div class="col-8"style="background-color:#FFF;">
+              <br>
+            </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+            <div class="col-8"style="background-color:#FFF;">
+                <div class="title1" align="center" >Registro de Alumnos</div>
+            </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div>
 
-        <div class="title1" align="center" >Registro de Alumnos</div>
-
-	
-        <div class="formularioalumno">
-        <div class="etiquetas-nombre"> 
-            <div class="labelInfo1" >Nombre:</div>
-            <div class="labelInfo1" >Apellclasso paterno:</div>
-            <div class="labelInfo1" >Apellclasso materno:</div>      
-        </div> <!--Fin etiquetas nombre-->
-
-        <div class="input-nombre"  >        
-            <input type="text" name="inputnombre" class="nombre" style="wclassth: calc(30% - 2px); margin-right: 2%;  float: left; padding: 5px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 16px;">        
-            <input type="text" name="inputapaterno" class="apaterno" style="wclassth: calc(30% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 16px;">        
-            <input type="text" name="inputamaterno" class="amaterno" style="wclassth: calc(30% - 2px); float: left; margin-right: 2%; padding: 5px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 16px;">        
-        </div> <!--Fin input nombre-->    
-
-        <div class="form1"  >    
-            <div class="etiquetas1" >    
-                <div class="labelInfo1" >No. Control:</div>
-                <div class="labelInfo1" >Carrera:</div>
-                <div class="labelInfo1" >Sexo:</div>
-            </div> <!--Fin etiquetas 1-->
-
-            <div class="input1"  >        
-                <input type="text" name="numcontrol" class="numcontrol" style="wclassth: calc(30% - 2px); margin-right: 2%;  float: left; padding: 5px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 16px;">
-                <select name="carrera" class="carrera" style="wclassth: calc(31% - 2px); margin-right: 2%; float: left; padding: 5px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 15px; font-family: 'Open Sans', sans-serif;">
-                    <option value="1">Ing. en Sistemas Computacionales</option>
-                    <option value="2">Ing. en Electromecánica</option>
-                    <option value="3">Ing. Bioquímica</option>
-                    <option value="4">Ing. en Gestión Empresarial</option>
-                    <option value="5">Arquitectura</option>
-                    <option value="6">Lic. en Administración</option>
-                    <option value="7">Contador Público</option>
-                </select>
-
-                <div class="genero" >
-                    <input type="radio" name="sexo" style="margin-left: 20px;" class="sexo_0" value="femenino">
-                        <label for="origen_0" style="margin-left:5px;">Femenino</label>
-                    <input style="margin-left: 40px;" type="radio" name="sexo" class="sexo_1" value="masculino">
-                        <label for="origen_1" style="margin-left:5px;">Masculino</label>
-                </div>
-            </div> <!--Fin input1-->       
-        </div> <!--Fin fila 1-->
-
-        <div class="form1"  >    
-            <div class="etiquetas2" >    
-                <div class="labelInfo1" >Fecha de nacimiento (DD/MM/AAAA):</div>
-                <div class="labelInfo1" >Lugar de nacimiento:</div>
-                <div class="labeledad" style="wclassth: 16.5%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D;">Edad:</div>            
-                <div class="labeledocivil" style="wclassth: 16.5%; float: left; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #2D2D2D;">Estado civil:</div>
-            </div> <!--Fin etiquetas 2-->
-
-            <div class="input2"  >        
-                <div class="fechanac" style="wclassth: 33%; float: left;">            
-                    <input type="text" name="dianac" class="dianac" style="wclassth: calc(26% - 2px); margin-right: 3%;  float: left; padding: 5px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 15px;" placeholder="Día (dd)">
-                    <input type="text" name="mesnac" class="mesnac" style="wclassth: calc(26% - 2px); margin-right: 3%;  float: left; padding: 5px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 15px;" placeholder="Mes (mm)">                
-                    <input type="text" name="anionac" class="anioac" style="wclassth: calc(26% - 2px); float: left; padding: 5px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 15px;" placeholder="Año (aaaa)">                
-                </div>
-                
-                <div class="lugarnacimiento" style="wclassth: 30%; float: left; margin-right: 3%;">                
-                    <input type="text" name="lugarnac" class="lugarnac" style="wclassth: calc(100% - 2px); margin-right: 2%;  float: left; padding: 5px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 15px;">
-                </div> <!--Fin lugar nacimiento-->
-                
-                <div class="edadalumno" style="wclassth: 13%; float: left; margin-right: 3%;">                
-                    <input type="text" name="edad" class="edad" style="wclassth: calc(100% - 2px); margin-right: 2%;  float: left; padding: 5px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 15px;">
-                </div> 
-                
-                <select name="edocivil" class="edocivil" style="wclassth: calc(16% - 2px); margin-right: 2%; float: left; padding: 3px; border-radius: 10px; border: 1px solclass #233D7B; font-size: 15px; font-family: 'Open Sans', sans-serif;">
-                    <option value="1">Soltero (a)</option>
-                    <option value="2">En una relación</option>
-                    <option value="3">Comprometclasso (a)</option>
-                    <option value="4">Unión libre</option>
-                    <option value="5">Casado (a)</option>
-                    <option value="6">Divorciado (a)</option>
-                    <option value="7">Separado (a)</option>
-                    <option value="8">Viudo (a)</option>
-                </select>
-            </div> <!--Fin input2-->        
-        </div> <!--Fin fila 2-->
-
-        <div class="form1"  >    
-            <div class="titledomicilio" align="center" >Domicilio actual</div>
-            <div class="etiquetas3" >    
-                <div class="labelcalle">Calle:</div>
-                <div class="labelnumext">Num. Ext:</div>            
-                <div class="labelnumint">Num. Int:</div>
-                <div class="labelcolonia">Colonia:</div>            
-                <div class="labelcp">CP:</div>
-            </div> <!--Fin etiquetas 3-->
-
-            <div class="input1"  >        
-                <input type="text" name="calle" class="calle" >
-                <input type="text" name="numext" class="numext" >            
-                <input type="text" name="numint" class="numint" >            
-                <input type="text" name="colonia" class="colonia" >            
-                <input type="text" name="cp" class="cp">            
-            </div> <!--Fin input3-->
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+            <div class="col-8"style="background-color:#FFF;">
+               
+            <form>
             
-        </div> <!--Fin fila 3-->    
-
-        <div class="form1"  >
-            <div class="label4" >    
-                <div class="labelInfo1" >Correo electrónico:</div>
-                <div class="labeltelefono">Teléfono:</div>
-                <div class="labeltrabaja">¿Trabajas?:</div>            
-                <div class="labelespecifique">Especifique su trabajo:</div>            
-            </div> <!--Fin label 4-->
-
-            <div class="input1"  >        
-                <input type="text" name="correo" class="correo">
-                <input type="text" name="telefono" class="telefono">
-                <div class="trabaja">
-                    <input type="radio" name="trabaja">                       
-                    <label for="origen_0">Sí</label>
-                    <input type="radio" name="trabaja" style="margin-left: 10px;" class="trabaja_1" value="no">
-                        <label for="origen_1" style="margin-left: 10px;">No</label>
+                <div class="form-group">
+                    <label for="inputAddress2">Ejemplo completo</label>
+                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
                 </div>
-                
-                <input type="text" name="especifique" class="especifique" >
-                
-            </div> <!--Fin input 4-->
 
-        </div> <!--Fin fila 4-->
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                    <label for="inputCity">Nombre: </label>
+                    <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="form-group col-md-4">
+                    <label for="inputCity">Apellido paterno: </label>
+                    <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="form-group col-md-4">
+                    <label for="inputZip">Apellido materno: </label>
+                    <input type="text" class="form-control" id="inputZip">
+                    </div>
+                </div>
 
-        <input type="button" name="registrarse" class="botongrande" value="Registrarse" onClick="">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                    <label for="inputCity">No. Control: </label>
+                    <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="form-group col-md-4">
+                    <label for="inputState">Carrera: </label>
+                    <select id="inputState" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                    <label for="inputState">Sexo: </label>
+                    <select id="inputState" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                    <label for="inputCity">Fecha de nacimiento: </label>
+                    <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="form-group col-md-4">
+                    <label for="inputState">Estado civil: </label>
+                    <select id="inputState" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                    <label for="inputZip">Ciudad de nacimiento: </label>
+                    <input type="text" class="form-control" id="inputZip">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Direccion: </label>
+                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputPassword4">Colonia: </label>
+                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputPassword4">Codigo postal: </label>
+                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                    </div>
+                </div>
 
 
-        </div> <!--Fin formulario-->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                    <label for="inputCity">Correo electronico: </label>
+                    <input type="text" class="form-control" id="inputCity">
+                    </div>
+ 
+                    <div class="form-group col-md-6">
+                    <label for="inputZip">Telefono: </label>
+                    <input type="text" class="form-control" id="inputZip">
+                    </div>
+                </div>
+
+
+
+                <button type="button" name="registrarse" class="botongrande" value="Registrarse" onClick="">Registrarse</button>
+             </form>
+
+            </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+   
+
+
 
     @include ('includes.footer') 
     </body>

@@ -15,6 +15,210 @@
     <body>
     @include ('includes.header')
 
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-2 colleft"></div>
+            <div class="col-6"style="background-color:#FFF;">
+  
+            </div>
+          <div class="col-2 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+            <div class="col-8"style="background-color:#FFF;">
+                <br>
+                    <div class="title1" align="center" >Perfil de Alumnos</div>
+                <br>
+            </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+                <div class="col-lg"style="background-color:#fff;">
+                <hr style="border-color:#233D7B;border-width: 2px;">
+            </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+
+
+
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+        <div class="col-1 colleft"></div>
+            <div class="col-lg colright">
+                <br>
+                
+                <div class="col-8 circulo"style="background-color:blue;">
+                    d
+                </div>
+                <br>
+                <div class="title1"  >- Nombre: Francisco Gerardo Salinas Mendoza</div>
+                <br>
+                <div class="title1"  >- Carrera: Ingenieria en Sistemas Computacionales</div>
+                <br>
+                <div class="title1"  >- Tutor: John Cena</div>
+            </div>
+
+            
+            
+            
+            <div class="col-lg"style="background-color:##EEEEFF;">   
+            <div class="row">
+                <div class="col-1"></div>
+                    <div class="col-10">
+                        <br>
+                        <div class="title1" align="center" >Proximas reuniones</div>
+                    </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row"> 
+                <div class="col-1"></div>
+                <div class="col-10">
+                    -Reunión con el alumno Antonio Díaz Gómez el día 23 de Septiembre a las 11:00 hrs.
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row"> 
+                <div class="col-1"></div>
+                <div class="col-10">
+                    -Reunión con el alumno Antonio Díaz Gómez el día 23 de Septiembre a las 11:00 hrs.
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row"> 
+                <div class="col-1"></div>
+                <div class="col-10">
+                    -Reunión con el alumno Antonio Díaz Gómez el día 23 de Septiembre a las 11:00 hrs.
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row"> 
+                <div class="col-1"></div>
+                <div class="col-10">
+                    -Reunión con el alumno Antonio Díaz Gómez el día 23 de Septiembre a las 11:00 hrs.
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row"> 
+                <div class="col-1"></div>
+                <div class="col-10">
+                    -Reunión con el alumno Antonio Díaz Gómez el día 23 de Septiembre a las 11:00 hrs.
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row"> 
+                <div class="col-1"></div>
+                <div class="col-10">
+                    <br> Ver mas...<br>
+                </div>
+                <div class="col-1"></div>
+            </div>
+
+            </div>
+
+
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+                <div class="col-lg"style="background-color:#fff;">
+                <hr style="border-color:#233D7B;border-width: 2px;">
+                <br>
+                <div class="title1" align="center" >Formularios</div>
+            </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+
+
+
+
+
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+                    <div class="col-sm-6 col-lg-2"style="background-color:green;">
+                        ...
+                    </div>
+                    <div class="col-sm-6 col-lg-2"style="background-color:pink;">
+                        ...
+                    </div>
+                    <div class="col-sm-6 col-lg-2"style="background-color:green;">
+                        ...     
+                    </div>
+                    <div class="col-sm-6 col-lg-2"style="background-color:pink;">
+                        ...     
+                    </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+                    <div class="col-sm-6 col-lg-2"style="background-color:pink;">
+                        ...
+                    </div>
+                    <div class="col-sm-6 col-lg-2"style="background-color:green;">
+                        ...
+                    </div>
+                    <div class="col-sm-6 col-lg-2"style="background-color:pink;">
+                        ...     
+                    </div>
+                    <div class="col-sm-6 col-lg-2"style="background-color:green;">
+                        ...     
+                    </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+                <div class="col-lg"style="background-color:#fff;">
+                <br> 
+                     <br>
+            </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+                <div class="col-lg"style="background-color:#fff;">
+                <br> 
+                <hr style="border-color:#233D7B;border-width: 2px;">
+                <div class="title1" align="center" >Agregar</div>
+            </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+
+
+    <div class="row">
+        <div class="col-1"style="background-color:#EEEEFF;"></div>
+          <div class="col-1 colleft"></div>
+               
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Example textarea</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" ></textarea>
+            </div>
+
+          
+            </div>
+          <div class="col-1 colright"></div>
+        <div class="col-1"style="background-color:#EEEEFF"></div>
+    </div> 
+    
+
     @include ('includes.footer') 
     </body>
 </html>

@@ -1,8 +1,30 @@
-        body { margin:0 auto }
-        body {
-            margin:0 auto; 
-            }
-    
+        body { margin:0 auto; background-color:#EEEEFF; }       
+
+.colleft{
+        background-color:#FFF;
+        float: center;
+        margin-top: 0px;
+        border-width: 2px; border-left: solid; border-color: #233D7B;
+}
+.colright{
+        background-color:#FFF;
+        float: center;
+        margin-top: 0px;
+        border-width: 2px; border-right: solid; border-color: #233D7B;
+}
+.circulo {
+        width: 10rem;
+	height: 10rem;
+	border-radius: 50%;
+	background: red;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+   }
+    .azulnav{
+        background-color: #233D7B;
+    }
             /** ---Inicio Header--- */
     .headerazul {
             width: 100%; float: left; background-color: #233D7B; 
@@ -85,6 +107,8 @@
             float: left; text-decoration: none; color: #20385C;
         }
             /** ---Fin Footer--- */
+
+            
                         
     
     
@@ -94,10 +118,15 @@
 .textoenimagen { width: 100%; float: left; font-family: 'Open Sans', sans-serif; font-size: 18px; font-weight: bold; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; color: #fff; position: absolute; z-index: 3; margin-top: 260px; text-transform: uppercase; letter-spacing: 5px; }
 .lineaseparadora { width: calc(100% - 300px); margin-left: 150px; margin-right: 150px; float: left; margin-top: 330px; margin-bottom: 50px; height: 1px; background-color: #1f3261; }
 .title1 { width: 100%; float: left; font-family: 'Open Sans', sans-serif; font-size: 20px; font-weight: bold; color: #233d7b; margin-bottom: 20px; }
+
+.title15 { width: 100%; float: left; font-family: 'Open Sans', sans-serif; font-size: 20px; font-weight: bold; color: #233d7b; margin-bottom: 20px; }
+
 .textblack { width: 100%; float: left; font-family: 'Open Sans', sans-serif; font-size: 14px; color: #000; margin-bottom: 50px; text-align: left; line-height: 25px; }
 .textblue1{width: 21%; float: left; font-size: 15px; color: #233D7B; font-family: 'Open Sans', sans-serif; margin-top: 3px}
 .textblue2 { width: calc(100% - 37px); float: left; font-size: 15px; font-weight: bold; }
-.fotoperfil1 { width: calc(25% - 40px); margin-left: 20px; float: left; padding-bottom: calc(25% - 40px); border-radius: 50%; background-color: #A6A1A1; background-image: url(../Images/tonystark.jpeg); background-size: cover; background-position: center; }
+.fotoperfil1 { 
+     width: 200px ; height: 200px; background-color: #2db372; border-radius: 100;
+}
 .fotoperfil2 { width: calc(70% - 40px); margin-left: 20px; padding-bottom: calc(70% - 40px); border-radius: 50%; background-color: #A6A1A1; background-image: url(../Images/tonystark.jpeg); background-size: cover; background-position: center; }
 .fotoperfil3 { width: calc(35% - 40px); margin-left: 20px; padding-bottom: calc(35% - 40px); border-radius: 50%; background-color: #A6A1A1; background-image: url(../Images/tonystark.jpeg); background-size: cover; background-position: center; }
 .botonpequenio{width: calc(15% - 13px); float: left; margin-bottom: 20px; background-color: #1f3261; border: 1px solid #1f3261; cursor: pointer; font-family: 'Open Sans', sans-serif; font-size: 14px; color: #fff; padding: 2px 5px; border-radius: 10px; margin-left: 20px;}
