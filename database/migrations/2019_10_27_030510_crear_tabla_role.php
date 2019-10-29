@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CrearTablaTutor extends Migration
+class CrearTablaRole extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CrearTablaTutor extends Migration
      */
     public function up()
     {
-        Schema::create('tutor', function (Blueprint $table) {
-            $table->bigIncrements('idtutor');
-            $table->string('informacion_profesional', 64);
-            $table->timestamps();
+        Schema::create('role', function (Blueprint $table) {
+                $table->engine = 'InnoDB';
+                $table->increments('idrole');
+                $table->string('nombre', 16);
+                $table->string('descripcion', 64);
+                $table->timestamps();
         });
     }
 
@@ -27,6 +29,6 @@ class CrearTablaTutor extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tutor');
+        Schema::dropIfExists('role');
     }
 }

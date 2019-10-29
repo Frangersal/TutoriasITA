@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ReemplazaNombrePorPluto extends Migration
+class CrearTablaFormulario extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class ReemplazaNombrePorPluto extends Migration
      */
     public function up()
     {
-        Schema::table('usuario', function (Blueprint $table) {
-            $table->string('pluto', 64);
+        Schema::create('formulario', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+                $table->increments('idformulario');
+                $table->string('tema_formulario', 64);
+                $table->string('reactivo', 64);
         });
     }
 
@@ -25,10 +28,6 @@ class ReemplazaNombrePorPluto extends Migration
      */
     public function down()
     {
-        Schema::table('usuario', function (Blueprint $table) {
-            $table->string('nombre', 64);
-            $table->string('pluto', 64);
-
-        });
+        Schema::dropIfExists('formulario');
     }
 }
