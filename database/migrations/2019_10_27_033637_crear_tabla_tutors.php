@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CrearTablaTutor extends Migration
+class CrearTablaTutors extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CrearTablaTutor extends Migration
      */
     public function up()
     {
-        Schema::create('tutor', function (Blueprint $table) {
+        Schema::create('tutors', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('idtutor');
             $table->string('informacion_profesional', 64);
@@ -21,10 +21,10 @@ class CrearTablaTutor extends Migration
 
             $table->integer('idusuario')->unsigned();
 
-            $table->index(["idusuario"], 'fk_tutor_usuario_idx');
+            $table->index(["idusuario"], 'fk_tutors_usuarios_idx');
 
-            $table->foreign('idusuario', 'fk_tutor_usuario_idx')
-                ->references('idusuario')->on('usuario')
+            $table->foreign('idusuario', 'fk_tutors_usuarios_idx')
+                ->references('idusuario')->on('usuarios')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
@@ -40,6 +40,6 @@ class CrearTablaTutor extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tutor');
+        Schema::dropIfExists('tutors');
     }
 }

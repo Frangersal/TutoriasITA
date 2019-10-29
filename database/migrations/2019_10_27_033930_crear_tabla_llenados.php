@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CrearTablaLlenado extends Migration
+class CrearTablaLlenados extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CrearTablaLlenado extends Migration
      */
     public function up()
     {
-        Schema::create('llenado', function (Blueprint $table) {
+        Schema::create('llenados', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('idllenado');
             $table->string('respuesta', 64);
@@ -22,15 +22,15 @@ class CrearTablaLlenado extends Migration
             $table->integer('idformulario')->unsigned();
             $table->integer('idusuario')->unsigned();
 
-            $table->index(["idformulario"], 'fk_llenado_formulario_idx');
+            $table->index(["idformulario"], 'fk_llenados_formularios_idx');
             $table->index(["idusuario"], 'fk_llenado_usuarioe_idx');
 
-            $table->foreign('idformulario', 'fk_llenado_formulario_idx')
-                ->references('idformulario')->on('formulario')
+            $table->foreign('idformulario', 'fk_llenados_formularios_idx')
+                ->references('idformulario')->on('formularios')
                 ->onDelete('no action')
                 ->onUpdate('no action');
-            $table->foreign('idusuario', 'fk_llenado_usuario_idx')
-                ->references('idusuario')->on('usuario')
+            $table->foreign('idusuario', 'fk_llenados_usuarios_idx')
+                ->references('idusuario')->on('usuarios')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
@@ -46,6 +46,6 @@ class CrearTablaLlenado extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('llenado');
+        Schema::dropIfExists('llenados');
     }
 }

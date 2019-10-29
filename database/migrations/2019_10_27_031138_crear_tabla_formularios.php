@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CrearTablaRole extends Migration
+class CrearTablaFormularios extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CrearTablaRole extends Migration
      */
     public function up()
     {
-        Schema::create('role', function (Blueprint $table) {
-                $table->engine = 'InnoDB';
-                $table->increments('idrole');
-                $table->string('nombre', 16);
-                $table->string('descripcion', 64);
-                $table->timestamps();
+        Schema::create('formularios', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+                $table->increments('idformulario');
+                $table->string('tema_formulario', 64);
+                $table->string('reactivo', 64);
         });
     }
 
@@ -29,6 +28,6 @@ class CrearTablaRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role');
+        Schema::dropIfExists('formularios');
     }
 }
