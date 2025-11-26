@@ -49,4 +49,14 @@ class User extends Authenticatable
             'two_factor_confirmed_at' => 'datetime',
         ];
     }
+
+    /**
+     * Relación con el modelo Role
+     * Un usuario pertenece a un rol
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
 }

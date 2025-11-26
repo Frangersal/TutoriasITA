@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(RolesAndUsersSeeder::class);
         // User::factory(10)->create();
 
         User::firstOrCreate(

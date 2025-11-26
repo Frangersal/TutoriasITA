@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Illuminate\Support\Facades\Log;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -38,14 +39,28 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
-        return [
-            ...parent::share($request),
-            'name' => config('app.name'),
-            'quote' => ['message' => trim($message), 'author' => trim($author)],
-            'auth' => [
-                'user' => $request->user(),
-            ],
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-        ];
+            // Construir el array que realmente se compartirá como 'auth.user'
+            $sharedUser = ($user = $request->user())
+                ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    // obtener nombre del role si existe
+                    'role' => $user->role?->name ?? null,
+                ]
+                : null;
+
+            // Loguear el array exacto que se comparte con Inertia (debug temporal)
+            Log::debug('HandleInertiaRequests::shared auth.user', ['auth_user' => $sharedUser]);
+
+            return [
+                ...parent::share($request),
+                'name' => config('app.name'),
+                'quote' => ['message' => trim($message), 'author' => trim($author)],
+                'auth' => [
+                    'user' => $sharedUser,
+                ],
+                'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            ];
     }
 }
