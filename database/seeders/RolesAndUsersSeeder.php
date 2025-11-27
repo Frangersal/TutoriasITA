@@ -23,21 +23,21 @@ class RolesAndUsersSeeder extends Seeder
         // Crear usuarios por defecto
         User::create([
             'name' => 'Admin User',
-            'email' => 'Admin@user.com',
+            'email' => 'admin@user.com',
             'password' => Hash::make('password'),
             'role_id' => $adminRole->id,
         ]);
 
         User::create([
             'name' => 'Tutor User',
-            'email' => 'Tutor@user.com',
+            'email' => 'tutor@user.com',
             'password' => Hash::make('password'),
             'role_id' => $tutorRole->id,
         ]);
 
         User::create([
             'name' => 'Student User',
-            'email' => 'Student@user.com',
+            'email' => 'student@user.com',
             'password' => Hash::make('password'),
             'role_id' => $studentRole->id,
         ]);

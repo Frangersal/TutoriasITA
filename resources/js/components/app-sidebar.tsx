@@ -11,18 +11,10 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { type NavItem, type SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { BookOpen, Folder, LayoutGrid, User, Users, FileText, BarChart2 } from 'lucide-react';
 import AppLogo from './app-logo';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
 
 const footerNavItems: NavItem[] = [
     {
@@ -38,6 +30,35 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+    const page = usePage<SharedData>();
+    const rawRole = (page.props.auth?.user as any)?.role ?? null;
+    const role = rawRole ? String(rawRole).toLowerCase() : null;
+
+    // Construir items según role
+    const mainNavItems: NavItem[] = [
+        { title: 'Inicio', href: dashboard(), icon: LayoutGrid },
+        { title: 'Perfil', href: '/settings/profile', icon: User },
+    ];
+
+    if (role === 'admin') {
+        mainNavItems.push(
+            { title: 'Tutores', href: '/tutors', icon: Users },
+            { title: 'Alumnos', href: '/pupils', icon: Users },
+            { title: 'Formularios', href: '/forms', icon: FileText },
+            { title: 'Estadísticas', href: '/stats', icon: BarChart2 },
+        );
+    } else if (role === 'tutor') {
+        mainNavItems.push(
+            { title: 'Reuniones', href: '/reunions', icon: Users },
+            { title: 'Estadísticas', href: '/stats', icon: BarChart2 },
+        );
+    } else if (role === 'student' || role === 'pupil') {
+        mainNavItems.push(
+            { title: 'Formularios', href: '/forms', icon: FileText },
+            { title: 'Reuniones', href: '/reunions', icon: Users },
+        );
+    }
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
