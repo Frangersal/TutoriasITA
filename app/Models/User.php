@@ -37,18 +37,15 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string,string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'two_factor_confirmed_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'two_factor_confirmed_at' => 'datetime',
+    ];
 
     /**
      * Relación con el modelo Role
@@ -57,6 +54,42 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Comprueba si el usuario tiene un rol concreto.
+     */
+    public function hasRole(string $role): bool
+    {
+        $current = optional($this->role)->name;
+        if (!$current) {
+            return false;
+        }
+
+        return mb_strtolower($current) === mb_strtolower($role);
+    }
+
+    /**
+     * Comprueba si el usuario tiene alguno de los roles pasados.
+     * Acepta array de nombres de rol.
+     *
+     * @param array $roles
+     */
+    public function hasAnyRoles(array $roles): bool
+    {
+        $current = optional($this->role)->name;
+        if (!$current) {
+            return false;
+        }
+
+        $current = mb_strtolower($current);
+        foreach ($roles as $r) {
+            if ($current === mb_strtolower($r)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

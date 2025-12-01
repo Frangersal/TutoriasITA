@@ -16,9 +16,9 @@ class RolesAndUsersSeeder extends Seeder
     public function run(): void
     {
          // Crear roles
-        $adminRole = Role::create(['name' => 'Admin']);
-        $tutorRole = Role::create(['name' => 'Tutor']);
-        $studentRole = Role::create(['name' => 'Student']);
+        $adminRole = Role::create(['name' => 'admin']);
+        $tutorRole = Role::create(['name' => 'tutor']);
+        $studentRole = Role::create(['name' => 'student']);
 
         // Crear usuarios por defecto
         User::create([

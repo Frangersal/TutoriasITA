@@ -42,20 +42,20 @@ export function AppSidebar() {
 
     if (role === 'admin') {
         mainNavItems.push(
-            { title: 'Tutores', href: '/tutors', icon: Users },
-            { title: 'Alumnos', href: '/pupils', icon: Users },
-            { title: 'Formularios', href: '/forms', icon: FileText },
-            { title: 'Estadísticas', href: '/stats', icon: BarChart2 },
+            { title: 'Tutores', href: '/admin/tutors', icon: Users },
+            { title: 'Alumnos', href: '/admin/pupils', icon: Users },
+            { title: 'Formularios', href: '/admin/forms', icon: FileText },
+            { title: 'Estadísticas', href: '/admin/stats', icon: BarChart2 },
         );
     } else if (role === 'tutor') {
         mainNavItems.push(
-            { title: 'Reuniones', href: '/reunions', icon: Users },
-            { title: 'Estadísticas', href: '/stats', icon: BarChart2 },
+            { title: 'Reuniones', href: '/tutor/reunions', icon: Users },
+            { title: 'Estadísticas', href: '/tutor/stats', icon: BarChart2 },
         );
     } else if (role === 'student' || role === 'pupil') {
         mainNavItems.push(
-            { title: 'Formularios', href: '/forms', icon: FileText },
-            { title: 'Reuniones', href: '/reunions', icon: Users },
+            { title: 'Formularios', href: '/student/forms', icon: FileText },
+            { title: 'Reuniones', href: '/student/reunions', icon: Users },
         );
     }
 
