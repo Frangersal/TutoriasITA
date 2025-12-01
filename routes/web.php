@@ -32,27 +32,11 @@ Route::get('test', function () {
     return response()->json(['status' => 'ok']);
 });
 
-Route::resource('admin/users', UsersController::class);
-
-
-// Route::middleware('auth')->group(function () {
-//     Route::resource('users', UsersController::class);
-// });
+// ------ >> ------ Admin cruds ------ << ------ //
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'can:admin-action'])->group(function () {
+    // Admin crud Usuarios
+    Route::resource('users', UsersController::class);
+});
 
 require __DIR__.'/settings.php';
 
-
-// ------ >> ------ Admin cruds ------ << ------ //
-// Route::prefix('admin')->name('admin.')->middleware(['auth','can:manage-users'])->group(function () {
-    // Admin crud Usuarios
-    // Route::resource('users', UsersController::class)->except(['show', 'create', 'store']);
-
-    // Admin crud Forms
-    // Route::resource('forms', FormsController::class)->except(['show']);
-
-    // Admin crud Questions
-    // Route::resource('questions', QuestionsController::class);
-
-    // Admin crud AnswerOption (Options)
-    // Route::resource('options', OptionsController::class);
-// });

@@ -27,10 +27,37 @@ class AuthServiceProvider extends ServiceProvider
         // Log para verificar que boot() se ejecutó
         Log::info('[DEBUG] AuthServiceProvider::boot() ejecutado');
 
-        // Definir explicitamente la ability (temporal)
-        Gate::define('manage-users', function ($user = null) {
-            Log::info('[DEBUG] Gate "manage-users" evaluada; user id: ' . ($user?->id ?? 'null'));
-            return true;
+        // Definir la ability para gestionar usuarios (solo Admin)
+        Gate::define('manage-users', function ($user) {
+            return $user->hasRole('admin');
+        });
+
+        //------------------ Acciones Por Rol ------------------//
+        //Acciones exclusivas de Administrador
+        Gate::define('admin-action', function ($user) {
+            return $user->hasRole('admin');
+        });
+        //Acciones exclusivas de Tutor
+        Gate::define('tutor-action', function ($user) {
+            return $user->hasRole('tutor');
+        });
+        //Acciones exclusivas de Estudiante
+        Gate::define('student-action', function ($user) {
+            return $user->hasRole('student');
+        });
+        
+        //------------------ Acciones Compartidas ------------------//
+        //Acciones exclusivas de Administrador-Tutor
+        Gate::define('admin-tutor-action', function ($user) {
+            return $user->hasAnyRoles(['admin', 'tutor']);
+        });
+        //Acciones exclusivas de Tutor-Estudiante
+        Gate::define('tutor-student-action', function ($user) {
+            return $user->hasAnyRoles(['tutor', 'student']);
+        });
+        //Acciones exclusivas de Admin-Estudiante
+        Gate::define('admin-student-action', function ($user) {
+            return $user->hasAnyRoles(['admin', 'student']);
         });
     }
 }
