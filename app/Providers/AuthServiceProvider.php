@@ -27,11 +27,6 @@ class AuthServiceProvider extends ServiceProvider
         // Log para verificar que boot() se ejecutó
         Log::info('[DEBUG] AuthServiceProvider::boot() ejecutado');
 
-        // Definir la ability para gestionar usuarios (solo Admin)
-        Gate::define('manage-users', function ($user) {
-            return $user->hasRole('admin');
-        });
-
         //------------------ Acciones Por Rol ------------------//
         //Acciones exclusivas de Administrador
         Gate::define('admin-action', function ($user) {

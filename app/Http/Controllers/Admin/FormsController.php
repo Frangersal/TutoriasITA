@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Form;
 use App\Models\Question;
+use App\Models\Answer;
+use App\Models\AnswersOptions;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,16 +19,12 @@ class FormsController extends Controller
      */
     public function index()
     {
-        $forms = Form::orderBy('id', 'desc')->paginate(15);
-
-        return Inertia::render('admin/forms/index', [
-            'forms' => $forms,
-        ]);
+        return response()->json(Form::orderBy('id', 'desc')->get());
     }
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -34,7 +32,7 @@ class FormsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('admin/forms/create');
+        return response()->json(['message' => 'create endpoint']);
     }
 
     /**
@@ -49,12 +47,7 @@ class FormsController extends Controller
 
         $form = Form::create($data);
 
-        // Si se envía la intención de crear y editar preguntas, redirigimos al edit
-        if ($request->filled('create_editQuestion') || $request->boolean('create_editQuestion')) {
-            return redirect()->route('admin.forms.edit', $form);
-        }
-
-        return redirect()->route('admin.forms.index')->with('success', 'Formulario creado.');
+        return response()->json(['message' => 'Formulario creado', 'form' => $form], 201);
     }
 
     /**
@@ -62,9 +55,7 @@ class FormsController extends Controller
      */
     public function show(Form $form)
     {
-        return Inertia::render('admin/forms/show', [
-            'form' => $form,
-        ]);
+        return response()->json($form);
     }
 
     /**
@@ -72,16 +63,7 @@ class FormsController extends Controller
      */
     public function edit(Form $form)
     {
-        if (Gate::denies('admin-action')) {
-            return redirect()->route('admin.forms.index');
-        }
-
-        $questions = Question::where('form_id', $form->id)->get();
-
-        return Inertia::render('admin/forms/edit', [
-            'form' => $form,
-            'questions' => $questions,
-        ]);
+        return response()->json($form);
     }
 
     /**
@@ -94,13 +76,9 @@ class FormsController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        if (Gate::denies('admin-action')) {
-            return redirect()->route('admin.forms.index');
-        }
-
         $form->update($data);
 
-        return redirect()->route('admin.forms.index')->with('success', 'Formulario actualizado.');
+        return response()->json(['message' => 'Formulario actualizado', 'form' => $form]);
     }
 
     /**
@@ -108,12 +86,8 @@ class FormsController extends Controller
      */
     public function destroy(Form $form)
     {
-        if (Gate::denies('admin-action')) {
-            return redirect()->route('admin.forms.index');
-        }
-
         $form->delete();
 
-        return redirect()->route('admin.forms.index')->with('success', 'Formulario eliminado.');
+        return response()->json(['message' => 'Formulario eliminado']);
     }
 }

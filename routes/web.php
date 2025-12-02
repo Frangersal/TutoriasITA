@@ -32,10 +32,16 @@ Route::get('test', function () {
     return response()->json(['status' => 'ok']);
 });
 
-// ------ >> ------ Admin cruds ------ << ------ //
+// ------ >> ------ Admin CRUD's ------ << ------ //
+// Ej: /admin
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'can:admin-action'])->group(function () {
-    // Admin crud Usuarios
+    // Admin rutas
+    // Ej: /admin/users
     Route::resource('users', UsersController::class);
+    Route::resource('forms', FormsController::class);
+    Route::resource('questions', QuestionsController::class);
+    Route::resource('options', OptionsController::class);
+
 });
 
 require __DIR__.'/settings.php';
