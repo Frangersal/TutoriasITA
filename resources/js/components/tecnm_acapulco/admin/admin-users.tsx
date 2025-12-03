@@ -106,17 +106,33 @@ export default function AdminUsers() {
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     return (
-        <div className="p-6 bg-white dark:bg-sidebar-accent/10 rounded-lg shadow-md border border-sidebar-border/70 dark:border-sidebar-border">
+        <div className="p-6 bg-white dark:bg-sidebar-accent/10 rounded-lg shadow-[inset_0_0_15px_rgba(74,222,128,0.2)] border-2 border-green-400 dark:border-green-600">
+            <style>{`
+                @keyframes expand {
+                    from { opacity: 0; transform: scale(0.95); }
+                    to { opacity: 1; transform: scale(1); }
+                }
+                @keyframes slideIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .animate-expand {
+                    animation: expand 0.3s ease-out forwards;
+                }
+                .animate-slide-in {
+                    opacity: 0;
+                    animation: slideIn 0.3s ease-out forwards;
+                }
+            `}</style>
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                    Gestión de Usuarios
-                    <span className="text-green-400 ml-2 text-sm">Administrador 🔑</span>
+                    Gestión de Usuarios 🔑
                 </h1>
                 <button 
                     onClick={handleCreate}
                     className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                 >
-                    Crear Usuario
+                    Crear Usuario nuevo
                 </button>
             </div>
 
@@ -153,7 +169,7 @@ export default function AdminUsers() {
                                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
                             }`}
                         >
-                            Email
+                            E-Mail
                         </button>
                         <button
                             onClick={() => setSearchField('role_id')}
@@ -163,7 +179,7 @@ export default function AdminUsers() {
                                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
                             }`}
                         >
-                            Rol
+                            Rol ID
                         </button>
                     </div>
                 </div>
@@ -193,12 +209,19 @@ export default function AdminUsers() {
             </div>
 
             {(editingUser || creatingUser) && (
-                <div className="mb-6 p-4 border border-blue-200 rounded bg-blue-50 dark:bg-blue-900/20 dark:border-blue-800">
-                    <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
+                <div 
+                    key={editingUser ? `edit-${editingUser.id}` : 'create'}
+                    className={`animate-expand mb-6 p-4 border rounded ${
+                        editingUser 
+                            ? 'border-blue-200 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-800' 
+                            : 'border-green-200 bg-green-50 dark:bg-green-900/20 dark:border-green-800'
+                    }`}
+                >
+                    <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200 animate-slide-in" style={{ animationDelay: '0ms' }}>
                         {editingUser ? `Editar Usuario: ${editingUser.name}` : 'Crear Nuevo Usuario'}
                     </h3>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <div>
+                    <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
+                        <div className="animate-slide-in" style={{ animationDelay: '100ms' }}>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
                             <input
                                 type="text"
@@ -206,19 +229,21 @@ export default function AdminUsers() {
                                 onChange={e => setFormData({ ...formData, name: e.target.value })}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white p-2 border"
                                 required
+                                autoComplete="off"
                             />
                         </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                        <div className="animate-slide-in" style={{ animationDelay: '200ms' }}>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">E-Mail</label>
                             <input
                                 type="email"
                                 value={formData.email}
                                 onChange={e => setFormData({ ...formData, email: e.target.value })}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white p-2 border"
                                 required
+                                autoComplete="off"
                             />
                         </div>
-                        <div>
+                        <div className="animate-slide-in" style={{ animationDelay: '300ms' }}>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Contraseña {editingUser && '(Dejar en blanco para mantener)'}</label>
                             <input
                                 type="password"
@@ -226,9 +251,10 @@ export default function AdminUsers() {
                                 onChange={e => setFormData({ ...formData, password: e.target.value })}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white p-2 border"
                                 required={!editingUser}
+                                autoComplete="new-password"
                             />
                         </div>
-                        <div>
+                        <div className="animate-slide-in" style={{ animationDelay: '400ms' }}>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirmar Contraseña</label>
                             <input
                                 type="password"
@@ -236,9 +262,10 @@ export default function AdminUsers() {
                                 onChange={e => setFormData({ ...formData, password_confirmation: e.target.value })}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white p-2 border"
                                 required={!editingUser}
+                                autoComplete="new-password"
                             />
                         </div>
-                        <div>
+                        <div className="animate-slide-in" style={{ animationDelay: '500ms' }}>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Rol ID</label>
                             <select
                                 value={formData.role_id}
@@ -250,8 +277,13 @@ export default function AdminUsers() {
                                 <option value={3}>Estudiante (3)</option>
                             </select>
                         </div>
-                        <div className="flex gap-2">
-                            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        <div className="flex gap-2 animate-slide-in" style={{ animationDelay: '600ms' }}>
+                            <button 
+                                type="submit" 
+                                className={`px-4 py-2 text-white rounded ${
+                                    editingUser ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'
+                                }`}
+                            >
                                 {editingUser ? 'Actualizar' : 'Crear'}
                             </button>
                             <button type="button" onClick={handleCancel} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Cancelar</button>
