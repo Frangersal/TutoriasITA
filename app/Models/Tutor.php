@@ -13,14 +13,14 @@ class Tutor extends Model
         'description','user_id',
     ];
 
-    public function users()
+    public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function reunions()
     {
-        return $this->hasMany('App\Reunion');
+        return $this->hasMany(Reunion::class);
     }
     /** @use HasFactory<\Database\Factories\TutorFactory> */
     // use HasFactory;

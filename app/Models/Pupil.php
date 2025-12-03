@@ -13,19 +13,19 @@ class Pupil extends Model
         'coment','tutor_id','user_id',
     ];
 
-    public function tutors()
+    public function tutor()
     {
-        return $this->belongsTo('App\Tutor', 'tutor_id');
+        return $this->belongsTo(Tutor::class);
     }
 
-    public function users()
+    public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class);
     }
     
     public function reunions()
     {
-        return $this->hasMany('App\Reunion');
+        return $this->hasMany(Reunion::class);
     }
     /** @use HasFactory<\Database\Factories\PupilFactory> */
     // use HasFactory;

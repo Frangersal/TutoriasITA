@@ -13,14 +13,14 @@ class Reunion extends Model
         'date_time','description','tutor_id','pupil_id',
     ];
 
-    public function tutors()
+    public function tutor()
     {
-        return $this->belongsTo('App\Tutor', 'tutor_id');
+        return $this->belongsTo(Tutor::class);
     }
 
-    public function pupils()
+    public function pupil()
     {
-        return $this->belongsTo('App\Pupil', 'pupil_id');
+        return $this->belongsTo(Pupil::class);
     }
     /** @use HasFactory<\Database\Factories\ReunionFactory> */
     // use HasFactory;

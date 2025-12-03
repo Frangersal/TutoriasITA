@@ -13,24 +13,24 @@ class Question extends Model
         'form_id','name','answer_type_id',//'option',
     ];
 
-    public function forms()
+    public function form()
     {
-        return $this->belongsTo('App\Form','form_id');
+        return $this->belongsTo(Form::class);
     }
 
     public function answers()
     {
-        return $this->hasMany('App\Answer');
+        return $this->hasMany(Answer::class);
     }
 
-    public function answer_option()
+    public function options()
     {
-        return $this->hasMany('App\Option');
+        return $this->hasMany(AnswersOptions::class);
     }
 
     public function answer_type()
     {
-        return $this->belongsTo('App\AnswersTypes','answer_type_id');
+        return $this->belongsTo(Answers_Types::class, 'answer_type_id');
     }
 
     /** @use HasFactory<\Database\Factories\QuestionFactory> */

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Pupil;
+use App\Models\Tutor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,14 +20,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        return response()->json($user);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, User $user)
@@ -34,6 +28,7 @@ class UsersController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:6|confirmed',
+            'role_id' => 'nullable|integer|exists:roles,id',
         ]);
 
         $update = [
@@ -45,9 +40,31 @@ class UsersController extends Controller
             $update['password'] = Hash::make($data['password']);
         }
 
+        if (isset($data['role_id'])) {
+            $update['role_id'] = $data['role_id'];
+        }
+
         $user->update($update);
 
-        return response()->json(['message' => 'Usuario actualizado', 'user' => $user]);
+        // Lógica para crear Tutor o Pupil según el rol
+        if ($user->role_id == 2) { // Tutor
+            // Si ya existe un tutor asociado a este usuario, no hacemos nada.
+            if (!$user->tutor) {
+                Tutor::create([
+                    'user_id' => $user->id,
+                    'description' => 'Tutor generado automáticamente',
+                ]);
+            }
+        } elseif ($user->role_id == 3) { // Pupil
+            if (!$user->pupil) {
+                Pupil::create([
+                    'user_id' => $user->id,
+                    'coment' => 'Alumno generado automáticamente',
+                ]);
+            }
+        }
+
+        return response()->json(['message' => 'Usuario actualizado', 'user' => $user->load(['tutor', 'pupil'])]);
     }
 
     /**
@@ -58,14 +75,6 @@ class UsersController extends Controller
         $user->delete();
 
         return response()->json(['message' => 'Usuario eliminado']);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return response()->json(['message' => 'create endpoint']);
     }
 
     /**
