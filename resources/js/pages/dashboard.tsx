@@ -5,6 +5,9 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
 import { PageProps } from '@/types/inertia';
+import AdminUsers from '@/components/tecnm_acapulco/admin/admin-users';
+import TutorReunions from '@/components/tecnm_acapulco/tutor/tutor-reunions';
+import StudentForms from '@/components/tecnm_acapulco/student/student-forms';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -28,25 +31,25 @@ export default function Dashboard() {
 
                 {user?.role?.toLowerCase() === 'admin' && (
                     <p className="mt-4 font-semibold text-green-400">
-                        Panel de administración
+                        Panel de administración 🔑
                     </p>
                 )}
 
                 {user?.role?.toLowerCase() === 'tutor' && (
                     <p className="mt-4 font-semibold text-blue-400">
-                        Bienvenido tutor
+                        Bienvenido tutor 📏
                     </p>
                 )}
 
                 {user?.role?.toLowerCase() === 'student' && (
                     <p className="mt-4 font-semibold text-yellow-400">
-                        Bienvenido estudiante
+                        Bienvenido estudiante ✏️
                     </p>
                 )}
             </div>
             {/* <h1>hola mundo ahahh</h1> */}
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                     </div>
@@ -56,9 +59,15 @@ export default function Dashboard() {
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                     </div>
-                </div>
+                </div> */}
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                    {user?.role?.toLowerCase() === 'admin' && <AdminUsers />}
+                    {user?.role?.toLowerCase() === 'tutor' && <TutorReunions />}
+                    {user?.role?.toLowerCase() === 'student' && <StudentForms />}
+                    
+                    {!['admin', 'tutor', 'student'].includes(user?.role?.toLowerCase() || '') && (
+                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                    )}
                 </div>
             </div>
         </AppLayout>

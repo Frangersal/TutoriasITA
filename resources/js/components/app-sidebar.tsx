@@ -42,6 +42,7 @@ export function AppSidebar() {
 
     if (role === 'admin') {
         mainNavItems.push(
+            { title: 'Usuarios', href: dashboard(), icon: Users },
             { title: 'Tutores', href: '/admin/tutors', icon: Users },
             { title: 'Alumnos', href: '/admin/pupils', icon: Users },
             { title: 'Formularios', href: '/admin/forms', icon: FileText },
