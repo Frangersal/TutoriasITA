@@ -57,6 +57,12 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    // Relación muchos a muchos con Forms (Formularios completados)
+    public function completedForms()
+    {
+        return $this->belongsToMany(Form::class, 'form_users', 'user_id', 'form_id')->withTimestamps();
+    }
+
     public function tutor()
     {
         return $this->hasOne(Tutor::class);

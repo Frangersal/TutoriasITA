@@ -51,6 +51,9 @@ class StudentAnswersController extends Controller
             );
         }
 
+        // Registrar en la tabla intermedia que el usuario completó este formulario
+        auth()->user()->completedForms()->syncWithoutDetaching([$data['form_id']]);
+
         return response()->json(['message' => 'Respuestas guardadas correctamente'], 201);
     }
 

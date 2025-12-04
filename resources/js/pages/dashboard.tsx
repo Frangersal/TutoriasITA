@@ -72,7 +72,11 @@ export default function Dashboard() {
                         </>
                     )}
                     {user?.role?.toLowerCase() === 'tutor' && <TutorReunions />}
-                    {user?.role?.toLowerCase() === 'student' && <StudentForms />}
+                    {user?.role?.toLowerCase() === 'student' && (
+                        <>
+                            {(!view || view === 'forms') && <StudentForms />}
+                        </>
+                    )}
                     
                     {!['admin', 'tutor', 'student'].includes(user?.role?.toLowerCase() || '') && (
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
