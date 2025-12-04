@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+// --- Interfaz de TypeScript para definir la estructura de Usuario ---
 interface User {
     id: number;
     name: string;
@@ -11,25 +12,30 @@ interface User {
 }
 
 export default function AdminUsers() {
+    // --- Estados Principales ---
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    // --- Estados para CRUD de Usuarios (Crear/Editar) ---
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [creatingUser, setCreatingUser] = useState(false);
     const [formData, setFormData] = useState({ name: '', email: '', role_id: 3, password: '', password_confirmation: '' });
     
-    // Paginación
+    // --- Estados para Paginación ---
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 30;
 
-    // Búsqueda
+    // --- Estados para Búsqueda y Filtrado ---
     const [searchTerm, setSearchTerm] = useState('');
     const [searchField, setSearchField] = useState<'id' | 'name' | 'email' | 'role_id'>('name');
 
+    // Cargar usuarios al montar el componente
     useEffect(() => {
         fetchUsers();
     }, []);
 
+    // Obtener lista de usuarios del backend
     const fetchUsers = async () => {
         try {
             const response = await axios.get('/admin/users');
@@ -41,6 +47,9 @@ export default function AdminUsers() {
         }
     };
 
+    // --- Lógica de CRUD de Usuarios ---
+
+    // Eliminar un usuario
     const handleDelete = async (id: number) => {
         if (!confirm('¿Estás seguro de eliminar este usuario?')) return;
         try {
@@ -51,18 +60,21 @@ export default function AdminUsers() {
         }
     };
 
+    // Preparar estado para editar un usuario existente
     const handleEdit = (user: User) => {
         setEditingUser(user);
         setCreatingUser(false);
         setFormData({ name: user.name, email: user.email, role_id: user.role_id, password: '', password_confirmation: '' });
     };
 
+    // Preparar estado para crear un nuevo usuario
     const handleCreate = () => {
         setCreatingUser(true);
         setEditingUser(null);
         setFormData({ name: '', email: '', role_id: 3, password: '', password_confirmation: '' });
     };
 
+    // Enviar datos del formulario (Crear o Actualizar)
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
@@ -82,6 +94,7 @@ export default function AdminUsers() {
         }
     };
 
+    // Cancelar edición/creación y limpiar formulario
     const handleCancel = () => {
         setEditingUser(null);
         setCreatingUser(false);
@@ -91,7 +104,7 @@ export default function AdminUsers() {
     if (loading) return <p className="text-gray-600 dark:text-gray-300">Cargando usuarios...</p>;
     if (error) return <p className="text-red-500">{error}</p>;
 
-    // Lógica de búsqueda y paginación
+    // --- Lógica de Filtrado y Paginación ---
     const filteredUsers = users.filter(user => {
         const value = user[searchField];
         // Convertir a string para poder buscar tanto en números (ID, rol) como en texto
@@ -105,6 +118,7 @@ export default function AdminUsers() {
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+    // --- Renderizado Principal: Lista de Usuarios ---
     return (
         <div className="p-6 bg-white dark:bg-sidebar-accent/10 rounded-lg shadow-[inset_0_0_15px_rgba(74,222,128,0.2)] border-2 border-green-400 dark:border-green-600">
             <style>{`
@@ -130,7 +144,7 @@ export default function AdminUsers() {
                 </h1>
                 <button 
                     onClick={handleCreate}
-                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
                 >
                     Crear Usuario nuevo
                 </button>
@@ -143,7 +157,7 @@ export default function AdminUsers() {
                     <div className="flex gap-2 flex-wrap">
                         <button
                             onClick={() => setSearchField('id')}
-                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer ${
                                 searchField === 'id' 
                                     ? 'bg-blue-600 text-white' 
                                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
@@ -153,7 +167,7 @@ export default function AdminUsers() {
                         </button>
                         <button
                             onClick={() => setSearchField('name')}
-                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer ${
                                 searchField === 'name' 
                                     ? 'bg-blue-600 text-white' 
                                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
@@ -163,7 +177,7 @@ export default function AdminUsers() {
                         </button>
                         <button
                             onClick={() => setSearchField('email')}
-                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer ${
                                 searchField === 'email' 
                                     ? 'bg-blue-600 text-white' 
                                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
@@ -173,7 +187,7 @@ export default function AdminUsers() {
                         </button>
                         <button
                             onClick={() => setSearchField('role_id')}
-                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer ${
                                 searchField === 'role_id' 
                                     ? 'bg-blue-600 text-white' 
                                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
@@ -200,7 +214,7 @@ export default function AdminUsers() {
                                 setSearchTerm('');
                                 setCurrentPage(1);
                             }}
-                            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer"
                         >
                             Limpiar
                         </button>
@@ -208,6 +222,7 @@ export default function AdminUsers() {
                 </div>
             </div>
 
+            {/* Formulario de Creación/Edición (Desplegable) */}
             {(editingUser || creatingUser) && (
                 <div 
                     key={editingUser ? `edit-${editingUser.id}` : 'create'}
@@ -270,7 +285,7 @@ export default function AdminUsers() {
                             <select
                                 value={formData.role_id}
                                 onChange={e => setFormData({ ...formData, role_id: Number(e.target.value) })}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white p-2 border"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white p-2 border cursor-pointer"
                             >
                                 <option value={1}>Admin (1)</option>
                                 <option value={2}>Tutor (2)</option>
@@ -280,18 +295,19 @@ export default function AdminUsers() {
                         <div className="flex gap-2 animate-slide-in" style={{ animationDelay: '600ms' }}>
                             <button 
                                 type="submit" 
-                                className={`px-4 py-2 text-white rounded ${
+                                className={`px-4 py-2 text-white rounded cursor-pointer ${
                                     editingUser ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'
                                 }`}
                             >
                                 {editingUser ? 'Actualizar' : 'Crear'}
                             </button>
-                            <button type="button" onClick={handleCancel} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Cancelar</button>
+                            <button type="button" onClick={handleCancel} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 cursor-pointer">Cancelar</button>
                         </div>
                     </form>
                 </div>
             )}
 
+            {/* Tabla de Resultados */}
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead className="bg-gray-50 dark:bg-gray-800">
@@ -315,13 +331,13 @@ export default function AdminUsers() {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <button
                                         onClick={() => handleEdit(user)}
-                                        className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-4"
+                                        className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-4 cursor-pointer"
                                     >
                                         Editar
                                     </button>
                                     <button
                                         onClick={() => handleDelete(user.id)}
-                                        className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                                        className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 cursor-pointer"
                                     >
                                         Eliminar
                                     </button>
@@ -338,7 +354,7 @@ export default function AdminUsers() {
                     <button
                         onClick={() => paginate(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                        className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'}`}
                     >
                         Anterior
                     </button>
@@ -347,7 +363,7 @@ export default function AdminUsers() {
                         <button
                             key={i + 1}
                             onClick={() => paginate(i + 1)}
-                            className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-blue-800 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'}`}
+                            className={`px-3 py-1 rounded cursor-pointer ${currentPage === i + 1 ? 'bg-blue-800 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'}`}
                         >
                             {i + 1}
                         </button>
@@ -356,7 +372,7 @@ export default function AdminUsers() {
                     <button
                         onClick={() => paginate(currentPage + 1)}
                         disabled={currentPage === totalPages}
-                        className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                        className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'}`}
                     >
                         Siguiente
                     </button>
