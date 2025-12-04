@@ -43,14 +43,14 @@ export function AppSidebar() {
     if (role === 'admin') {
         mainNavItems.push(
             { title: 'Usuarios', href: dashboard().url, icon: Users },
-            { title: 'Tutores', href: '/admin/tutors', icon: Users },
-            { title: 'Alumnos', href: '/admin/pupils', icon: Users },
+            // { title: 'Tutores', href: '/admin/tutors', icon: Users },
+            // { title: 'Alumnos', href: '/admin/pupils', icon: Users },
             { title: 'Formularios', href: dashboard({ query: { view: 'forms' } }).url, icon: FileText },
             { title: 'Estadísticas', href: '/admin/stats', icon: BarChart2 },
         );
     } else if (role === 'tutor') {
         mainNavItems.push(
-            { title: 'Reuniones', href: '/tutor/reunions', icon: Users },
+            { title: 'Reuniones', href: dashboard({ query: { view: 'reunions' } }).url, icon: Users },
             { title: 'Estadísticas', href: '/tutor/stats', icon: BarChart2 },
         );
     } else if (role === 'student' || role === 'pupil') {

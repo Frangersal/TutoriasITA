@@ -71,7 +71,11 @@ export default function Dashboard() {
                             {view === 'forms' && <AdminForms />}
                         </>
                     )}
-                    {user?.role?.toLowerCase() === 'tutor' && <TutorReunions />}
+                    {user?.role?.toLowerCase() === 'tutor' && (
+                        <>
+                            {(!view || view === 'reunions') && <TutorReunions />}
+                        </>
+                    )}
                     {user?.role?.toLowerCase() === 'student' && (
                         <>
                             {(!view || view === 'forms') && <StudentForms />}

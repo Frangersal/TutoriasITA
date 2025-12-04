@@ -13,7 +13,7 @@ class TutorsController extends Controller
      */
     public function index()
     {
-        return response()->json(Tutor::all());
+        return response()->json(Tutor::with('user')->get());
     }
 
     /**

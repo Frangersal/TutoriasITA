@@ -9,18 +9,31 @@ interface User {
     role_id: number;
     created_at: string;
     updated_at: string;
+    pupil?: {
+        id: number;
+        tutor_id: number | null;
+    };
+}
+
+interface Tutor {
+    id: number;
+    user_id: number;
+    user?: {
+        name: string;
+    };
 }
 
 export default function AdminUsers() {
     // --- Estados Principales ---
     const [users, setUsers] = useState<User[]>([]);
+    const [tutors, setTutors] = useState<Tutor[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     // --- Estados para CRUD de Usuarios (Crear/Editar) ---
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [creatingUser, setCreatingUser] = useState(false);
-    const [formData, setFormData] = useState({ name: '', email: '', role_id: 3, password: '', password_confirmation: '' });
+    const [formData, setFormData] = useState({ name: '', email: '', role_id: 3, password: '', password_confirmation: '', tutor_id: '' as string | number });
     
     // --- Estados para Paginación ---
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +46,7 @@ export default function AdminUsers() {
     // Cargar usuarios al montar el componente
     useEffect(() => {
         fetchUsers();
+        fetchTutors();
     }, []);
 
     // Obtener lista de usuarios del backend
@@ -47,6 +61,15 @@ export default function AdminUsers() {
         }
     };
 
+    const fetchTutors = async () => {
+        try {
+            const response = await axios.get('/supervisor/tutors');
+            setTutors(response.data);
+        } catch (err) {
+            console.error('Error al cargar tutores');
+        }
+    };
+
     // --- Lógica de CRUD de Usuarios ---
 
     // Eliminar un usuario
@@ -55,6 +78,8 @@ export default function AdminUsers() {
         try {
             await axios.delete(`/admin/users/${id}`);
             setUsers(users.filter(user => user.id !== id));
+            // Actualizar lista de tutores por si se eliminó un tutor
+            fetchTutors();
         } catch (err) {
             alert('Error al eliminar usuario');
         }
@@ -87,6 +112,7 @@ export default function AdminUsers() {
                         role_id: user.role_id,
                         password: '',
                         password_confirmation: '',
+                        tutor_id: user.pupil?.tutor_id || '',
                     });
                 }
             };
@@ -101,6 +127,7 @@ export default function AdminUsers() {
                 role_id: user.role_id,
                 password: '',
                 password_confirmation: '',
+                tutor_id: user.pupil?.tutor_id || '',
             });
         }
     };
@@ -109,7 +136,7 @@ export default function AdminUsers() {
     const handleCreate = () => {
         setCreatingUser(true);
         setEditingUser(null);
-        setFormData({ name: '', email: '', role_id: 3, password: '', password_confirmation: '' });
+        setFormData({ name: '', email: '', role_id: 3, password: '', password_confirmation: '', tutor_id: '' });
     };
 
     // Enviar datos del formulario (Crear o Actualizar)
@@ -126,6 +153,8 @@ export default function AdminUsers() {
                 setUsers([...users, response.data.user]);
                 alert('Usuario creado correctamente');
             }
+            // Actualizar lista de tutores siempre, por si se creó/editó un tutor
+            fetchTutors();
             handleCancel();
         } catch (err) {
             alert('Error al guardar usuario');
@@ -136,7 +165,7 @@ export default function AdminUsers() {
     const handleCancel = () => {
         setEditingUser(null);
         setCreatingUser(false);
-        setFormData({ name: '', email: '', role_id: 3, password: '', password_confirmation: '' });
+        setFormData({ name: '', email: '', role_id: 3, password: '', password_confirmation: '', tutor_id: '' });
     };
 
     if (loading) return <p className="text-gray-600 dark:text-gray-300">Cargando usuarios...</p>;
@@ -330,6 +359,25 @@ export default function AdminUsers() {
                                 <option value={3}>Estudiante (3)</option>
                             </select>
                         </div>
+
+                        {formData.role_id === 3 && (
+                            <div className="animate-slide-in" style={{ animationDelay: '550ms' }}>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Asignar Tutor</label>
+                                <select
+                                    value={formData.tutor_id}
+                                    onChange={e => setFormData({ ...formData, tutor_id: e.target.value })}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white p-2 border cursor-pointer"
+                                >
+                                    <option value="">-- Seleccionar Tutor --</option>
+                                    {tutors.map(tutor => (
+                                        <option key={tutor.id} value={tutor.id}>
+                                            {tutor.user?.name || `Tutor #${tutor.id}`}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
+
                         <div className="flex gap-2 animate-slide-in" style={{ animationDelay: '600ms' }}>
                             <button 
                                 type="submit" 
