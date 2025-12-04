@@ -91,9 +91,38 @@ export default function AdminForms() {
 
     // Preparar estado para editar un formulario existente
     const handleEdit = (form: Form) => {
-        setEditingForm(form);
-        setCreatingForm(false);
-        setFormData({ name: form.name, description: form.description });
+        const startY = window.scrollY;
+
+        if (startY > 100) {
+            // Scroll manual más rápido (300ms) para asegurar que se vea la animación al llegar
+            const duration = 300;
+            const startTime = performance.now();
+
+            const animateScroll = (currentTime: number) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+
+                window.scrollTo(0, startY * (1 - ease));
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateScroll);
+                } else {
+                    setEditingForm(form);
+                    setCreatingForm(false);
+                    setFormData({
+                        name: form.name,
+                        description: form.description,
+                    });
+                }
+            };
+            requestAnimationFrame(animateScroll);
+        } else {
+            window.scrollTo({ top: 0 });
+            setEditingForm(form);
+            setCreatingForm(false);
+            setFormData({ name: form.name, description: form.description });
+        }
     };
 
     // Preparar estado para crear un nuevo formulario

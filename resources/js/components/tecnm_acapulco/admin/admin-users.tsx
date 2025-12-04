@@ -62,9 +62,47 @@ export default function AdminUsers() {
 
     // Preparar estado para editar un usuario existente
     const handleEdit = (user: User) => {
-        setEditingUser(user);
-        setCreatingUser(false);
-        setFormData({ name: user.name, email: user.email, role_id: user.role_id, password: '', password_confirmation: '' });
+        const startY = window.scrollY;
+
+        if (startY > 100) {
+            // Scroll manual más rápido (300ms) para asegurar que se vea la animación al llegar
+            const duration = 300;
+            const startTime = performance.now();
+
+            const animateScroll = (currentTime: number) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+
+                window.scrollTo(0, startY * (1 - ease));
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateScroll);
+                } else {
+                    setEditingUser(user);
+                    setCreatingUser(false);
+                    setFormData({
+                        name: user.name,
+                        email: user.email,
+                        role_id: user.role_id,
+                        password: '',
+                        password_confirmation: '',
+                    });
+                }
+            };
+            requestAnimationFrame(animateScroll);
+        } else {
+            window.scrollTo({ top: 0 });
+            setEditingUser(user);
+            setCreatingUser(false);
+            setFormData({
+                name: user.name,
+                email: user.email,
+                role_id: user.role_id,
+                password: '',
+                password_confirmation: '',
+            });
+        }
     };
 
     // Preparar estado para crear un nuevo usuario
