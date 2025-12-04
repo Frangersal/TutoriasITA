@@ -36,16 +36,16 @@ export function AppSidebar() {
 
     // Construir items según role
     const mainNavItems: NavItem[] = [
-        { title: 'Inicio', href: dashboard(), icon: LayoutGrid },
+        { title: 'Inicio', href: dashboard().url, icon: LayoutGrid },
         { title: 'Perfil', href: '/settings/profile', icon: User },
     ];
 
     if (role === 'admin') {
         mainNavItems.push(
-            { title: 'Usuarios', href: dashboard(), icon: Users },
+            { title: 'Usuarios', href: dashboard().url, icon: Users },
             { title: 'Tutores', href: '/admin/tutors', icon: Users },
             { title: 'Alumnos', href: '/admin/pupils', icon: Users },
-            { title: 'Formularios', href: '/admin/forms', icon: FileText },
+            { title: 'Formularios', href: dashboard({ query: { view: 'forms' } }).url, icon: FileText },
             { title: 'Estadísticas', href: '/admin/stats', icon: BarChart2 },
         );
     } else if (role === 'tutor') {
@@ -66,7 +66,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()} prefetch>
+                            <Link href={dashboard().url} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

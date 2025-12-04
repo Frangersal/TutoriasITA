@@ -19,7 +19,7 @@ class FormsController extends Controller
      */
     public function index()
     {
-        return response()->json(Form::orderBy('id', 'desc')->get());
+        return response()->json(Form::orderBy('id', 'asc')->get());
     }
 
     public function __construct()
@@ -55,7 +55,7 @@ class FormsController extends Controller
      */
     public function show(Form $form)
     {
-        return response()->json($form);
+        return response()->json($form->load('questions.options'));
     }
 
     /**

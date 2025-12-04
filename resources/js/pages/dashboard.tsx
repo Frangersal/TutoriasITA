@@ -6,6 +6,7 @@ import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
 import { PageProps } from '@/types/inertia';
 import AdminUsers from '@/components/tecnm_acapulco/admin/admin-users';
+import AdminForms from '@/components/tecnm_acapulco/admin/admin-forms';
 import TutorReunions from '@/components/tecnm_acapulco/tutor/tutor-reunions';
 import StudentForms from '@/components/tecnm_acapulco/student/student-forms';
 
@@ -18,10 +19,13 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dashboard() {
-    const { props } = usePage<PageProps>();
+    const { props, url } = usePage<PageProps>();
     // Hacer accesos más tolerantes: props.auth.user puede ser null
     const user = props.auth.user as { name?: string; email?: string; role?: string } | null;
     console.log('auth.user:', user);
+
+    const params = new URLSearchParams(url.split('?')[1]);
+    const view = params.get('view');
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -61,7 +65,12 @@ export default function Dashboard() {
                     </div>
                 </div> */}
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    {user?.role?.toLowerCase() === 'admin' && <AdminUsers />}
+                    {user?.role?.toLowerCase() === 'admin' && (
+                        <>
+                            {(!view || view === 'users') && <AdminUsers />}
+                            {view === 'forms' && <AdminForms />}
+                        </>
+                    )}
                     {user?.role?.toLowerCase() === 'tutor' && <TutorReunions />}
                     {user?.role?.toLowerCase() === 'student' && <StudentForms />}
                     
