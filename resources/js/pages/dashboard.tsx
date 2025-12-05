@@ -9,6 +9,7 @@ import AdminUsers from '@/components/tecnm_acapulco/admin/admin-users';
 import AdminForms from '@/components/tecnm_acapulco/admin/admin-forms';
 import TutorReunions from '@/components/tecnm_acapulco/tutor/tutor-reunions';
 import StudentForms from '@/components/tecnm_acapulco/student/student-forms';
+import StudentReunions from '@/components/tecnm_acapulco/student/student-reunion';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -79,6 +80,7 @@ export default function Dashboard() {
                     {user?.role?.toLowerCase() === 'student' && (
                         <>
                             {(!view || view === 'forms') && <StudentForms />}
+                            {view === 'reunions' && <StudentReunions />}
                         </>
                     )}
                     

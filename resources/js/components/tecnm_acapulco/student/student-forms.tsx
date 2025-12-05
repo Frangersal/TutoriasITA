@@ -261,22 +261,31 @@ export default function StudentForms() {
                     </div>
 
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {forms.map((form) => (
+                        {forms.map((form, index) => (
                             <div
                                 key={form.id}
                                 className={`flex flex-col justify-between rounded-lg border p-4 shadow-sm transition-shadow hover:shadow-md ${
                                     form.is_answered
                                         ? 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/10'
-                                        : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'
+                                        : 'border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/10'
                                 }`}
                             >
                                 <div>
-                                    <div className="mb-2 flex items-start justify-between">
-                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                                            {form.name}
-                                        </h3>
+                                    <div className="mb-4 flex items-start justify-between gap-2">
+                                        <div className="flex items-start gap-3">
+                                            <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold shadow-sm ${
+                                                form.is_answered
+                                                    ? 'bg-white/80 text-green-700 ring-1 ring-green-600/20 dark:bg-green-800 dark:text-green-100'
+                                                    : 'bg-white/80 text-red-700 ring-1 ring-red-600/20 dark:bg-red-800 dark:text-red-100'
+                                            }`}>
+                                                {index + 1}
+                                            </span>
+                                            <h3 className="mt-0.5 text-lg font-semibold leading-tight text-gray-900 dark:text-gray-100">
+                                                {form.name}
+                                            </h3>
+                                        </div>
                                         {form.is_answered && (
-                                            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400" title="Completado">
+                                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400" title="Completado">
                                                 ✓
                                             </span>
                                         )}
@@ -290,8 +299,8 @@ export default function StudentForms() {
                                     onClick={() => handleSelectForm(form.id)}
                                     className={`mt-auto w-full cursor-pointer rounded px-4 py-2 text-center font-medium text-white transition-colors ${
                                         form.is_answered
-                                            ? 'bg-yellow-500 hover:bg-yellow-600'
-                                            : 'bg-blue-600 hover:bg-blue-700'
+                                            ? 'bg-gray-500 hover:bg-gray-600'
+                                            : 'bg-red-900 hover:bg-red-950'
                                     }`}
                                 >
                                     {form.is_answered ? 'Editar Respuestas' : 'Responder'}

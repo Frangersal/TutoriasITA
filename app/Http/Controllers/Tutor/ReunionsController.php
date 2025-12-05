@@ -16,7 +16,20 @@ class ReunionsController extends Controller
      */
     public function index()
     {
-        return response()->json(Reunion::all());
+        $user = auth()->user();
+        $tutor = $user->tutor;
+
+        if (!$tutor) {
+            return response()->json(['reunions' => [], 'pupils' => []]);
+        }
+
+        $reunions = Reunion::where('tutor_id', $tutor->id)->with('pupil.user')->orderBy('date_time', 'desc')->get();
+        $pupils = Pupil::where('tutor_id', $tutor->id)->with('user')->get();
+
+        return response()->json([
+            'reunions' => $reunions,
+            'pupils' => $pupils
+        ]);
     }
 
     /**
@@ -24,14 +37,24 @@ class ReunionsController extends Controller
      */
     public function store(Request $request)
     {
+        $tutor = auth()->user()->tutor;
+        
+        if (!$tutor) {
+            return response()->json(['message' => 'No eres un tutor válido'], 403);
+        }
+
         $data = $request->validate([
             'date_time' => 'required|date',
             'description' => 'required|string',
             'pupil_id' => 'required|exists:pupils,id',
-            'tutor_id' => 'required|exists:tutors,id',
         ]);
 
+        $data['tutor_id'] = $tutor->id;
+
         $reunion = Reunion::create($data);
+        
+        // Cargar relaciones para devolver al frontend
+        $reunion->load('pupil.user');
 
         return response()->json(['message' => 'Reunión creada', 'reunion' => $reunion], 201);
     }
@@ -49,16 +72,21 @@ class ReunionsController extends Controller
      */
     public function update(Request $request, Reunion $reunion)
     {
+        $tutor = auth()->user()->tutor;
+
+        if ($reunion->tutor_id !== $tutor->id) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
         $data = $request->validate([
             'date_time' => 'sometimes|required|date',
             'description' => 'sometimes|required|string',
             'pupil_id' => 'sometimes|required|exists:pupils,id',
-            'tutor_id' => 'sometimes|required|exists:tutors,id',
         ]);
 
         $reunion->update($data);
 
-        return response()->json(['message' => 'Reunión actualizada', 'reunion' => $reunion]);
+        return response()->json(['message' => 'Reunión actualizada', 'reunion' => $reunion->load('pupil.user')]);
     }
 
     /**
@@ -66,6 +94,12 @@ class ReunionsController extends Controller
      */
     public function destroy(Reunion $reunion)
     {
+        $tutor = auth()->user()->tutor;
+
+        if ($reunion->tutor_id !== $tutor->id) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
         $reunion->delete();
 
         return response()->json(['message' => 'Reunión eliminada']);

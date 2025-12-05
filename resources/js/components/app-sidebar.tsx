@@ -56,7 +56,7 @@ export function AppSidebar() {
     } else if (role === 'student' || role === 'pupil') {
         mainNavItems.push(
             { title: 'Formularios', href: dashboard({ query: { view: 'forms' } }).url, icon: FileText },
-            { title: 'Reuniones', href: '/student/reunions', icon: Users },
+            { title: 'Reuniones', href: dashboard({ query: { view: 'reunions' } }).url, icon: Users },
         );
     }
 
