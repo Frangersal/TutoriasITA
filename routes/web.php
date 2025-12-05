@@ -9,6 +9,11 @@ use App\Http\Controllers\Admin\QuestionsController;
 use App\Http\Controllers\Admin\OptionsController;
 use App\Http\Controllers\Tutor\ReunionsController;
 use App\Http\Controllers\Supervisor\PupilsController;
+use App\Http\Controllers\Supervisor\PupilsGraphsController;
+use App\Http\Controllers\Supervisor\PupilsGraphsYearsController;
+use App\Http\Controllers\Supervisor\PupilController;
+use App\Http\Controllers\Supervisor\PupilFormsController;
+use App\Http\Controllers\Supervisor\PupilFormsPDFController;
 use App\Http\Controllers\Supervisor\TutorsController;
 use App\Http\Controllers\Student\StudentFormsController;
 use App\Http\Controllers\Student\StudentAnswersController;
@@ -64,8 +69,20 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'can:tutor-action'])
 // Ej: /supervisor
 Route::prefix('supervisor')->name('supervisor.')->middleware(['auth', 'can:admin-tutor-action'])->group(function () {
     // /supervisor/pupils
-    // /supervisor/tutors
+    // /supervisor/pupils/graphs
+    // /supervisor/pupils/graphs/years
     Route::resource('pupils', PupilsController::class)->except(['create', 'edit']);
+    Route::resource('pupils/graphs', PupilsGraphsController::class)->except(['create', 'edit']);
+    Route::resource('pupils/graphs/years', PupilsGraphsYearsController::class)->except(['create', 'edit']);
+    
+    // /supervisor/pupil
+    // /supervisor/pupil/forms
+    // /supervisor/pupil/forms/pdf
+    Route::resource('pupil', PupilController::class)->except(['create', 'edit']);
+    Route::resource('pupil/forms', PupilFormsController::class)->except(['create', 'edit']);
+    Route::resource('pupil/forms/pdf', PupilFormsPDFController::class)->except(['create', 'edit']);
+
+    // /supervisor/tutors
     Route::resource('tutors', TutorsController::class)->except(['create', 'edit']);
 });
 
