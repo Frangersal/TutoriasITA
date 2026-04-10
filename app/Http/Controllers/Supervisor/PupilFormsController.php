@@ -21,7 +21,7 @@ class PupilFormsController extends Controller
             return response()->json(['error' => 'Pupil ID is required'], 400);
         }
 
-        $pupil = Pupil::with('user')->findOrFail($pupilId);
+        $pupil = Pupil::with(['user', 'tutor.user'])->findOrFail($pupilId);
         
         $formUsers = FormUser::with('form')
             ->where('user_id', $pupil->user_id)

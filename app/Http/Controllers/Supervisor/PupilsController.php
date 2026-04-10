@@ -10,7 +10,22 @@ class PupilsController extends Controller
 {
     public function index()
     {
-        return response()->json(Pupil::all());
+        $user = auth()->user();
+        $query = Pupil::with(['user', 'tutor.user']);
+
+        // Si es tutor, filtrar solo sus pupilos
+        if ($user->hasRole('tutor')) {
+            // Asegurarse de que el usuario tenga un registro de tutor asociado
+            if ($user->tutor) {
+                $query->where('tutor_id', $user->tutor->id);
+            } else {
+                // Si es rol tutor pero no tiene registro en la tabla tutors, no ve nada
+                return response()->json([]);
+            }
+        }
+        // Si es admin (o supervisor), ve todo (no aplicamos filtro extra)
+
+        return response()->json($query->get());
     }
 
     public function store(Request $request)

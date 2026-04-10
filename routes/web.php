@@ -78,9 +78,9 @@ Route::prefix('supervisor')->name('supervisor.')->middleware(['auth', 'can:admin
     // /supervisor/pupil
     // /supervisor/pupil/forms
     // /supervisor/pupil/forms/pdf
-    Route::resource('pupil', PupilController::class)->except(['create', 'edit']);
-    Route::resource('pupil/forms', PupilFormsController::class)->except(['create', 'edit']);
     Route::resource('pupil/forms/pdf', PupilFormsPDFController::class)->except(['create', 'edit']);
+    Route::resource('pupil/forms', PupilFormsController::class)->except(['create', 'edit']);
+    Route::resource('pupil', PupilController::class)->except(['create', 'edit']);
 
     // /supervisor/tutors
     Route::resource('tutors', TutorsController::class)->except(['create', 'edit']);

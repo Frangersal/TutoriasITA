@@ -10,6 +10,8 @@ import AdminForms from '@/components/tecnm_acapulco/admin/admin-forms';
 import TutorReunions from '@/components/tecnm_acapulco/tutor/tutor-reunions';
 import StudentForms from '@/components/tecnm_acapulco/student/student-forms';
 import StudentReunions from '@/components/tecnm_acapulco/student/student-reunion';
+import { SupervisorPupils } from '@/components/tecnm_acapulco/supervisor/supervisor-pupils';
+import { SupervisorPupilForms } from '@/components/tecnm_acapulco/supervisor/supervisor-pupil-forms';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -27,6 +29,7 @@ export default function Dashboard() {
 
     const params = new URLSearchParams(url.split('?')[1]);
     const view = params.get('view');
+    const pupilId = params.get('pupil_id');
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -70,11 +73,15 @@ export default function Dashboard() {
                         <>
                             {(!view || view === 'users') && <AdminUsers />}
                             {view === 'forms' && <AdminForms />}
+                            {view === 'pupils' && <SupervisorPupils />}
+                            {view === 'pupil-forms' && pupilId && <SupervisorPupilForms pupilId={Number(pupilId)} />}
                         </>
                     )}
                     {user?.role?.toLowerCase() === 'tutor' && (
                         <>
                             {(!view || view === 'reunions') && <TutorReunions />}
+                            {view === 'pupils' && <SupervisorPupils />}
+                            {view === 'pupil-forms' && pupilId && <SupervisorPupilForms pupilId={Number(pupilId)} />}
                         </>
                     )}
                     {user?.role?.toLowerCase() === 'student' && (
