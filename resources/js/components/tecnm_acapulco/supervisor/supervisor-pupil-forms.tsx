@@ -10,7 +10,8 @@ interface Option {
 interface Answer {
     id: number;
     question_id: number;
-    answer: string;
+    name?: string;
+    answer?: string;
 }
 
 interface Question {
@@ -95,7 +96,7 @@ export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
             
             const answersMap: { [key: number]: string } = {};
             fetchedAnswers.forEach(a => {
-                answersMap[a.question_id] = a.answer;
+                answersMap[a.question_id] = a.name || a.answer || '';
             });
             setAnswers(answersMap);
             

@@ -25,7 +25,11 @@ class PupilFormsController extends Controller
         
         $formUsers = FormUser::with('form')
             ->where('user_id', $pupil->user_id)
-            ->get();
+            ->get()
+            ->map(function ($formUser) {
+                $formUser->is_answered = true;
+                return $formUser;
+            });
             
         return response()->json([
             'pupil' => $pupil,
@@ -54,7 +58,7 @@ class PupilFormsController extends Controller
      */
     public function show(string $id)
     {
-        $formUser = FormUser::with(['form.questions', 'user.pupil'])->findOrFail($id);
+        $formUser = FormUser::with(['form.questions.options', 'user.pupil'])->findOrFail($id);
         
         $answers = Answer::where('user_id', $formUser->user_id)
             ->whereIn('question_id', $formUser->form->questions->pluck('id'))
