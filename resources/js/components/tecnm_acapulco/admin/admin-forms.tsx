@@ -39,7 +39,7 @@ export default function AdminForms() {
     // --- Estados para Gestión de Preguntas (Sub-módulo) ---
     const [managingForm, setManagingForm] = useState<Form | null>(null); // Formulario actual cuyas preguntas se están editando
     const [newQuestionName, setNewQuestionName] = useState('');
-    const [newQuestionType, setNewQuestionType] = useState(1); // 1: Texto, 2: Opción
+    const [newQuestionType, setNewQuestionType] = useState(100); // 100: Texto, 300: Opción
     const [newOptionName, setNewOptionName] = useState<{
         [key: number]: string;
     }>({}); // Mapa de question_id -> texto de nueva opción
@@ -183,7 +183,7 @@ export default function AdminForms() {
     const handleCloseQuestions = () => {
         setManagingForm(null);
         setNewQuestionName('');
-        setNewQuestionType(1);
+        setNewQuestionType(100);
         setEditingQuestion(null);
     };
 
@@ -224,7 +224,7 @@ export default function AdminForms() {
     const handleCancelEditQuestion = () => {
         setEditingQuestion(null);
         setNewQuestionName('');
-        setNewQuestionType(1);
+        setNewQuestionType(100);
     };
 
     // Guardar cambios de una pregunta editada
@@ -278,7 +278,7 @@ export default function AdminForms() {
                 questions: [...(managingForm.questions || []), newQuestion],
             });
             setNewQuestionName('');
-            setNewQuestionType(1);
+            setNewQuestionType(100);
         } catch (err) {
             alert('Error al crear la pregunta');
         }
@@ -494,8 +494,10 @@ export default function AdminForms() {
                                 }
                                 className="w-full cursor-pointer rounded-md border border-gray-300 p-2 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                             >
-                                <option value={1}>Texto Libre</option>
-                                <option value={2}>Opciones (Selección)</option>
+                                <option value={100}>Texto Libre</option>
+                                <option value={200}>Texto Opcional</option>
+                                <option value={300}>Opciones (Selección)</option>
+                                <option value={350}>Opciones (Selección Opcional)</option>
                             </select>
                         </div>
                         <div
@@ -531,7 +533,7 @@ export default function AdminForms() {
                             <div className="mb-4">
                                 <span className="mb-2 inline-block rounded bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-600 dark:bg-gray-800 dark:text-gray-400">
                                     Pregunta #{index + 1} •{' '}
-                                    {question.answer_type_id === 1
+                                    {[100, 200].includes(question.answer_type_id)
                                         ? 'Texto Libre'
                                         : 'Opciones'}
                                 </span>
@@ -540,8 +542,8 @@ export default function AdminForms() {
                                 </h4>
                             </div>
 
-                            {/* Sección de Opciones (solo si es tipo 2) */}
-                            {question.answer_type_id === 2 && (
+                            {/* Sección de Opciones (solo si es tipo 300 o 350) */}
+                            {[300, 350].includes(question.answer_type_id) && (
                                 <div className="mt-4 mb-4 ml-4 border-l-2 border-gray-200 pl-4 dark:border-gray-700">
                                     <h5 className="mb-2 text-sm font-semibold text-gray-600 dark:text-gray-400">
                                         Opciones de respuesta:

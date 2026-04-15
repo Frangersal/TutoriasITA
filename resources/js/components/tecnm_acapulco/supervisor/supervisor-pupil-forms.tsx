@@ -18,7 +18,7 @@ interface Question {
     id: number;
     name: string;
     form_id: number;
-    answer_type_id: number;
+    answer_type_id: number; // 100: Texto, 200: Texto Opcional, 300: Opción, 350: Opción Opcional
     options?: Option[];
     user_answer?: Answer | null;
 }
@@ -58,6 +58,7 @@ interface SupervisorPupilFormsProps {
 export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
     const [pupil, setPupil] = useState<Pupil | null>(null);
     const [formUsers, setFormUsers] = useState<FormUser[]>([]);
+    const [totalFormsFromDb, setTotalFormsFromDb] = useState<number>(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [selectedFormUser, setSelectedFormUser] = useState<FormUser | null>(null);
@@ -76,6 +77,7 @@ export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
             });
             setPupil(response.data.pupil);
             setFormUsers(response.data.formUsers);
+            setTotalFormsFromDb(response.data.totalFormsCount || 0);
             setLoading(false);
         } catch (err) {
             setError('Error al cargar la información del alumno.');
@@ -113,6 +115,10 @@ export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
         setAnswers({});
     };
 
+    const totalForms = totalFormsFromDb;
+    const completedForms = formUsers.length;
+    const progressPercentage = totalForms > 0 ? Math.round((completedForms / totalForms) * 100) : 0;
+
     if (loading && !selectedFormUser) return <p className="text-gray-600 dark:text-gray-300">Cargando...</p>;
     if (error) return <p className="text-red-500">{error}</p>;
 
@@ -148,7 +154,7 @@ export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
                     Expediente del Alumno
                 </h1>
                 {pupil && (
-                    <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-3">
                         <div>
                             <p className="text-sm text-gray-500 dark:text-gray-400">Alumno</p>
                             <p className="font-medium text-gray-900 dark:text-gray-100">{pupil.user?.name || 'Sin nombre'}</p>
@@ -159,6 +165,26 @@ export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
                             <p className="font-medium text-gray-900 dark:text-gray-100">
                                 {pupil.tutor?.user?.name ?? 'Sin asignar'}
                             </p>
+                        </div>
+                        <div>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">Progreso de Formularios</p>
+                            <div className="flex items-center gap-2 mt-1">
+                                <span className="font-medium text-gray-900 dark:text-gray-100">
+                                    {completedForms} de {totalForms} ({progressPercentage}%)
+                                </span>
+                            </div>
+                            <div className="w-full h-2 mt-2 bg-gray-200 rounded-full dark:bg-gray-700">
+                                <div 
+                                    className={`h-full rounded-full ${
+                                        progressPercentage < 40 
+                                            ? 'bg-red-500 dark:bg-red-400' 
+                                            : progressPercentage < 100 
+                                                ? 'bg-yellow-500 dark:bg-yellow-400' 
+                                                : 'bg-green-500 dark:bg-green-400'
+                                    }`} 
+                                    style={{ width: `${progressPercentage}%` }}
+                                ></div>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -206,10 +232,10 @@ export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
                                 className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50"
                             >
                                 <label className="mb-3 block text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {index + 1}. {question.name}
+                                    {index + 1}. {question.name} {![100, 300].includes(question.answer_type_id) && <span className="text-sm font-normal text-gray-500">(Opcional)</span>}
                                 </label>
 
-                                {question.answer_type_id === 1 ? (
+                                {[100, 200].includes(question.answer_type_id) ? (
                                     <div className="w-full rounded-md border border-gray-300 p-3 bg-white dark:border-gray-600 dark:bg-gray-700 dark:text-white">
                                         {answers[question.id] || <span className="text-gray-400 italic">Sin respuesta</span>}
                                     </div>

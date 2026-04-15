@@ -33,7 +33,7 @@ class StudentAnswersController extends Controller
             'form_id' => 'required|exists:forms,id',
             'answers' => 'required|array',
             'answers.*.question_id' => 'required|exists:questions,id',
-            'answers.*.value' => 'required', // Puede ser texto o ID de opción
+            'answers.*.value' => 'required', // Siempre llega un valor, aunque sea "Sin respuesta"
         ]);
 
         $userId = auth()->id();

@@ -18,7 +18,7 @@ interface Question {
     id: number;
     name: string;
     form_id: number;
-    answer_type_id: number; // 1: Texto, 2: Opción
+    answer_type_id: number; // 100: Texto, 200: Texto Opcional, 300: Opción, 350: Opción Opcional
     options?: Option[];
     user_answer?: Answer | null; // Respuesta previa del usuario si existe
 }
@@ -108,10 +108,13 @@ export default function StudentForms() {
             // Estructuramos los datos para enviar
             const payload = {
                 form_id: selectedForm.id,
-                answers: Object.entries(answers).map(([questionId, value]) => ({
-                    question_id: Number(questionId),
-                    value: value
-                }))
+                answers: selectedForm.questions?.map(q => {
+                    const val = answers[q.id];
+                    return {
+                        question_id: q.id,
+                        value: val && String(val).trim() !== '' && String(val).trim() !== 'Sin respuesta' ? val : 'Sin respuesta'
+                    };
+                }) || []
             };
 
             await axios.post('/student/answers', payload);
@@ -196,15 +199,15 @@ export default function StudentForms() {
                                 className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50"
                             >
                                 <label className="mb-3 block text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {index + 1}. {question.name}
+                                    {index + 1}. {question.name} {![100, 300].includes(question.answer_type_id) && <span className="text-sm font-normal text-gray-500">(Opcional)</span>}
                                 </label>
 
-                                {question.answer_type_id === 1 ? (
+                                {[100, 200].includes(question.answer_type_id) ? (
                                     // Texto Libre
                                     <textarea
-                                        required
+                                        required={question.answer_type_id === 100}
                                         rows={3}
-                                        value={answers[question.id] || ''}
+                                        value={(answers[question.id] === 'Sin respuesta' ? '' : answers[question.id]) || ''}
                                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                                         className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                         placeholder="Escribe tu respuesta aquí..."
@@ -218,10 +221,16 @@ export default function StudentForms() {
                                                     type="radio"
                                                     name={`question_${question.id}`}
                                                     value={option.name} // O option.id si el backend espera ID
-                                                    checked={answers[question.id] === option.name}
+                                                    checked={answers[question.id] === option.name && answers[question.id] !== 'Sin respuesta'}
+                                                    onClick={(e) => {
+                                                        // Permite desmarcar si es opcional (no requerido)
+                                                        if (question.answer_type_id !== 300 && answers[question.id] === option.name) {
+                                                            handleAnswerChange(question.id, 'Sin respuesta');
+                                                        }
+                                                    }}
                                                     onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                                                     className="h-4 w-4 border-gray-300 text-yellow-600 focus:ring-yellow-500 dark:border-gray-600 dark:bg-gray-700"
-                                                    required
+                                                    required={question.answer_type_id === 300}
                                                 />
                                                 <span className="text-gray-700 dark:text-gray-300">
                                                     {option.name}

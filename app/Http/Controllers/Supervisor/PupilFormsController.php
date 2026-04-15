@@ -31,9 +31,12 @@ class PupilFormsController extends Controller
                 return $formUser;
             });
             
+        $totalFormsCount = \App\Models\Form::count();
+            
         return response()->json([
             'pupil' => $pupil,
-            'formUsers' => $formUsers
+            'formUsers' => $formUsers,
+            'totalFormsCount' => $totalFormsCount
         ]);
     }
 
