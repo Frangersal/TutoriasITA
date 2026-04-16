@@ -34,11 +34,42 @@ class StudentAnswersController extends Controller
             'answers' => 'required|array',
             'answers.*.question_id' => 'required|exists:questions,id',
             'answers.*.value' => 'required', // Siempre llega un valor, aunque sea "Sin respuesta"
+            'answers.*.file' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:10240',
         ]);
+
+        // Validaciones dinámicas adicionales por tipo de pregunta
+        foreach ($data['answers'] as $ans) {
+            $question = \App\Models\Question::find($ans['question_id']);
+            if ($question && $ans['value'] !== 'Sin respuesta') {
+                if ($question->answer_type_id == 501 && !filter_var($ans['value'], FILTER_VALIDATE_INT)) {
+                    return response()->json(['message' => 'La pregunta "' . $question->name . '" debe ser un número entero.'], 422);
+                }
+                if ($question->answer_type_id == 502 && !is_numeric($ans['value'])) {
+                    return response()->json(['message' => 'La pregunta "' . $question->name . '" debe ser un número decimal.'], 422);
+                }
+                if (in_array($question->answer_type_id, [503, 553])) {
+                    $d = \DateTime::createFromFormat('Y-m-d', $ans['value']);
+                    if (!$d || $d->format('Y-m-d') !== $ans['value']) {
+                        return response()->json(['message' => 'La pregunta "' . $question->name . '" debe ser una fecha válida (AAAA-MM-DD).'], 422);
+                    }
+                }
+            }
+        }
 
         $userId = auth()->id();
 
-        foreach ($data['answers'] as $ans) {
+        foreach ($data['answers'] as $index => $ans) {
+            $valueToSave = $ans['value'];
+            
+            // Si viene un archivo para esta respuesta, lo guardamos y actualizamos el valor con la ruta
+            if (isset($ans['file']) && $request->hasFile("answers.{$index}.file")) {
+                // Guardar perfil en storage/app/public/answers_images/
+                $path = $request->file("answers.{$index}.file")->store('answers_images', 'public');
+                $valueToSave = $path;
+            } elseif ($valueToSave === 'file_attached') {
+                $valueToSave = 'Sin respuesta'; // En caso de que falle la carga del archivo
+            }
+
             // Evitar duplicados si se reenvía: usamos updateOrCreate
             Answer::updateOrCreate(
                 [
@@ -46,7 +77,7 @@ class StudentAnswersController extends Controller
                     'question_id' => $ans['question_id']
                 ],
                 [
-                    'name' => $ans['value']
+                    'name' => $valueToSave
                 ]
             );
         }
@@ -85,18 +116,51 @@ class StudentAnswersController extends Controller
             'answers' => 'required|array',
             'answers.*.question_id' => 'required|exists:questions,id',
             'answers.*.value' => 'required',
+            'answers.*.file' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:10240',
         ]);
+
+        // Validaciones dinámicas adicionales por tipo de pregunta en actualización
+        foreach ($data['answers'] as $ans) {
+            $question = \App\Models\Question::find($ans['question_id']);
+            if ($question && $ans['value'] !== 'Sin respuesta') {
+                if ($question->answer_type_id == 501 && !filter_var($ans['value'], FILTER_VALIDATE_INT)) {
+                    return response()->json(['message' => 'La pregunta "' . $question->name . '" debe ser un número entero.'], 422);
+                }
+                if ($question->answer_type_id == 502 && !is_numeric($ans['value'])) {
+                    return response()->json(['message' => 'La pregunta "' . $question->name . '" debe ser un número decimal.'], 422);
+                }
+                if (in_array($question->answer_type_id, [503, 553])) {
+                    $d = \DateTime::createFromFormat('Y-m-d', $ans['value']);
+                    if (!$d || $d->format('Y-m-d') !== $ans['value']) {
+                        return response()->json(['message' => 'La pregunta "' . $question->name . '" debe ser una fecha válida (AAAA-MM-DD).'], 422);
+                    }
+                }
+            }
+        }
 
         $userId = auth()->id();
 
-        foreach ($data['answers'] as $ans) {
+        foreach ($data['answers'] as $index => $ans) {
+            $valueToSave = $ans['value'];
+            
+            // Si se envió un nuevo archivo, lo subimos
+            if (isset($ans['file']) && $request->hasFile("answers.{$index}.file")) {
+                $path = $request->file("answers.{$index}.file")->store('answers_images', 'public');
+                $valueToSave = $path;
+            } elseif ($valueToSave === 'file_attached') {
+                // Prevenir que se guarde el string temporal si hubo un error en la subida, 
+                // mejor buscar el valor existente o ignorar. Pero en general, esto no debería ocurrir.
+                $existing = Answer::where('user_id', $userId)->where('question_id', $ans['question_id'])->first();
+                $valueToSave = $existing ? $existing->name : 'Sin respuesta';
+            }
+
             Answer::updateOrCreate(
                 [
                     'user_id' => $userId,
                     'question_id' => $ans['question_id']
                 ],
                 [
-                    'name' => $ans['value']
+                    'name' => $valueToSave
                 ]
             );
         }

@@ -20,7 +20,7 @@ class FormsSeeder extends Seeder
 
         DB::table("forms")->insert([
             "id" => 2, "name" => "Formulario Hermanos",
-            "description" => "Formulario sobre tus hermanos, ordénalos de mayor a menor incluyéndote, en caso de no tener tantos hermanos responda ‘Sin respuesta'",
+            "description" => "Formulario sobre tus hermanos, ordénalos de mayor a menor incluyéndote, si no tiene tantos hermanos solo llene los que tenga y baje a dar clic en 'Enviar respuestas'",
         ]);
 
         DB::table("forms")->insert([

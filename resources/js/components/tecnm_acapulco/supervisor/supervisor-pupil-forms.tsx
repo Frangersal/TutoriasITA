@@ -43,7 +43,9 @@ interface Pupil {
     user: {
         name: string;
         email: string;
+        control_number?: string;
     };
+    photo_url?: string | null;
     tutor?: {
         user?: {
             name: string;
@@ -155,10 +157,20 @@ export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
                 </h1>
                 {pupil && (
                     <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-3">
-                        <div>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">Alumno</p>
-                            <p className="font-medium text-gray-900 dark:text-gray-100">{pupil.user?.name || 'Sin nombre'}</p>
-                            <p className="text-sm text-gray-600 dark:text-gray-300">{pupil.user?.email || 'Sin correo'}</p>
+                        <div className="flex items-start gap-4">
+                            {pupil.photo_url && (
+                                <img
+                                    src={pupil.photo_url}
+                                    alt="Foto del alumno"
+                                    className="h-[113px] w-[94px] shrink-0 rounded-md border border-gray-200 bg-gray-50 object-cover shadow-sm dark:border-gray-600 dark:bg-gray-800"
+                                />
+                            )}
+                            <div>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Alumno</p>
+                                <p className="font-medium text-gray-900 dark:text-gray-100">{pupil.user?.name || 'Sin nombre'}</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-300">{pupil.user?.control_number || 'Sin número de control'}</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-300">{pupil.user?.email || 'Sin correo'}</p>
+                            </div>
                         </div>
                         <div>
                             <p className="text-sm text-gray-500 dark:text-gray-400">Tutor Asignado</p>
@@ -232,28 +244,44 @@ export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
                                 className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50"
                             >
                                 <label className="mb-3 block text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {index + 1}. {question.name} {![100, 300].includes(question.answer_type_id) && <span className="text-sm font-normal text-gray-500">(Opcional)</span>}
+                                    {index + 1}. {question.name} {![100, 300, 501, 502, 503, 506].includes(question.answer_type_id) && <span className="text-sm font-normal text-gray-500">(Opcional)</span>}
                                 </label>
 
-                                {[100, 200].includes(question.answer_type_id) ? (
+                                {[100, 200, 501, 502].includes(question.answer_type_id) ? (
                                     <div className="w-full rounded-md border border-gray-300 p-3 bg-white dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-                                        {answers[question.id] || <span className="text-gray-400 italic">Sin respuesta</span>}
+                                        {answers[question.id] && answers[question.id] !== 'Sin respuesta' ? answers[question.id] : <span className="text-gray-400 italic">Sin respuesta</span>}
+                                    </div>
+                                ) : [503, 553].includes(question.answer_type_id) ? (
+                                    <div className="w-full rounded-md border border-gray-300 p-3 bg-white dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                                        {answers[question.id] && answers[question.id] !== 'Sin respuesta' ? (
+                                            isNaN(Date.parse(answers[question.id])) 
+                                                ? answers[question.id] 
+                                                : new Date(answers[question.id] + 'T00:00:00').toLocaleDateString('es-MX', { day: '2-digit', month: 'long', year: 'numeric' })
+                                        ) : <span className="text-gray-400 italic">Sin respuesta</span>}
+                                    </div>
+                                ) : question.answer_type_id === 506 ? (
+                                    <div className="w-full rounded-md border border-gray-300 p-3 bg-white dark:border-gray-600 dark:bg-gray-700 dark:text-white flex items-center justify-center">
+                                        {answers[question.id] && answers[question.id] !== 'Sin respuesta' ? (
+                                            <a href={`/storage/${answers[question.id]}`} target="_blank" rel="noreferrer">
+                                                <img 
+                                                    src={`/storage/${answers[question.id]}`} 
+                                                    alt="Respuesta adjunta" 
+                                                    className="max-h-64 max-w-full rounded object-contain shadow-sm transition-transform hover:scale-105"
+                                                    title="Clic para ver en grande"
+                                                />
+                                            </a>
+                                        ) : (
+                                            <span className="text-gray-400 italic">Sin imagen adjunta</span>
+                                        )}
                                     </div>
                                 ) : (
-                                    <div className="space-y-2">
-                                        {question.options?.map((option) => (
-                                            <div key={option.id} className="flex items-center">
-                                                <input
-                                                    type="radio"
-                                                    disabled
-                                                    checked={answers[question.id] === option.name || answers[question.id] === String(option.id)}
-                                                    className="h-4 w-4 border-gray-300 text-yellow-600 focus:ring-yellow-500 dark:border-gray-600 dark:bg-gray-700"
-                                                />
-                                                <label className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                                    {option.name}
-                                                </label>
-                                            </div>
-                                        ))}
+                                    <div className="w-full rounded-md border border-gray-300 p-3 bg-white dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                                        {(() => {
+                                            const ans = answers[question.id];
+                                            if (!ans || ans === 'Sin respuesta') return <span className="text-gray-400 italic">Sin respuesta</span>;
+                                            const matchedOption = question.options?.find(o => o.name === ans || String(o.id) === ans);
+                                            return matchedOption ? matchedOption.name : ans;
+                                        })()}
                                     </div>
                                 )}
                             </div>
@@ -305,7 +333,7 @@ export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
                     
                     {formUsers.length === 0 && (
                         <p className="col-span-full py-8 text-center text-gray-500">
-                            Este alumno no tiene formularios asignados.
+                            Este alumno no ha llenado ningun formulario.
                         </p>
                     )}
                 </div>

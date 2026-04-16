@@ -20,6 +20,7 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
+            'control_number' => ['required', 'string', 'size:8', 'regex:/^[0-9]+$/', Rule::unique('users', 'control_number')],
             'email' => [
                 'required',
                 'string',
@@ -32,8 +33,10 @@ class CreateNewUser implements CreatesNewUsers
 
         return User::create([
             'name' => $input['name'],
+            'control_number' => $input['control_number'],
             'email' => $input['email'],
             'password' => $input['password'],
+            'role_id' => 3, // Asignar el rol 3 (student) por defecto? Si no, se ignorará
         ]);
     }
 }

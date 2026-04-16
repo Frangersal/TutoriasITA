@@ -498,6 +498,11 @@ export default function AdminForms() {
                                 <option value={200}>Texto Opcional</option>
                                 <option value={300}>Opciones (Selección)</option>
                                 <option value={350}>Opciones (Selección Opcional)</option>
+                                <option value={501}>Número Entero</option>
+                                <option value={502}>Número Decimal</option>
+                                <option value={503}>Fecha</option>
+                                <option value={553}>Fecha Opcional</option>
+                                <option value={506}>Selector de Imágenes</option>
                             </select>
                         </div>
                         <div
@@ -535,7 +540,15 @@ export default function AdminForms() {
                                     Pregunta #{index + 1} •{' '}
                                     {[100, 200].includes(question.answer_type_id)
                                         ? 'Texto Libre'
-                                        : 'Opciones'}
+                                        : [300, 350].includes(question.answer_type_id)
+                                        ? 'Opciones'
+                                        : [501, 502].includes(question.answer_type_id)
+                                        ? 'Número'
+                                        : [503, 553].includes(question.answer_type_id)
+                                        ? 'Fecha'
+                                        : question.answer_type_id === 506
+                                        ? 'Imagen'
+                                        : 'Otro'}
                                 </span>
                                 <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                                     {question.name}

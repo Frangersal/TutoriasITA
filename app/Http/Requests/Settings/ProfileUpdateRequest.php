@@ -18,6 +18,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'control_number' => ['required', 'string', 'size:8', 'regex:/^[0-9]+$/', Rule::unique(User::class, 'control_number')->ignore($this->user()->id)],
 
             'email' => [
                 'required',
@@ -27,6 +28,7 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'picture' => ['nullable', 'image', 'max:5120'],
         ];
     }
 }

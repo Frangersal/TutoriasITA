@@ -23,6 +23,13 @@ class PupilFormsController extends Controller
 
         $pupil = Pupil::with(['user', 'tutor.user'])->findOrFail($pupilId);
         
+        // Si el usuario tiene picture, usarla
+        if ($pupil->user && $pupil->user->picture) {
+            $pupil->photo_url = '/storage/' . $pupil->user->picture;
+        } else {
+            $pupil->photo_url = null;
+        }
+
         $formUsers = FormUser::with('form')
             ->where('user_id', $pupil->user_id)
             ->get()

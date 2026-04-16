@@ -40,8 +40,11 @@ export default function StudentForms() {
     // Estado para el formulario seleccionado (Vista de Responder)
     const [selectedForm, setSelectedForm] = useState<Form | null>(null);
     
-    // Estado para las respuestas: Mapa de question_id -> valor
-    const [answers, setAnswers] = useState<{ [key: number]: string }>({});
+    // Estado para las respuestas: Mapa de question_id -> valor (string o File)
+    const [answers, setAnswers] = useState<{ [key: number]: any }>({});
+
+    // Estado para mostrar validaciones de la pregunta con diseño de Tailwind
+    const [formSubmitError, setFormSubmitError] = useState<{ questionId: number, message: string } | null>(null);
 
     // --- Efectos ---
     useEffect(() => {
@@ -90,10 +93,11 @@ export default function StudentForms() {
     const handleBack = () => {
         setSelectedForm(null);
         setAnswers({});
+        setFormSubmitError(null);
         fetchForms(); // Recargar lista para actualizar estados
     };
 
-    const handleAnswerChange = (questionId: number, value: string) => {
+    const handleAnswerChange = (questionId: number, value: any) => {
         setAnswers(prev => ({
             ...prev,
             [questionId]: value
@@ -104,20 +108,82 @@ export default function StudentForms() {
         e.preventDefault();
         if (!selectedForm) return;
 
-        try {
-            // Estructuramos los datos para enviar
-            const payload = {
-                form_id: selectedForm.id,
-                answers: selectedForm.questions?.map(q => {
-                    const val = answers[q.id];
-                    return {
-                        question_id: q.id,
-                        value: val && String(val).trim() !== '' && String(val).trim() !== 'Sin respuesta' ? val : 'Sin respuesta'
-                    };
-                }) || []
-            };
+        // Reiniciar cualquier error previo
+        setFormSubmitError(null);
 
-            await axios.post('/student/answers', payload);
+        // Validación para evitar números que comiencen con 0 (ignorando decimales como 0.5 o el número 0 solo)
+        let invalidZeroQuestion: { id: number, name: string } | null = null;
+        selectedForm.questions?.forEach(q => {
+            if ([501, 502].includes(q.answer_type_id) && !invalidZeroQuestion) {
+                const val = (answers[q.id] === undefined || answers[q.id] === null) ? '' : String(answers[q.id]);
+                if (val !== '' && val !== 'Sin respuesta') {
+                    if (val.startsWith('0') && val.length > 1 && val[1] !== '.') {
+                        invalidZeroQuestion = { id: q.id, name: q.name };
+                    }
+                }
+            }
+        });
+
+        const errorQuestion = invalidZeroQuestion as { id: number, name: string } | null;
+
+        if (errorQuestion) {
+            setFormSubmitError({
+                questionId: errorQuestion.id,
+                message: `El número de esta pregunta no puede comenzar con 0.`
+            });
+            // Scroll a la pregunta específica
+            setTimeout(() => {
+                document.getElementById(`question-${errorQuestion.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 50);
+            return;
+        }
+
+        try {
+            // Verificar si hay algún archivo para enviar como multipart/form-data
+            const hasFiles = selectedForm.questions?.some(q => answers[q.id] instanceof File);
+
+            if (hasFiles) {
+                const formData = new FormData();
+                formData.append('form_id', String(selectedForm.id));
+                // Para Laravel, simular PUT si el formulario ya ha sido respondido
+                if (selectedForm.is_answered) {
+                    formData.append('_method', 'PUT');
+                }
+
+                selectedForm.questions?.forEach((q, i) => {
+                    const val = answers[q.id];
+                    formData.append(`answers[${i}][question_id]`, String(q.id));
+                    
+                    if (val instanceof File) {
+                        formData.append(`answers[${i}][value]`, 'file_attached'); // Un indicador para el backend
+                        formData.append(`answers[${i}][file]`, val);
+                    } else {
+                        const finalVal = val && String(val).trim() !== '' && String(val).trim() !== 'Sin respuesta' ? String(val) : 'Sin respuesta';
+                        formData.append(`answers[${i}][value]`, finalVal);
+                    }
+                });
+
+                // Si es actualización, enviamos al endpoint de 'answers' o 'answers/form_id'? 
+                // En el original se usa always POST para ambas pero luego en update...
+                // Espera, el original SIEMPRE usaba POST a '/student/answers'. Y el controller hacía updateOrCreate.
+                await axios.post('/student/answers', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+            } else {
+                // Estructuramos los datos para enviar normalmente en JSON
+                const payload = {
+                    form_id: selectedForm.id,
+                    answers: selectedForm.questions?.map(q => {
+                        const val = answers[q.id];
+                        return {
+                            question_id: q.id,
+                            value: val && String(val).trim() !== '' && String(val).trim() !== 'Sin respuesta' ? String(val) : 'Sin respuesta'
+                        };
+                    }) || []
+                };
+
+                await axios.post('/student/answers', payload);
+            }
             
             alert('Respuestas enviadas correctamente.');
             handleBack();
@@ -178,7 +244,7 @@ export default function StudentForms() {
                                 Preguntas
                             </h1>
                             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                                {selectedForm.name}
+                                {selectedForm.id} .- {selectedForm.name}
                             </h2>
                             <p className="mt-1 text-gray-600 dark:text-gray-400 whitespace-pre-wrap">
                                 {selectedForm.description}
@@ -195,11 +261,34 @@ export default function StudentForms() {
                     <form onSubmit={handleSubmit} className="space-y-8">
                         {selectedForm.questions?.map((question, index) => (
                             <div 
-                                key={question.id} 
-                                className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50"
+                                key={question.id}
+                                id={`question-${question.id}`}
+                                className={`transition-all duration-300 rounded-lg border p-4 ${
+                                    formSubmitError?.questionId === question.id
+                                        ? 'border-red-400 bg-red-50/50 ring-2 ring-red-400/50 dark:border-red-500/50 dark:bg-red-900/10'
+                                        : 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50'
+                                }`}
                             >
-                                <label className="mb-3 block text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {index + 1}. {question.name} {![100, 300].includes(question.answer_type_id) && <span className="text-sm font-normal text-gray-500">(Opcional)</span>}
+                                {formSubmitError?.questionId === question.id && (
+                                    <div className="mb-4 rounded-md border-l-4 border-red-500 bg-red-100 p-3 text-red-800 shadow-sm dark:bg-red-900/50 dark:text-red-200 animate-slide-in">
+                                        <div className="flex items-start justify-between">
+                                            <div className="flex items-center">
+                                                <svg className="mr-3 h-5 w-5 shrink-0 text-red-500 dark:text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clipRule="evenodd" />
+                                                </svg>
+                                                <span className="font-medium text-sm">{formSubmitError.message}</span>
+                                            </div>
+                                            <button onClick={() => setFormSubmitError(null)} type="button" className="ml-4 shrink-0 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
+                                                <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                    <label className="mb-3 block text-lg font-medium text-gray-900 dark:text-gray-100">
+                                    {index + 1}. {question.name} {![100, 300, 350, 501, 502, 503].includes(question.answer_type_id) && <span className="text-sm font-normal text-gray-500">(Opcional)</span>}
                                 </label>
 
                                 {[100, 200].includes(question.answer_type_id) ? (
@@ -211,6 +300,46 @@ export default function StudentForms() {
                                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                                         className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                         placeholder="Escribe tu respuesta aquí..."
+                                    />
+                                ) : [501, 502].includes(question.answer_type_id) ? (
+                                    // Números
+                                    <input
+                                        type="text"
+                                        inputMode={question.answer_type_id === 502 ? "decimal" : "numeric"}
+                                        maxLength={16}
+                                        required
+                                        value={(answers[question.id] === 'Sin respuesta' ? '' : answers[question.id]) || ''}
+                                        onChange={(e) => {
+                                            const val = e.target.value;
+                                            if (val === '') {
+                                                handleAnswerChange(question.id, '');
+                                                return;
+                                            }
+                                            
+                                            // Validar longitud y formato según el tipo
+                                            if (question.answer_type_id === 501) {
+                                                // Enteros: Solo números, máx 16 caracteres
+                                                if (/^\d*$/.test(val) && val.length <= 16) {
+                                                    handleAnswerChange(question.id, val);
+                                                }
+                                            } else if (question.answer_type_id === 502) {
+                                                // Decimales: Números con un punto, máx 2 decimales, máx 16 caracteres en total
+                                                if (/^\d*\.?\d{0,2}$/.test(val) && val.length <= 16) {
+                                                    handleAnswerChange(question.id, val);
+                                                }
+                                            }
+                                        }}
+                                        className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                        placeholder={`Ingresa un número ${question.answer_type_id === 502 ? 'decimal' : 'entero'}...`}
+                                    />
+                                ) : [503, 553].includes(question.answer_type_id) ? (
+                                    // Fecha
+                                    <input
+                                        type="date"
+                                        required={question.answer_type_id === 503}
+                                        value={(answers[question.id] === 'Sin respuesta' ? '' : answers[question.id]) || ''}
+                                        onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                                        className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     />
                                 ) : (
                                     // Opciones

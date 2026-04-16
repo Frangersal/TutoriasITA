@@ -123,50 +123,57 @@ class AnswersTypesSeeder extends Seeder
         
         DB::table('answers_types')->insert([ 
             "id" => "501", 
-            "name" => "Date 501",
-            "description" => "Fecha" 
+            "name" => "Int 501",
+            "description" => "Numero entero de 16 caracteres" 
         ]);
         
         DB::table('answers_types')->insert([ 
             "id" => "502", 
-            "name" => "Hour 502",
-            "description" => "Hora" 
+            "name" => "Decimal 502",
+            "description" => "Numero decimal de 16 caracteres con 2 decimales" 
         ]);
-        
+
         DB::table('answers_types')->insert([ 
             "id" => "503", 
-            "name" => "Date Time 503",
-            "description" => "Fecha y hora" 
+            "name" => "Date 503",
+            "description" => "Fecha" 
         ]);
         
         DB::table('answers_types')->insert([ 
             "id" => "504", 
-            "name" => "Image 504",
-            "description" => "Imagen" 
+            "name" => "Hour 504",
+            "description" => "Hora" 
         ]);
         
         DB::table('answers_types')->insert([ 
             "id" => "505", 
-            "name" => "audio 505",
-            "description" => "Audio" 
+            "name" => "Date Time 505",
+            "description" => "Fecha y hora" 
         ]);
         
         DB::table('answers_types')->insert([ 
             "id" => "506", 
-            "name" => "video 506",
-            "description" => "Video" 
+            "name" => "Image 506",
+            "description" => "Imagen" 
         ]);
         
         DB::table('answers_types')->insert([ 
             "id" => "507", 
-            "name" => "PDF 507",
-            "description" => "PDF" 
+            "name" => "audio 507",
+            "description" => "Audio" 
         ]);
         
         DB::table('answers_types')->insert([ 
             "id" => "508", 
-            "name" => "Word 508",
-            "description" => "Word" 
+            "name" => "video 508",
+            "description" => "Video" 
+        ]);
+        
+        
+        DB::table('answers_types')->insert([ 
+            "id" => "553", 
+            "name" => "Date 553",
+            "description" => "Fecha opcional" 
         ]);
 
     }

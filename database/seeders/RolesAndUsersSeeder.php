@@ -23,6 +23,8 @@ class RolesAndUsersSeeder extends Seeder
         // Crear usuarios por defecto
         User::create([
             'name' => 'Admin User',
+            'control_number' => '11111111',
+            'picture' => null,
             'email' => 'admin@user.com',
             'password' => Hash::make('password'),
             'role_id' => $adminRole->id,
@@ -30,6 +32,8 @@ class RolesAndUsersSeeder extends Seeder
 
         User::create([
             'name' => 'Tutor User',
+            'control_number' => '22222222',
+            'picture' => null,
             'email' => 'tutor@user.com',
             'password' => Hash::make('password'),
             'role_id' => $tutorRole->id,
@@ -37,6 +41,8 @@ class RolesAndUsersSeeder extends Seeder
 
         User::create([
             'name' => 'Student User',
+            'control_number' => '33333333',
+            'picture' => null,
             'email' => 'student@user.com',
             'password' => Hash::make('password'),
             'role_id' => $studentRole->id,
