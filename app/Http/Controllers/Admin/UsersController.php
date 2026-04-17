@@ -27,6 +27,9 @@ class UsersController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'control_number' => 'nullable|string|size:8',
+            'major_id' => 'nullable|integer|exists:majors,id',
+            'picture' => 'nullable|image|max:5120',
             'password' => 'nullable|string|min:6|confirmed',
             'role_id' => 'nullable|integer|exists:roles,id',
             'tutor_id' => 'nullable|exists:tutors,id',
@@ -35,7 +38,16 @@ class UsersController extends Controller
         $update = [
             'name' => $data['name'],
             'email' => strtolower($data['email']),
+            'control_number' => $data['control_number'] ?? null,
+            'major_id' => $data['major_id'] ?? null,
         ];
+
+        if ($request->hasFile('picture')) {
+            if ($user->picture && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->picture)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->picture);
+            }
+            $update['picture'] = $request->file('picture')->store('profiles', 'public');
+        }
 
         if (!empty($data['password'])) {
             $update['password'] = Hash::make($data['password']);
@@ -85,6 +97,15 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+        if ($user->pupil) {
+            $user->pupil->reunions()->delete();
+            $user->pupil->delete();
+        }
+        if ($user->tutor) {
+            $user->tutor->reunions()->delete();
+            $user->tutor->delete();
+        }
+
         $user->delete();
 
         return response()->json(['message' => 'Usuario eliminado']);
@@ -98,6 +119,9 @@ class UsersController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
+            'control_number' => 'nullable|string|size:8',
+            'major_id' => 'nullable|integer|exists:majors,id',
+            'picture' => 'nullable|image|max:5120',
             'password' => 'required|string|min:6|confirmed',
             'role_id' => 'nullable|integer|exists:roles,id',
             'tutor_id' => 'nullable|exists:tutors,id',
@@ -105,12 +129,20 @@ class UsersController extends Controller
 
         $roleId = $data['role_id'] ?? 3; // <-- default a 3
 
-        $user = User::create([
+        $createData = [
             'name' => $data['name'],
             'email' => strtolower($data['email']),
+            'control_number' => $data['control_number'] ?? null,
+            'major_id' => $data['major_id'] ?? null,
             'password' => Hash::make($data['password']),
             'role_id' => $roleId,
-        ]);
+        ];
+
+        if ($request->hasFile('picture')) {
+            $createData['picture'] = $request->file('picture')->store('profiles', 'public');
+        }
+
+        $user = User::create($createData);
 
         // Lógica para crear Tutor o Pupil según el rol
         if ($roleId == 2) { // Tutor

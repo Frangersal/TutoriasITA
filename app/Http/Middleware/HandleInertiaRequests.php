@@ -47,6 +47,8 @@ class HandleInertiaRequests extends Middleware
                     'email' => $user->email,
                     'control_number' => $user->control_number,
                     'picture' => $user->picture,
+                    'major_id' => $user->major_id,
+                    'major' => $user->major,
                     // obtener nombre del role si existe
                     'role' => $user->role?->name ?? null,
                 ]

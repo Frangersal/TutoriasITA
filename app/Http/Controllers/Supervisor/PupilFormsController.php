@@ -21,7 +21,7 @@ class PupilFormsController extends Controller
             return response()->json(['error' => 'Pupil ID is required'], 400);
         }
 
-        $pupil = Pupil::with(['user', 'tutor.user'])->findOrFail($pupilId);
+        $pupil = Pupil::with(['user.major', 'tutor.user'])->findOrFail($pupilId);
         
         // Si el usuario tiene picture, usarla
         if ($pupil->user && $pupil->user->picture) {

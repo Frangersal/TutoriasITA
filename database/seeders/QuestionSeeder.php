@@ -22,9 +22,9 @@ class QuestionSeeder extends Seeder
         //DB::table("questions")->insert([ "id"=>"3",   "name"=>"Subir foto de perfil","form_id"=>"1","answer_type_id"=>"506",]);
         DB::table("questions")->insert([ "id"=>"4",   "name"=>"Estatura (metros)","form_id"=>"1","answer_type_id"=>"502",]);
         DB::table("questions")->insert([ "id"=>"5",   "name"=>"Peso (kilos)","form_id"=>"1","answer_type_id"=>"502",]);
-        DB::table("questions")->insert([ "id"=>"6",   "name"=>"Carrera","form_id"=>"1","answer_type_id"=>"300",]);
+        //DB::table("questions")->insert([ "id"=>"6",   "name"=>"Carrera","form_id"=>"1","answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"7",   "name"=>"Fecha de Nacimiento","form_id"=>"1","answer_type_id"=>"503",]);
-        DB::table("questions")->insert([ "id"=>"8",   "name"=>"Sexo","form_id"=>"1","answer_type_id"=>"100",]);
+        DB::table("questions")->insert([ "id"=>"8",   "name"=>"Sexo","form_id"=>"1","answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"9",   "name"=>"Edad","form_id"=>"1","answer_type_id"=>"501",]);
         DB::table("questions")->insert([ "id"=>"10",  "name"=>"Estado Civil","form_id"=>"1", "answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"11",  "name"=>"Trabaja","form_id"=>"1", "answer_type_id"=>"300",]);
@@ -34,7 +34,7 @@ class QuestionSeeder extends Seeder
         DB::table("questions")->insert([ "id"=>"15",  "name"=>"Código Postal","form_id"=>"1","answer_type_id"=>"501",]);
         DB::table("questions")->insert([ "id"=>"16",  "name"=>"E-Mail","form_id"=>"1","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"17",  "name"=>"Tipo de vivienda","form_id"=>"1", "answer_type_id"=>"300",]);
-        DB::table("questions")->insert([ "id"=>"18",  "name"=>"La casa o departamento onde vives es","form_id"=>"1", "answer_type_id"=>"300",]);
+        DB::table("questions")->insert([ "id"=>"18",  "name"=>"La casa o departamento donde vives es","form_id"=>"1", "answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"19",  "name"=>"Numero de personas con las que vives (Parentesco)","form_id"=>"1","answer_type_id"=>"501",]);
         DB::table("questions")->insert([ "id"=>"20",  "name"=>"Nombre del Padre","form_id"=>"1","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"21",  "name"=>"Edad (Padre)","form_id"=>"1","answer_type_id"=>"501",]);

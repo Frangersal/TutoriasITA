@@ -10,6 +10,10 @@ interface Pupil {
         id: number;
         name: string;
         email: string;
+        control_number?: string;
+        major?: {
+            initials: string;
+        };
     };
     tutor?: {
         id: number;
@@ -30,6 +34,7 @@ export function SupervisorPupils() {
 
     // Búsqueda
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchField, setSearchField] = useState<'id' | 'control_number' | 'name' | 'major' | 'email' | 'tutor'>('name');
 
     useEffect(() => {
         fetchPupils();
@@ -46,29 +51,34 @@ export function SupervisorPupils() {
         }
     };
 
-    // Filtrado
+    // --- Lógica de Filtrado y Paginación ---
     const filteredPupils = pupils.filter(pupil => {
-        const searchLower = searchTerm.toLowerCase();
-        const userName = pupil.user?.name || '';
-        const userEmail = pupil.user?.email || '';
-        const tutorName = pupil.tutor?.user?.name || '';
+        if (searchField === 'major') {
+            const majorSearchStr = pupil.user?.major?.initials || '';
+            return majorSearchStr.toLowerCase().includes(searchTerm.toLowerCase());
+        }
 
-        return (
-            userName.toLowerCase().includes(searchLower) ||
-            userEmail.toLowerCase().includes(searchLower) ||
-            tutorName.toLowerCase().includes(searchLower)
-        );
+        if (searchField === 'tutor') {
+            const tutorSearchStr = pupil.tutor?.user?.name || '';
+            return tutorSearchStr.toLowerCase().includes(searchTerm.toLowerCase());
+        }
+
+        if (searchField === 'id') {
+            return String(pupil.id).toLowerCase().includes(searchTerm.toLowerCase());
+        }
+        
+        // @ts-ignore - Acceso dinámico a las propiedades del usuario anidado
+        const value = pupil.user?.[searchField];
+        // Convertir a string para poder buscar tanto en números (ID, rol) como en texto
+        return String(value || '').toLowerCase().includes(searchTerm.toLowerCase());
     });
 
-    // Paginación lógica
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = filteredPupils.slice(indexOfFirstItem, indexOfLastItem);
+    const currentPupils = filteredPupils.slice(indexOfFirstItem, indexOfLastItem);
     const totalPages = Math.ceil(filteredPupils.length / itemsPerPage);
 
-    const handlePageChange = (pageNumber: number) => {
-        setCurrentPage(pageNumber);
-    };
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     const handleDownloadPdf = (pupilId: number) => {
         // Redirigir a la ruta de descarga del PDF
@@ -88,10 +98,75 @@ export function SupervisorPupils() {
 
             {/* Barra de Búsqueda */}
             <div className="mb-4 flex flex-col gap-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                <div className="flex items-center gap-4 flex-wrap">
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">Buscar por:</span>
+                    <div className="flex gap-2 flex-wrap">
+                        <button
+                            onClick={() => setSearchField('id')}
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+                                searchField === 'id' 
+                                    ? 'bg-blue-600 text-white' 
+                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
+                            }`}
+                        >
+                            ID
+                        </button>
+                        <button
+                            onClick={() => setSearchField('name')}
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+                                searchField === 'name' 
+                                    ? 'bg-blue-600 text-white' 
+                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
+                            }`}
+                        >
+                            Nombre
+                        </button>
+                        <button
+                            onClick={() => setSearchField('control_number')}
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+                                searchField === 'control_number' 
+                                    ? 'bg-blue-600 text-white' 
+                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
+                            }`}
+                        >
+                            N. Control
+                        </button>
+                        <button
+                            onClick={() => setSearchField('major')}
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+                                searchField === 'major' 
+                                    ? 'bg-blue-600 text-white' 
+                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
+                            }`}
+                        >
+                            Carrera
+                        </button>
+                        <button
+                            onClick={() => setSearchField('email')}
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+                                searchField === 'email' 
+                                    ? 'bg-blue-600 text-white' 
+                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
+                            }`}
+                        >
+                            Correo
+                        </button>
+                        <button
+                            onClick={() => setSearchField('tutor')}
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+                                searchField === 'tutor' 
+                                    ? 'bg-blue-600 text-white' 
+                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'
+                            }`}
+                        >
+                            Tutor
+                        </button>
+                    </div>
+                </div>
                 <div className="flex gap-2 w-full">
                     <input
                         type="text"
-                        placeholder="Buscar alumno por nombre, correo o tutor..."
+                        placeholder="Buscar..."
                         value={searchTerm}
                         onChange={(e) => {
                             setSearchTerm(e.target.value);
@@ -119,20 +194,28 @@ export function SupervisorPupils() {
                         <tr>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">ID</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nombre</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">N. Control</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Carrera</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Correo</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tutor Asignado</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Acciones</th>
                         </tr>
                     </thead>
                     <tbody className="bg-white dark:bg-sidebar-accent/5 divide-y divide-gray-200 dark:divide-gray-700">
-                        {currentItems.length > 0 ? (
-                            currentItems.map((pupil) => (
+                        {currentPupils.length > 0 ? (
+                            currentPupils.map((pupil) => (
                                 <tr key={pupil.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                         {pupil.id}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                         {pupil.user?.name || 'Sin Nombre'}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 font-mono">
+                                        {pupil.user?.control_number || 'S/N'}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                        {pupil.user?.major?.initials || 'S/N'}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                         {pupil.user?.email || 'Sin Correo'}
@@ -174,7 +257,7 @@ export function SupervisorPupils() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                                <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
                                     No se encontraron alumnos.
                                 </td>
                             </tr>
@@ -187,7 +270,7 @@ export function SupervisorPupils() {
             {totalPages > 1 && (
                 <div className="flex justify-center mt-4 space-x-2">
                     <button
-                        onClick={() => handlePageChange(currentPage - 1)}
+                        onClick={() => paginate(currentPage - 1)}
                         disabled={currentPage === 1}
                         className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'}`}
                     >
@@ -197,7 +280,7 @@ export function SupervisorPupils() {
                     {Array.from({ length: totalPages }, (_, i) => (
                         <button
                             key={i + 1}
-                            onClick={() => handlePageChange(i + 1)}
+                            onClick={() => paginate(i + 1)}
                             className={`px-3 py-1 rounded cursor-pointer ${currentPage === i + 1 ? 'bg-blue-800 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200'}`}
                         >
                             {i + 1}
@@ -205,7 +288,7 @@ export function SupervisorPupils() {
                     ))}
 
                     <button
-                        onClick={() => handlePageChange(currentPage + 1)}
+                        onClick={() => paginate(currentPage + 1)}
                         disabled={currentPage === totalPages}
                         className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'}`}
                     >

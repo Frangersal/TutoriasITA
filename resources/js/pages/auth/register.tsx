@@ -1,16 +1,25 @@
 import { login } from '@/routes';
 import { store } from '@/routes/register';
 import { Form, Head } from '@inertiajs/react';
+import { useState } from 'react';
 
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 
-export default function Register() {
+interface Major {
+    id: number;
+    name: string;
+}
+
+export default function Register({ majors }: { majors: Major[] }) {
+    const [majorId, setMajorId] = useState('');
+
     return (
         <AuthLayout
             title="Crear una cuenta"
@@ -62,6 +71,27 @@ export default function Register() {
                                     }}
                                 />
                                 <InputError message={errors.control_number as string} />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="major_id">Carrera</Label>
+                                <Select
+                                    name="major_id"
+                                    onValueChange={(value) => setMajorId(value)}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Selecciona una carrera" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {majors?.map((m) => (
+                                            <SelectItem key={m.id} value={String(m.id)}>
+                                                {m.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <input type="hidden" name="major_id" value={majorId} />
+                                <InputError message={errors.major_id as string} className="mt-2" />
                             </div>
 
                             <div className="grid gap-2">

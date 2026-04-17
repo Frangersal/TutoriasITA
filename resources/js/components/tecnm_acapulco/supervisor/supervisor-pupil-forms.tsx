@@ -44,6 +44,9 @@ interface Pupil {
         name: string;
         email: string;
         control_number?: string;
+        major?: {
+            name: string;
+        };
     };
     photo_url?: string | null;
     tutor?: {
@@ -169,6 +172,7 @@ export function SupervisorPupilForms({ pupilId }: SupervisorPupilFormsProps) {
                                 <p className="text-sm text-gray-500 dark:text-gray-400">Alumno</p>
                                 <p className="font-medium text-gray-900 dark:text-gray-100">{pupil.user?.name || 'Sin nombre'}</p>
                                 <p className="text-sm text-gray-600 dark:text-gray-300">{pupil.user?.control_number || 'Sin número de control'}</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-300">{pupil.user?.major?.name || 'Sin carrera'}</p>
                                 <p className="text-sm text-gray-600 dark:text-gray-300">{pupil.user?.email || 'Sin correo'}</p>
                             </div>
                         </div>

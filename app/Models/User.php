@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'control_number',
         'picture',
+        'major_id',
         'password',
         'role_id',
     ];
@@ -58,7 +59,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
-
+    // RelaciÃ³n con el modelo Major
+    public function major()
+    {
+        return $this->belongsTo(Major::class);
+    }
     // Relación muchos a muchos con Forms (Formularios completados)
     public function completedForms()
     {

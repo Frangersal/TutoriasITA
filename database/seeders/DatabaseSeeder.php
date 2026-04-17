@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(MajorSeeder::class);
         $this->call(RolesAndUsersSeeder::class);
         // User::factory(10)->create();
 
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Test User',
                 'password' => 'password',
                 'email_verified_at' => now(),
+                'major_id' => 7,
             ]
         );
         

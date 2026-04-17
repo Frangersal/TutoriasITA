@@ -35,6 +35,7 @@ export interface User {
     name: string;
     email: string;
     control_number: string;
+    major_id: number;
     picture?: string;
     avatar?: string;
     email_verified_at: string | null;

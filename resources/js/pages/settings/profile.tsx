@@ -10,6 +10,7 @@ import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { edit } from '@/routes/profile';
@@ -24,12 +25,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Profile({
     mustVerifyEmail,
     status,
+    majors,
 }: {
     mustVerifyEmail: boolean;
     status?: string;
+    majors?: { id: number, name: string }[];
 }) {
     const { auth } = usePage<SharedData>().props;
     const [preview, setPreview] = useState<string | null>(null);
+    const [major_id, setMajorId] = useState<string>(auth.user.major_id ? String(auth.user.major_id) : '');
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -146,6 +150,28 @@ export default function Profile({
                                         className="mt-2"
                                         message={errors.control_number}
                                     />
+                                </div>
+
+                                <div className="grid gap-2">
+                                    <Label htmlFor="major_id">Carrera</Label>
+                                    <Select
+                                        name="major_id"
+                                        value={major_id ? String(major_id) : undefined}
+                                        onValueChange={(value) => setMajorId(value)}
+                                    >
+                                        <SelectTrigger className="mt-1 w-full bg-background border-input focus:ring-ring">
+                                            <SelectValue placeholder="Selecciona una carrera" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {majors?.map((m) => (
+                                                <SelectItem key={m.id} value={String(m.id)}>
+                                                    {m.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <input type="hidden" name="major_id" value={major_id} />
+                                    <InputError className="mt-2" message={errors.major_id as string} />
                                 </div>
 
                                 <div className="grid gap-2">

@@ -28,12 +28,14 @@ class CreateNewUser implements CreatesNewUsers
                 'max:255',
                 Rule::unique(User::class),
             ],
+            'major_id' => ['required', 'integer', 'exists:majors,id'],
             'password' => $this->passwordRules(),
         ])->validate();
 
         return User::create([
             'name' => $input['name'],
             'control_number' => $input['control_number'],
+            'major_id' => $input['major_id'],
             'email' => $input['email'],
             'password' => $input['password'],
             'role_id' => 3, // Asignar el rol 3 (student) por defecto? Si no, se ignorará

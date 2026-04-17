@@ -43,6 +43,10 @@ Route::get('test', function () {
     return response()->json(['status' => 'ok']);
 });
 
+Route::get('majors', function () {
+    return response()->json(\App\Models\Major::all());
+});
+
 // ------ >> ------ Admin CRUD's ------ << ------ //
 // Ej: /admin
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'can:admin-action'])->group(function () {

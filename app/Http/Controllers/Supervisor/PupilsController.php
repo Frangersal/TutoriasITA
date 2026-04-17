@@ -11,7 +11,7 @@ class PupilsController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $query = Pupil::with(['user', 'tutor.user']);
+        $query = Pupil::with(['user.major', 'tutor.user']);
 
         // Si es tutor, filtrar solo sus pupilos
         if ($user->hasRole('tutor')) {
