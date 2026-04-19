@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Transition } from '@headlessui/react';
 
 // --- Interfaces ---
 interface Option {
@@ -46,6 +47,16 @@ export default function StudentForms() {
     // Estado para mostrar validaciones de la pregunta con diseño de Tailwind
     const [formSubmitError, setFormSubmitError] = useState<{ questionId: number, message: string } | null>(null);
 
+    // Estado de notificación global parecido al de profile
+    const [notification, setNotification] = useState<{ show: boolean, type: 'success' | 'info' | 'error', message: string } | null>(null);
+
+    const showNotification = (type: 'success' | 'info' | 'error', message: string) => {
+        setNotification({ show: true, type, message });
+        setTimeout(() => {
+            setNotification(prev => prev ? { ...prev, show: false } : null);
+        }, 6000);
+    };
+
     // --- Efectos ---
     useEffect(() => {
         fetchForms();
@@ -84,7 +95,7 @@ export default function StudentForms() {
             // Scroll arriba para la animación
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (err) {
-            alert('Error al cargar el formulario.');
+            showNotification('error', 'Error al cargar el formulario.');
         } finally {
             setLoading(false);
         }
@@ -185,11 +196,14 @@ export default function StudentForms() {
                 await axios.post('/student/answers', payload);
             }
             
-            alert('Respuestas enviadas correctamente.');
+            showNotification(
+                selectedForm.is_answered ? 'info' : 'success',
+                selectedForm.is_answered ? 'Respuestas editadas correctamente.' : 'Respuestas enviadas correctamente.'
+            );
             handleBack();
         } catch (err) {
             console.error(err);
-            alert('Error al enviar las respuestas.');
+            showNotification('error', 'Error al enviar las respuestas.');
         }
     };
 
@@ -199,19 +213,70 @@ export default function StudentForms() {
     if (error) return <p className="text-red-500">{error}</p>;
 
     return (
-        <div className="rounded-lg border-2 border-yellow-400 bg-white p-6 shadow-[inset_0_0_15px_rgba(250,204,21,0.2)] dark:border-yellow-600 dark:bg-sidebar-accent/10">
-            <style>{`
-                @keyframes slideIn {
-                    from { opacity: 0; transform: translateY(10px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                .animate-slide-in {
-                    opacity: 0;
-                    animation: slideIn 0.3s ease-out forwards;
-                }
-            `}</style>
+        <div className="space-y-6">
+            {/* Notificaciones (Flotante absoluto arriba) */}
+            {notification && (
+                <div className="fixed right-6 top-20 z-[100] w-full max-w-sm px-4 shadow-2xl">
+                    <Transition
+                        show={notification.show}
+                        enter="transition ease-out duration-300"
+                        enterFrom="opacity-0 translate-y-[-10px]"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in duration-300"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 translate-y-[-10px]"
+                    >
+                        <div className={`rounded-md border-l-4 p-4 shadow-sm ${
+                            notification.type === 'success' ? 'border-green-500 bg-green-100 dark:bg-green-900/50' :
+                            notification.type === 'info' ? 'border-blue-500 bg-blue-100 dark:bg-blue-900/50' :
+                            'border-red-500 bg-red-100 dark:bg-red-900/50'
+                        }`}>
+                            <div className="flex">
+                                <div className="shrink-0">
+                                    {notification.type === 'success' && (
+                                        <svg className="h-5 w-5 text-green-500 dark:text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                        </svg>
+                                    )}
+                                    {notification.type === 'info' && (
+                                        <svg className="h-5 w-5 text-blue-500 dark:text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                        </svg>
+                                    )}
+                                    {notification.type === 'error' && (
+                                        <svg className="h-5 w-5 text-red-500 dark:text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clipRule="evenodd" />
+                                        </svg>
+                                    )}
+                                </div>
+                                <div className="ml-3">
+                                    <p className={`text-sm font-medium ${
+                                        notification.type === 'success' ? 'text-green-800 dark:text-green-200' :
+                                        notification.type === 'info' ? 'text-blue-800 dark:text-blue-200' :
+                                        'text-red-800 dark:text-red-200'
+                                    }`}>
+                                        {notification.message}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </Transition>
+                </div>
+            )}
 
-            {/* Pestañas de Navegación */}
+            <div className="rounded-lg border-2 border-yellow-400 bg-white p-6 shadow-[inset_0_0_15px_rgba(250,204,21,0.2)] dark:border-yellow-600 dark:bg-sidebar-accent/10">
+                <style>{`
+                    @keyframes slideIn {
+                        from { opacity: 0; transform: translateY(10px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                    .animate-slide-in {
+                        opacity: 0;
+                        animation: slideIn 0.3s ease-out forwards;
+                    }
+                `}</style>
+
+                {/* Pestañas de Navegación */}
             <div className="mb-6 flex border-b border-gray-200 dark:border-gray-700">
                 <button
                     onClick={handleBack}
@@ -288,7 +353,7 @@ export default function StudentForms() {
                                 )}
                                 
                                     <label className="mb-3 block text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {index + 1}. {question.name} {![100, 300, 350, 501, 502, 503].includes(question.answer_type_id) && <span className="text-sm font-normal text-gray-500">(Opcional)</span>}
+                                    {index + 1}. {question.name} {![100, 300, 501, 502, 503].includes(question.answer_type_id) && <span className="text-sm font-normal text-gray-500">(Opcional)</span>}
                                 </label>
 
                                 {[100, 200].includes(question.answer_type_id) ? (
@@ -454,6 +519,7 @@ export default function StudentForms() {
                     </div>
                 </div>
             )}
+            </div>
         </div>
     );
 }

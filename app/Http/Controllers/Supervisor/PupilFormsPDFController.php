@@ -40,7 +40,7 @@ class PupilFormsPDFController extends Controller
      */
     public function show(string $id)
     {
-        $pupil = Pupil::with(['user', 'tutor.user'])->findOrFail($id);
+        $pupil = Pupil::with(['user.major', 'tutor.user'])->findOrFail($id);
         
         // Obtener formularios completados por el usuario asociado al alumno
         $completedForms = FormUser::with(['form.questions'])
@@ -62,12 +62,21 @@ class PupilFormsPDFController extends Controller
             ];
         }
 
+
+        //---------------
+
         $pdf = Pdf::loadView('pdf.pupil_forms', compact('pupil', 'formsData'));
         
         // Limpiar el nombre del archivo para evitar caracteres inválidos
         $filename = 'tutorias_' . preg_replace('/[^A-Za-z0-9\-]/', '_', $pupil->user->name) . '.pdf';
         
-        return $pdf->download($filename);
+        //Despues de terminar de editar el PDF debo descomentar download y comentar stream
+        //return $pdf->download($filename);
+        return $pdf->stream($filename);
+
+        //----------------
+
+        //return view('pdf.pupil_forms', compact('pupil', 'formsData'));
     }
 
     /**
