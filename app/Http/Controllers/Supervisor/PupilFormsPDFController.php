@@ -65,7 +65,7 @@ class PupilFormsPDFController extends Controller
 
         //---------------
 
-        $pdf = Pdf::loadView('pdf.pupil_forms', compact('pupil', 'formsData'));
+        $pdf = Pdf::loadView('pdf.pupil_forms', compact('pupil', 'formsData'))->setPaper('letter');
         
         // Limpiar el nombre del archivo para evitar caracteres inválidos
         $filename = 'tutorias_' . preg_replace('/[^A-Za-z0-9\-]/', '_', $pupil->user->name) . '.pdf';

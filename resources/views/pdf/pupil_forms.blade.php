@@ -4,122 +4,70 @@
     <meta charset="utf-8">
     <title>Reporte de Tutorías</title>
     <style>
-        body {
-            font-family: sans-serif;
-            font-size: 16px;
-            color: #333;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        .header h1 {
-            margin: 0;
-            color: #1b396a;
-        }
-        .info-section {
-            margin-bottom: 20px;
-            background-color: #f9fafb;
-            padding: 15px;
-            border-radius: 5px;
-        }
-        .info-row {
-            margin-bottom: 5px;
-        }
-        .info-label {
-            font-weight: bold;
-            color: #555;
-        }
-        .form-section {
-            margin-bottom: 30px;
-            page-break-inside: avoid;
-        }
-        .form-title {
-            font-size: 16px;
-            font-weight: bold;
-            background-color: #1b396a;
-            color: #ffffff;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-left: 4px solid #D4D4D4;
-            border-radius: 0px 50px 50px 0px;
-        }
-        .question-item {
-            margin-bottom: 10px;
-            border-bottom: 1px solid #eee;
-            border-right: 1px solid #eee;
-            padding-bottom: 5px;
-            padding-left: 5px;
-        }
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-        .answer-text {
-            color: #4b5563;
-            font-style: italic;
-        }
-        .footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-            font-size: 10px;
-            color: #999;
-            border-top: 1px solid #eee;
-            padding-top: 5px;
-        }
+        {!! file_get_contents(public_path('css/pdf_pupil_forms.css')) !!}
     </style>
 </head>
 <body>
-    <div style="text-align: right; margin-bottom: 20px; font-size: 14px;">
+    <header>
+        <table class="top-header-table">
+            <tr>
+                <td class="td-header-left">
+                    <img src="{{ public_path('TecNM_assets/sep.png') }}" class="header-img-sep" alt="Logo SEP">
+                    <img src="{{ public_path('TecNM_assets/logo_horizontal_tecnm_azul.png') }}" class="header-img-tecnm" alt="Logo TecNM">
+                </td>
+                <td class="td-header-right">
+                    <img src="{{ public_path('TecNM_assets/mujer-bandera.png') }}" class="header-img-bandera" alt="Mujer Bandera"><br>
+                    <span class="header-text-bandera">Tecnológico Nacional de México campus Acapulco</span>
+                </td>
+            </tr>
+        </table>
+    </header>
+
+    <div class="text-right mb-20 font-14">
         @php
             $meses = ['01'=>'enero', '02'=>'febrero', '03'=>'marzo', '04'=>'abril', '05'=>'mayo', '06'=>'junio', '07'=>'julio', '08'=>'agosto', '09'=>'septiembre', '10'=>'octubre', '11'=>'noviembre', '12'=>'diciembre'];
         @endphp
-        Acapulco de Juárez, Guerrero, a {{ date('d') }} de {{ $meses[date('m')] }} de {{ date('Y') }}.
+        Acapulco de Juárez, Guerrero, {{ date('d') }}/{{ $meses[date('m')] }}/{{ date('Y') }}
     </div>
 
     <div class="header">
         <h1>Tecnológico Nacional de México</h1>
-        <img src="{{ public_path('TecNM_assets/tecnm_logo_azul.svg') }}" alt="Logo TecNM" style="height: 80px; margin: 10px 0;">
         <h2>Campus Acapulco</h2>
         <h3>Reporte de Formularios de Tutoría</h3>
     </div>
 
     <div class="info-section">
-        <table style="width: 100%; border-collapse: collapse;">
+        <table class="info-table">
             <tr>
-                <td style="width: 3.5cm; text-align: left; vertical-align: top;">
+                <td class="td-photo">
                     @if($pupil->user->picture)
                         @php
                             $picturePath = Str::startsWith($pupil->user->picture, ['http://', 'https://']) 
                                 ? $pupil->user->picture 
                                 : public_path('storage/' . $pupil->user->picture);
                         @endphp
-                        <div style="width: 2.5cm; height: 3.0cm; background-image: url('{{ $picturePath }}'); background-size: cover; background-position: center top; background-repeat: no-repeat;"></div>
+                        <div class="photo-container" style="background-image: url('{{ $picturePath }}');"></div>
                     @else
-                        <div style="width: 2.5cm; height: 3.0cm; background-color: #e5e7eb; border-radius: 4px; display: inline-block; text-align: center; border: 1px solid #ccc;">
-                            <span style="display: block; margin-top: 45px; color: #9ca3af; font-size: 10px;">Sin foto</span>
+                        <div class="no-photo-container">
+                            <span class="no-photo-text">Sin foto</span>
                         </div>
                     @endif
                 </td>
-                <td style="vertical-align: top; padding-left: 10px;">
+                <td class="td-info">
                     <div class="info-row">
-                        <span class="info-label">Alumno:</span> {{ $pupil->user->name }}
+                        <span class="info-label">ALUMNO:</span> {{ $pupil->user->name }}
                     </div>
                     <div class="info-row">
-                        <span class="info-label">Carrera:</span> {{ $pupil->user->major ? $pupil->user->major->name : 'Sin asignar' }}
+                        <span class="info-label">CARRERA:</span> {{ $pupil->user->major ? $pupil->user->major->name : 'Sin asignar' }}
                     </div>
                     <div class="info-row">
-                        <span class="info-label">Numero de control:</span> {{ $pupil->user->control_number ?: 'Sin asignar' }}
+                        <span class="info-label">NUMERO DE CONTROL:</span> {{ $pupil->user->control_number ?: 'Sin asignar' }}
                     </div>
                     <div class="info-row">
-                        <span class="info-label">Correo:</span> {{ $pupil->user->email }}
+                        <span class="info-label">CORREO:</span> {{ $pupil->user->email }}
                     </div>
                     <div class="info-row">
-                        <span class="info-label">Tutor Asignado:</span> {{ $pupil->tutor && $pupil->tutor->user ? $pupil->tutor->user->name : 'Sin asignar' }}
+                        <span class="info-label">TUTOR:</span> {{ $pupil->tutor && $pupil->tutor->user ? $pupil->tutor->user->name : 'Sin asignar' }}
                     </div>
                 </td>
             </tr>
@@ -127,22 +75,69 @@
     </div>
 
     @forelse($formsData as $formData)
+        @if($loop->first)
+            <div class="page-break-before"></div>
+        @endif
         <div class="form-section">
-            <div class="form-title">
-                <img src="{{ public_path('TecNM_assets/tecnm_logo_blanco.svg') }}" alt="Logo TecNM" style="height: 40px; float: right;">
-                <h2 style="margin: 0; line-height: 40px;">
-                    {{ $formData['form']->id }} .- {{ $formData['form']->name }}
-                </h2>
-                <div style="clear: both;"></div>
-            </div>
-            
-            @if($formData['questions']->count() > 0)
-                <table style="width: 100%; border-collapse: collapse;">
-                    @php $counter = 1; @endphp
-                    @foreach($formData['questions']->chunk(2) as $chunk)
+            <div class="page-break-avoid">
+                <div class="form-title form-title-padding">
+                    <table class="form-title-table">
                         <tr>
+                            <td class="align-middle">
+                                <h2 class="form-title-h2">
+                                    {{ $formData['form']->id }} .- {{ $formData['form']->name }}
+                                </h2>
+                            </td>
+                            <td class="form-title-logo-td">
+                                <img src="{{ public_path('TecNM_assets/tecnm_logo_blanco.png') }}" alt="Logo TecNM" class="logo-blanco">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+                @if($formData['form']->description)
+                    <div class="form-description">
+                        {{ $formData['form']->description }}
+                    </div>
+                @endif
+                
+                @if($formData['questions']->count() > 0)
+                    @php 
+                        $counter = 1; 
+                        $chunks = $formData['questions']->chunk(2);
+                        $firstChunks = $chunks->take(3);
+                        $remainingChunks = $chunks->skip(3);
+                    @endphp
+                    <table class="questions-table">
+                        @foreach($firstChunks as $chunk)
+                            <tr>
+                                @foreach($chunk as $question)
+                                    <td class="td-question">
+                                        <div class="question-item">
+                                            <div class="question-text">{{ $counter++ }}.- {{ $question->name }}:</div>
+                                            <div class="answer-text">
+                                                @php
+                                                    $answer = $formData['answers']->firstWhere('question_id', $question->id);
+                                                @endphp
+                                                {{ $answer ? $answer->name : 'Sin respuesta' }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                @endforeach
+                                @if($chunk->count() == 1)
+                                    <td style="width: 50%;"></td>
+                                @endif
+                            </tr>
+                        @endforeach
+                    </table>
+            </div>
+
+            @if($remainingChunks->count() > 0)
+                <table class="questions-table">
+                    @foreach($remainingChunks as $chunk)
+                        <tr class="page-break-avoid">
                             @foreach($chunk as $question)
-                                <td style="width: 50%; vertical-align: top; padding-left:7px; padding-right: 7px;">
+                                <td class="td-question">
                                     <div class="question-item">
                                         <div class="question-text">{{ $counter++ }}.- {{ $question->name }}:</div>
                                         <div class="answer-text">
@@ -160,8 +155,10 @@
                         </tr>
                     @endforeach
                 </table>
+            @endif
             @else
                 <p>Este formulario no tiene preguntas.</p>
+            </div>
             @endif
         </div>
     @empty
@@ -169,7 +166,10 @@
     @endforelse
 
     <div class="footer">
-        Generado por el Sistema de Tutorías ITA
+        <div class="page-number"></div>
+        Avenida Instituto Tecnológico km. 6.5, s/n, Col. El Cayaco. C.P. 39905 Acapulco de Juárez,<br>
+        Guerrero. Tel. (744) 4429010 ext. 101 e-mail: dir_acapulco@tecnm.mx <br>
+        https://acapulco.tecnm.mx/
     </div>
 </body>
 </html>

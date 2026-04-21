@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --azul_tecnm: #1b396a;
+    --gris_tecnm: #807e82;
+    --logo_sep_height: 46px;
+}
+
+@page {
+    margin: 130px 40px 60px 40px;
+}
+
+header {
+    position: fixed;
+    top: -110px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-weight: bold;
+    color: var(--azul_tecnm);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 9pt;
+    color: #333;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.header h1 {
+    margin: 0;
+    color: var(--azul_tecnm);
+}
+
+.info-section {
+    margin-bottom: 20px;
+    background-color: #f9fafb;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.info-row {
+    margin-bottom: 5px;
+    font-size: 10pt;
+    color: #000000;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #000000;
+}
+
+.form-section {
+    margin-bottom: 30px;
+}
+
+.form-title {
+    background-color: var(--azul_tecnm);
+    color: #ffffff;
+    padding: 5px 5px 5px 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--gris_tecnm);
+    border-radius: 0px 50px 50px 0px;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.form-description {
+    margin: 0 15px 15px 15px;
+    font-size: 13px;
+    color: #000;
+    font-style: normal;
+    text-align: justify;
+}
+
+.question-item {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    padding-bottom: 5px;
+    padding-left: 5px;
+}
+
+.question-text {
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.answer-text {
+    color: var(--gris_tecnm);
+    font-style: italic;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    color: var(--gris_tecnm);
+    border-top: 1px solid #eee;
+    padding-top: 5px;
+}
+
+.page-number {
+    position: absolute;
+    right: 0;
+    top: 5px;
+}
+
+.page-number:after {
+    content: "Página " counter(page);
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.font-14 {
+    font-size: 14px;
+}
+
+.logo-azul {
+    height: 80px;
+    margin: 10px 0;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.td-photo {
+    width: 3.5cm;
+    text-align: left;
+    vertical-align: top;
+}
+
+.photo-container {
+    width: 2.5cm;
+    height: 3.0cm;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+.no-photo-container {
+    width: 2.5cm;
+    height: 3.0cm;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.no-photo-text {
+    display: block;
+    margin-top: 45px;
+    color: #9ca3af;
+    font-size: 10px;
+}
+
+.td-info {
+    vertical-align: top;
+    padding-left: 10px;
+}
+
+.page-break-before {
+    page-break-before: always;
+}
+
+.page-break-avoid {
+    page-break-inside: avoid;
+}
+
+.form-title-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+}
+
+.align-middle {
+    vertical-align: middle;
+}
+
+.form-title-h2 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.2;
+}
+
+.form-title-logo-td {
+    vertical-align: middle;
+    text-align: right;
+    width: 60px;
+}
+
+.logo-blanco {
+    height: 40px;
+    display: inline-block;
+}
+
+.questions-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.td-question {
+    width: 50%;
+    vertical-align: top;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.top-header-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+}
+
+.td-header-left {
+    text-align: left;
+    vertical-align: middle;
+}
+
+.td-header-right {
+    text-align: right;
+    vertical-align: middle;
+}
+
+.header-img-sep {
+    height: var(--logo_sep_height);
+    width: auto;
+    margin-left: -14px;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+.header-img-tecnm {
+    height: calc(var(--logo_sep_height) * 0.8);
+    width: auto;
+    vertical-align: middle;
+    border-left: 1px solid #a57f2c;
+    padding-left: 20px;
+}
+
+.header-img-bandera {
+    height: 90px;
+    width: auto;
+    vertical-align: middle;
+    margin-top: -20px;
+    margin-bottom: -5px;
+    margin-right: -10px;
+}
+
+.header-text-bandera {
+    font-size: 10px;
+    font-weight: bold;
+    color: var(--gris_tecnm);
+    display: block;
+    margin-top: 10px;
+    margin-right: 42px;
+}

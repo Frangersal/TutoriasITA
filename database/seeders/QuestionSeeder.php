@@ -110,7 +110,7 @@ class QuestionSeeder extends Seeder
         DB::table("questions")->insert([ "id"=>"91",  "name"=>"Consideras importante facilitar algún otro dato sobre tu ambiente familiar","form_id"=>"8","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"92",  "name"=>"¿Cómo es tu relación con los compañeros?","form_id"=>"9", "answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"93",  "name"=>"¿Por qué?","form_id"=>"9","answer_type_id"=>"100",]);
-        DB::table("questions")->insert([ "id"=>"94",  "name"=>"¿Cómo es tu relación con tus amigos?","form_id"=>"9","answer_type_id"=>"100",]);
+        DB::table("questions")->insert([ "id"=>"94",  "name"=>"¿Cómo es tu relación con tus amigos?","form_id"=>"9","answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"95",  "name"=>"¿Tienes pareja?","form_id"=>"9", "answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"96",  "name"=>"¿Cómo es tu relación con tu pareja?","form_id"=>"9", "answer_type_id"=>"350",]);
         DB::table("questions")->insert([ "id"=>"97",  "name"=>"¿Cómo es tu relación con las autoridades académicas?","form_id"=>"9", "answer_type_id"=>"300",]);
@@ -142,9 +142,9 @@ class QuestionSeeder extends Seeder
         DB::table("questions")->insert([ "id"=>"123", "name"=>"Activo/a","form_id"=>"10", "answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"124", "name"=>"Independiente","form_id"=>"10", "answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"125", "name"=>"¿Cómo te gustaría ser?","form_id"=>"11","answer_type_id"=>"100",]);
-        DB::table("questions")->insert([ "id"=>"126", "name"=>"¿Recibes ayuda en tu casa para la realización de tareas escolares?","form_id"=>"11","answer_type_id"=>"100",]);
+        DB::table("questions")->insert([ "id"=>"126", "name"=>"¿Recibes ayuda en tu casa para la realización de tareas escolares?","form_id"=>"11","answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"127", "name"=>"¿Qué problemas personales intervienen en tus estudios?","form_id"=>"11","answer_type_id"=>"100",]);
-        DB::table("questions")->insert([ "id"=>"128", "name"=>"¿Cuál es tu rendimiento escolar?","form_id"=>"11","answer_type_id"=>"100",]);
+        DB::table("questions")->insert([ "id"=>"128", "name"=>"¿Cuál es tu rendimiento escolar?","form_id"=>"11","answer_type_id"=>"300",]);
         DB::table("questions")->insert([ "id"=>"129", "name"=>"Menciona las asignaturas que cursas en el semestre actual.","form_id"=>"11","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"130", "name"=>"¿Cuál es tu asignatura preferida? ¿Por qué?","form_id"=>"11","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"131", "name"=>"¿Cuál es la asignatura en la que sobresales? ¿Por qué?","form_id"=>"11","answer_type_id"=>"100",]);
@@ -153,12 +153,12 @@ class QuestionSeeder extends Seeder
         DB::table("questions")->insert([ "id"=>"134", "name"=>"¿Por qué vienes al Tecnológico?","form_id"=>"11","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"135", "name"=>"¿Para qué vienes al Tecnológico?","form_id"=>"11","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"136", "name"=>"¿Qué te motiva para venir al Tecnológico?","form_id"=>"11","answer_type_id"=>"100",]);
-        DB::table("questions")->insert([ "id"=>"137", "name"=>"¿Cuál es tu promedio general del ciclo anterior?","form_id"=>"11","answer_type_id"=>"100",]);
+        DB::table("questions")->insert([ "id"=>"137", "name"=>"¿Cuál es tu promedio general del ciclo anterior?","form_id"=>"11","answer_type_id"=>"502",]);
         DB::table("questions")->insert([ "id"=>"138", "name"=>"¿Tienes asignaturas reprobadas?","form_id"=>"11", "answer_type_id"=>"300",]);
-        DB::table("questions")->insert([ "id"=>"139", "name"=>"¿Cuales?","form_id"=>"11","answer_type_id"=>"100",]);
+        DB::table("questions")->insert([ "id"=>"139", "name"=>"¿Cuales?","form_id"=>"11","answer_type_id"=>"200",]);
         DB::table("questions")->insert([ "id"=>"140", "name"=>"¿Cuáles son tus planes inmediatos?","form_id"=>"12","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"141", "name"=>"¿Cuáles son tus metas en la vida?","form_id"=>"12","answer_type_id"=>"100",]);
-        DB::table("questions")->insert([ "id"=>"142", "name"=>"Nombre del entrevistador","form_id"=>"12","answer_type_id"=>"100",]);
+        //DB::table("questions")->insert([ "id"=>"142", "name"=>"Nombre del entrevistador","form_id"=>"12","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"143", "name"=>"Yo soy...","form_id"=>"13","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"144", "name"=>"Mi carácter es...","form_id"=>"13","answer_type_id"=>"100",]);
         DB::table("questions")->insert([ "id"=>"145", "name"=>"A mí me gusta que...","form_id"=>"13","answer_type_id"=>"100",]);

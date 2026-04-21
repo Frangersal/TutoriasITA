@@ -62,6 +62,15 @@ export default function StudentForms() {
         fetchForms();
     }, []);
 
+    useEffect(() => {
+        if (formSubmitError) {
+            const timer = setTimeout(() => {
+                setFormSubmitError(null);
+            }, 6000);
+            return () => clearTimeout(timer);
+        }
+    }, [formSubmitError]);
+
     // --- Funciones de API ---
 
     const fetchForms = async () => {
@@ -106,6 +115,7 @@ export default function StudentForms() {
         setAnswers({});
         setFormSubmitError(null);
         fetchForms(); // Recargar lista para actualizar estados
+        window.scrollTo(0, 0); // Scroll al instante hacia arriba
     };
 
     const handleAnswerChange = (questionId: number, value: any) => {
@@ -121,6 +131,31 @@ export default function StudentForms() {
 
         // Reiniciar cualquier error previo
         setFormSubmitError(null);
+
+        // Validación de preguntas obligatorias
+        const mandatoryTypes = [100, 300, 501, 502, 503];
+        let unansweredRequired: { id: number, name: string } | null = null;
+        
+        for (const q of selectedForm.questions || []) {
+            if (mandatoryTypes.includes(q.answer_type_id)) {
+                const val = answers[q.id];
+                if (val === undefined || val === null || String(val).trim() === '' || String(val).trim() === 'Sin respuesta') {
+                    unansweredRequired = { id: q.id, name: q.name };
+                    break;
+                }
+            }
+        }
+
+        if (unansweredRequired) {
+            setFormSubmitError({
+                questionId: unansweredRequired.id,
+                message: 'Esta pregunta es obligatoria. Por favor, proporciona una respuesta.'
+            });
+            setTimeout(() => {
+                document.getElementById(`question-${unansweredRequired.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 50);
+            return;
+        }
 
         // Validación para evitar números que comiencen con 0 (ignorando decimales como 0.5 o el número 0 solo)
         let invalidZeroQuestion: { id: number, name: string } | null = null;
@@ -323,7 +358,7 @@ export default function StudentForms() {
                         </button> */}
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-8">
+                    <form onSubmit={handleSubmit} noValidate className="space-y-8">
                         {selectedForm.questions?.map((question, index) => (
                             <div 
                                 key={question.id}
@@ -343,11 +378,6 @@ export default function StudentForms() {
                                                 </svg>
                                                 <span className="font-medium text-sm">{formSubmitError.message}</span>
                                             </div>
-                                            <button onClick={() => setFormSubmitError(null)} type="button" className="ml-4 shrink-0 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
-                                                <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-                                                </svg>
-                                            </button>
                                         </div>
                                     </div>
                                 )}
