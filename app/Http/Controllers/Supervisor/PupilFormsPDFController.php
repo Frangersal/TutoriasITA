@@ -71,8 +71,8 @@ class PupilFormsPDFController extends Controller
         $filename = 'tutorias_' . preg_replace('/[^A-Za-z0-9\-]/', '_', $pupil->user->name) . '.pdf';
         
         //Despues de terminar de editar el PDF debo descomentar download y comentar stream
-        //return $pdf->download($filename);
-        return $pdf->stream($filename);
+        return $pdf->download($filename);
+        //return $pdf->stream($filename);
 
         //----------------
 

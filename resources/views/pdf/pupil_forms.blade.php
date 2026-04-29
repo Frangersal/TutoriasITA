@@ -13,11 +13,15 @@
             <tr>
                 <td class="td-header-left">
                     <img src="{{ public_path('TecNM_assets/sep.png') }}" class="header-img-sep" alt="Logo SEP">
+                    <!-- 
                     <img src="{{ public_path('TecNM_assets/logo_horizontal_tecnm_azul.png') }}" class="header-img-tecnm" alt="Logo TecNM">
+                    -->
                 </td>
                 <td class="td-header-right">
                     <img src="{{ public_path('TecNM_assets/mujer-bandera.png') }}" class="header-img-bandera" alt="Mujer Bandera"><br>
+                    <!-- 
                     <span class="header-text-bandera">Tecnológico Nacional de México campus Acapulco</span>
+                    -->
                 </td>
             </tr>
         </table>
@@ -31,8 +35,10 @@
     </div>
 
     <div class="header">
+        <!--
         <h1>Tecnológico Nacional de México</h1>
         <h2>Campus Acapulco</h2>
+        -->
         <h3>Reporte de Formularios de Tutoría</h3>
     </div>
 
@@ -167,9 +173,11 @@
 
     <div class="footer">
         <div class="page-number"></div>
+        <!--
         Avenida Instituto Tecnológico km. 6.5, s/n, Col. El Cayaco. C.P. 39905 Acapulco de Juárez,<br>
         Guerrero. Tel. (744) 4429010 ext. 101 e-mail: dir_acapulco@tecnm.mx <br>
         https://acapulco.tecnm.mx/
+        -->
     </div>
 </body>
 </html>
