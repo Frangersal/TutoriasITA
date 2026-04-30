@@ -15,14 +15,14 @@ class AnswersOptionsSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table("answers_options")->insert([ "id" => "1", "name" => "Arquitectura", "question_id" => " 6", ]);
-        DB::table("answers_options")->insert([ "id" => "2", "name" => "Contador Público", "question_id" => " 6", ]);
-        DB::table("answers_options")->insert([ "id" => "3", "name" => "Ingeniería Industrial", "question_id" => " 6", ]);
-        DB::table("answers_options")->insert([ "id" => "4", "name" => "Ingeniería de Sistemas", "question_id" => " 6", ]);
-        DB::table("answers_options")->insert([ "id" => "5", "name" => "Ingeniería en Agronomía", "question_id" => " 6", ]);
-        DB::table("answers_options")->insert([ "id" => "6", "name" => "Ingeniería en Desarrollo Comunitario", "question_id" => " 6", ]);
-        DB::table("answers_options")->insert([ "id" => "7", "name" => "Ingeniería en Administración", "question_id" => " 6", ]);
-        DB::table("answers_options")->insert([ "id" => "8", "name" => "Ingeniería Informática", "question_id" => " 6", ]);
+        //DB::table("answers_options")->insert([ "id" => "1", "name" => "Arquitectura", "question_id" => " 6", ]);
+        //DB::table("answers_options")->insert([ "id" => "2", "name" => "Contador Público", "question_id" => " 6", ]);
+        //DB::table("answers_options")->insert([ "id" => "3", "name" => "Ingeniería Industrial", "question_id" => " 6", ]);
+        //DB::table("answers_options")->insert([ "id" => "4", "name" => "Ingeniería de Sistemas", "question_id" => " 6", ]);
+        //DB::table("answers_options")->insert([ "id" => "5", "name" => "Ingeniería en Agronomía", "question_id" => " 6", ]);
+        //DB::table("answers_options")->insert([ "id" => "6", "name" => "Ingeniería en Desarrollo Comunitario", "question_id" => " 6", ]);
+        //DB::table("answers_options")->insert([ "id" => "7", "name" => "Ingeniería en Administración", "question_id" => " 6", ]);
+        //DB::table("answers_options")->insert([ "id" => "8", "name" => "Ingeniería Informática", "question_id" => " 6", ]);
         DB::table("answers_options")->insert([ "id" => "9", "name" => "Masculino", "question_id" => " 8", ]);
         DB::table("answers_options")->insert([ "id" => "10", "name" => "Femenino", "question_id" => " 8", ]);
         //DB::table("answers_options")->insert([ "id" => "11", "name" => "No binario", "question_id" => " 8", ]);
@@ -333,10 +333,10 @@ class AnswersOptionsSeeder extends Seeder
         DB::table("answers_options")->insert([ "id" => "316", "name" => "No", "question_id" => " 149", ]);
         DB::table("answers_options")->insert([ "id" => "317", "name" => "Sí", "question_id" => " 150", ]);
         DB::table("answers_options")->insert([ "id" => "318", "name" => "No", "question_id" => " 150", ]);
-        DB::table("answers_options")->insert([ "id" => "319", "name" => "Sí", "question_id" => " 151", ]);
-        DB::table("answers_options")->insert([ "id" => "320", "name" => "No", "question_id" => " 151", ]);
-        DB::table("answers_options")->insert([ "id" => "321", "name" => "Sí", "question_id" => " 152", ]);
-        DB::table("answers_options")->insert([ "id" => "322", "name" => "No", "question_id" => " 152", ]);
+        //DB::table("answers_options")->insert([ "id" => "319", "name" => "Sí", "question_id" => " 151", ]);
+        //DB::table("answers_options")->insert([ "id" => "320", "name" => "No", "question_id" => " 151", ]);
+        //DB::table("answers_options")->insert([ "id" => "321", "name" => "Sí", "question_id" => " 152", ]);
+        //DB::table("answers_options")->insert([ "id" => "322", "name" => "No", "question_id" => " 152", ]);
         DB::table("answers_options")->insert([ "id" => "323", "name" => "Sí", "question_id" => " 153", ]);
         DB::table("answers_options")->insert([ "id" => "324", "name" => "No", "question_id" => " 153", ]);
         DB::table("answers_options")->insert([ "id" => "325", "name" => "Sí", "question_id" => " 154", ]);
@@ -417,10 +417,10 @@ class AnswersOptionsSeeder extends Seeder
         DB::table("answers_options")->insert([ "id" => "400", "name" => "No", "question_id" => " 191", ]);
         DB::table("answers_options")->insert([ "id" => "401", "name" => "Sí", "question_id" => " 192", ]);
         DB::table("answers_options")->insert([ "id" => "402", "name" => "No", "question_id" => " 192", ]);
-        DB::table("answers_options")->insert([ "id" => "403", "name" => "Sí", "question_id" => " 193", ]);
-        DB::table("answers_options")->insert([ "id" => "404", "name" => "No", "question_id" => " 193", ]);
-        DB::table("answers_options")->insert([ "id" => "405", "name" => "Sí", "question_id" => " 194", ]);
-        DB::table("answers_options")->insert([ "id" => "406", "name" => "No", "question_id" => " 194", ]);
+        //DB::table("answers_options")->insert([ "id" => "403", "name" => "Sí", "question_id" => " 193", ]);
+        //DB::table("answers_options")->insert([ "id" => "404", "name" => "No", "question_id" => " 193", ]);
+        //DB::table("answers_options")->insert([ "id" => "405", "name" => "Sí", "question_id" => " 194", ]);
+        //DB::table("answers_options")->insert([ "id" => "406", "name" => "No", "question_id" => " 194", ]);
         DB::table("answers_options")->insert([ "id" => "407", "name" => "Sí", "question_id" => " 195", ]);
         DB::table("answers_options")->insert([ "id" => "408", "name" => "No", "question_id" => " 195", ]);
         DB::table("answers_options")->insert([ "id" => "409", "name" => "Sí", "question_id" => " 196", ]);

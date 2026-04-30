@@ -16,11 +16,8 @@ return new class extends Migration
             $table->dateTime('date_time');
             $table->text('description');
             
-            $table->unsignedBigInteger('pupil_id');
-            $table->foreign('pupil_id')->references('id')->on('pupils');
-
-            $table->unsignedBigInteger('tutor_id');
-            $table->foreign('tutor_id')->references('id')->on('tutors');
+            $table->foreignId('pupil_id')->constrained('pupils')->cascadeOnDelete();
+            $table->foreignId('tutor_id')->constrained('tutors')->cascadeOnDelete();
             
             $table->timestamps();
         });

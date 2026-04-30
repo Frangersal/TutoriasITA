@@ -59,7 +59,7 @@ class RolesAndUsersSeeder extends Seeder
             // major_id: 1
             ['id' => 4, 'name' => 'Arqui Juve', 'email' => 'juve@user.com', 'major_id' => 1, 'role_id' => $tutorRole->id],
             ['id' => 5, 'name' => 'Ringo Star', 'email' => 'ringo@user.com', 'major_id' => 1, 'role_id' => $studentRole->id],
-            ['id' => 6, 'name' => 'Akane Tendo', 'email' => 'ringo3@user.com', 'major_id' => 1, 'role_id' => $studentRole->id],
+            ['id' => 6, 'name' => 'Akane Tendo', 'email' => 'akane@user.com', 'major_id' => 1, 'role_id' => $studentRole->id],
             ['id' => 7, 'name' => 'Luis Miguel', 'email' => 'luis@user.com', 'major_id' => 1, 'role_id' => $studentRole->id],
             ['id' => 8, 'name' => 'Mon Laferte', 'email' => 'mon@user.com', 'major_id' => 1, 'role_id' => $studentRole->id],
             

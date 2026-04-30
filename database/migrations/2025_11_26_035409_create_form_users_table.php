@@ -14,11 +14,8 @@ return new class extends Migration
         Schema::create('form_users', function (Blueprint $table) {
             $table->id();
             
-            $table->unsignedBigInteger('form_id');
-            $table->foreign('form_id')->references('id')->on('forms');
-
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('form_id')->constrained('forms')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             
             $table->timestamps();
         });

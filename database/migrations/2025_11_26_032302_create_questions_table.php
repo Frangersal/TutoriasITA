@@ -15,11 +15,8 @@ return new class extends Migration
             $table->id();
             $table->text('name');  
 
-            $table->unsignedBigInteger('form_id');
-            $table->foreign('form_id')->references('id')->on('forms');
-
-            $table->unsignedBigInteger('answer_type_id');
-            $table->foreign('answer_type_id')->references('id')->on('answers_types');
+            $table->foreignId('form_id')->constrained('forms')->cascadeOnDelete();
+            $table->foreignId('answer_type_id')->constrained('answers_types')->cascadeOnDelete();
 
             $table->timestamps();
         });
