@@ -21,7 +21,11 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'control_number',
+        'picture',
+        'major_id',
         'password',
+        'role_id',
     ];
 
     /**
@@ -37,16 +41,79 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string,string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'two_factor_confirmed_at' => 'datetime',
+    ];
+
+    /**
+     * Relación con el modelo Role
+     * Un usuario pertenece a un rol
+     */
+    public function role()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'two_factor_confirmed_at' => 'datetime',
-        ];
+        return $this->belongsTo(Role::class);
     }
+    // RelaciÃ³n con el modelo Major
+    public function major()
+    {
+        return $this->belongsTo(Major::class);
+    }
+    // Relación muchos a muchos con Forms (Formularios completados)
+    public function completedForms()
+    {
+        return $this->belongsToMany(Form::class, 'form_users', 'user_id', 'form_id')->withTimestamps();
+    }
+
+    public function tutor()
+    {
+        return $this->hasOne(Tutor::class);
+    }
+
+    public function pupil()
+    {
+        return $this->hasOne(Pupil::class);
+    }
+
+    /**
+     * Comprueba si el usuario tiene un rol concreto.
+     */
+    public function hasRole(string $role): bool
+    {
+        $current = optional($this->role)->name;
+        if (!$current) {
+            return false;
+        }
+
+        return mb_strtolower($current) === mb_strtolower($role);
+    }
+
+    /**
+     * Comprueba si el usuario tiene alguno de los roles pasados.
+     * Acepta array de nombres de rol.
+     *
+     * @param array $roles
+     */
+    public function hasAnyRoles(array $roles): bool
+    {
+        $current = optional($this->role)->name;
+        if (!$current) {
+            return false;
+        }
+
+        $current = mb_strtolower($current);
+        foreach ($roles as $r) {
+            if ($current === mb_strtolower($r)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

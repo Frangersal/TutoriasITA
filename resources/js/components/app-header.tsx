@@ -32,17 +32,11 @@ import { cn, isSameUrl, resolveUrl } from '@/lib/utils';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Menu, Search, User, Users, FileText, BarChart2 } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
+// mainNavItems will be construidos en tiempo de ejecución según el role del usuario
 
 const rightNavItems: NavItem[] = [
     {
@@ -68,6 +62,32 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     const page = usePage<SharedData>();
     const { auth } = page.props;
     const getInitials = useInitials();
+    const rawRole = (auth.user as any)?.role ?? null;
+    const role = rawRole ? String(rawRole).toLowerCase() : null;
+
+    const mainNavItems: NavItem[] = [
+        { title: 'Dashboard', href: dashboard(), icon: LayoutGrid },
+        { title: 'Perfil', href: '/settings/profile', icon: User },
+    ];
+
+    if (role === 'admin') {
+        mainNavItems.push(
+            { title: 'Tutores', href: '/tutors', icon: Users },
+            { title: 'Alumnos', href: '/pupils', icon: Users },
+            { title: 'Formularios', href: '/forms', icon: FileText },
+            { title: 'Estadísticas', href: '/stats', icon: BarChart2 },
+        );
+    } else if (role === 'tutor') {
+        mainNavItems.push(
+            { title: 'Reuniones', href: '/reunions', icon: Users },
+            { title: 'Estadísticas', href: '/stats', icon: BarChart2 },
+        );
+    } else if (role === 'student' || role === 'pupil') {
+        mainNavItems.push(
+            { title: 'Formularios', href: '/forms', icon: FileText },
+            { title: 'Reuniones', href: '/reunions', icon: Users },
+        );
+    }
     return (
         <>
             <div className="border-b border-sidebar-border/80">

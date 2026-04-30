@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(MajorSeeder::class);
+        $this->call(RolesAndUsersSeeder::class);
         // User::factory(10)->create();
 
         User::firstOrCreate(
@@ -21,7 +23,16 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Test User',
                 'password' => 'password',
                 'email_verified_at' => now(),
+                'major_id' => 7,
             ]
         );
+        
+        $this->call([ FormsSeeder::class,]);
+        $this->call([ AnswersTypesSeeder::class,]);
+        $this->call([ QuestionSeeder::class,]);
+        $this->call([ AnswersOptionsSeeder::class,]);
+        $this->call([ TutorSeeder::class,]);
+        $this->call([ PupilSeeder::class,]);
+        $this->call([ ReunionSeeder::class,]);
     }
 }

@@ -1,22 +1,31 @@
 import { login } from '@/routes';
 import { store } from '@/routes/register';
 import { Form, Head } from '@inertiajs/react';
+import { useState } from 'react';
 
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 
-export default function Register() {
+interface Major {
+    id: number;
+    name: string;
+}
+
+export default function Register({ majors }: { majors: Major[] }) {
+    const [majorId, setMajorId] = useState('');
+
     return (
         <AuthLayout
-            title="Create an account"
-            description="Enter your details below to create your account"
+            title="Crear una cuenta"
+            description="Ingresa tus datos a continuación para crear tu cuenta"
         >
-            <Head title="Register" />
+            <Head title="Registro" />
             <Form
                 {...store.form()}
                 resetOnSuccess={['password', 'password_confirmation']}
@@ -27,7 +36,7 @@ export default function Register() {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">Nombre completo</Label>
                                 <Input
                                     id="name"
                                     type="text"
@@ -36,7 +45,7 @@ export default function Register() {
                                     tabIndex={1}
                                     autoComplete="name"
                                     name="name"
-                                    placeholder="Full name"
+                                    placeholder="Nombre completo"
                                 />
                                 <InputError
                                     message={errors.name}
@@ -45,45 +54,86 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="control_number">Número de control</Label>
+                                <Input
+                                    id="control_number"
+                                    type="text"
+                                    inputMode="numeric"
+                                    pattern="\d{8}"
+                                    maxLength={8}
+                                    minLength={8}
+                                    required
+                                    tabIndex={2}
+                                    name="control_number"
+                                    placeholder="Ej. 20320001"
+                                    onInput={(e) => {
+                                        e.currentTarget.value = e.currentTarget.value.replace(/\D/g, '').slice(0, 8);
+                                    }}
+                                />
+                                <InputError message={errors.control_number as string} />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="major_id">Carrera</Label>
+                                <Select
+                                    name="major_id"
+                                    onValueChange={(value) => setMajorId(value)}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Selecciona una carrera" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {majors?.map((m) => (
+                                            <SelectItem key={m.id} value={String(m.id)}>
+                                                {m.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <input type="hidden" name="major_id" value={majorId} />
+                                <InputError message={errors.major_id as string} className="mt-2" />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="email">Correo electrónico</Label>
                                 <Input
                                     id="email"
                                     type="email"
                                     required
-                                    tabIndex={2}
+                                    tabIndex={3}
                                     autoComplete="email"
                                     name="email"
-                                    placeholder="email@example.com"
+                                    placeholder="correo@ejemplo.com"
                                 />
                                 <InputError message={errors.email} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">Contraseña</Label>
                                 <Input
                                     id="password"
                                     type="password"
                                     required
-                                    tabIndex={3}
+                                    tabIndex={4}
                                     autoComplete="new-password"
                                     name="password"
-                                    placeholder="Password"
+                                    placeholder="Contraseña"
                                 />
                                 <InputError message={errors.password} />
                             </div>
 
                             <div className="grid gap-2">
                                 <Label htmlFor="password_confirmation">
-                                    Confirm password
+                                    Confirmar contraseña
                                 </Label>
                                 <Input
                                     id="password_confirmation"
                                     type="password"
                                     required
-                                    tabIndex={4}
+                                    tabIndex={5}
                                     autoComplete="new-password"
                                     name="password_confirmation"
-                                    placeholder="Confirm password"
+                                    placeholder="Confirmar contraseña"
                                 />
                                 <InputError
                                     message={errors.password_confirmation}
@@ -93,18 +143,18 @@ export default function Register() {
                             <Button
                                 type="submit"
                                 className="mt-2 w-full"
-                                tabIndex={5}
+                                tabIndex={6}
                                 data-test="register-user-button"
                             >
                                 {processing && <Spinner />}
-                                Create account
+                                Crear cuenta
                             </Button>
                         </div>
 
                         <div className="text-center text-sm text-muted-foreground">
-                            Already have an account?{' '}
-                            <TextLink href={login()} tabIndex={6}>
-                                Log in
+                            ¿Ya tienes una cuenta?{' '}
+                            <TextLink href={login()} tabIndex={7}>
+                                Iniciar sesión
                             </TextLink>
                         </div>
                     </>

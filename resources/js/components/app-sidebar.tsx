@@ -11,18 +11,10 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { type NavItem, type SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { BookOpen, Folder, LayoutGrid, User, Users, FileText, BarChart2 } from 'lucide-react';
 import AppLogo from './app-logo';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
 
 const footerNavItems: NavItem[] = [
     {
@@ -38,13 +30,44 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+    const page = usePage<SharedData>();
+    const rawRole = (page.props.auth?.user as any)?.role ?? null;
+    const role = rawRole ? String(rawRole).toLowerCase() : null;
+
+    // Construir items según role
+    const mainNavItems: NavItem[] = [
+        { title: 'Inicio', href: dashboard().url, icon: LayoutGrid },
+        { title: 'Perfil', href: '/settings/profile', icon: User },
+    ];
+
+    if (role === 'admin') {
+        mainNavItems.push(
+            { title: 'Usuarios', href: dashboard().url, icon: Users },
+            // { title: 'Tutores', href: '/admin/tutors', icon: Users },
+            { title: 'Pupilos', href: dashboard({ query: { view: 'pupils' } }).url, icon: Users },
+            { title: 'Formularios', href: dashboard({ query: { view: 'forms' } }).url, icon: FileText },
+            { title: 'Estadísticas', href: '/admin/stats', icon: BarChart2 },
+        );
+    } else if (role === 'tutor') {
+        mainNavItems.push(
+            { title: 'Reuniones', href: dashboard({ query: { view: 'reunions' } }).url, icon: Users },
+            { title: 'Pupilos', href: dashboard({ query: { view: 'pupils' } }).url, icon: Users },
+            { title: 'Estadísticas', href: '/tutor/stats', icon: BarChart2 },
+        );
+    } else if (role === 'student' || role === 'pupil') {
+        mainNavItems.push(
+            { title: 'Formularios', href: dashboard({ query: { view: 'forms' } }).url, icon: FileText },
+            { title: 'Reuniones', href: dashboard({ query: { view: 'reunions' } }).url, icon: Users },
+        );
+    }
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()} prefetch>
+                            <Link href={dashboard().url} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
